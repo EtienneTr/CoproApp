@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints\Date;
 /**
  * Charge
  *
- * @ORM\Table(name="versement")
+ * @ORM\Table(name="charge")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CargeRepository")
  */
 class Charge
@@ -34,12 +34,6 @@ class Charge
      * @ORM\Column(name="title", type="string")
      */
     private $title;
-    /**
-     * @var
-     *
-     * @ORM\Column(name="assigned_to", type="")
-     */
-    private $assignedTo;
     /**
      * @var date
      *
