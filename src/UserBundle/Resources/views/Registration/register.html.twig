@@ -5,7 +5,7 @@
 {% block fos_user_content %}
     <form action="{{ path('fos_user_registration_register') }}" method="POST" class="form-signin">
         <div class="login-container" id="fos_user_registration_form">
-            <h1>Register an account</h1>
+            <h1>{{ 'layout.register'|trans }}</h1>
             <form>
                 <label for="email">{{ 'form.email'|trans }}</label>
                 {{ form_widget(form.email) }}
@@ -15,13 +15,16 @@
                 {{ form_widget(form.username) }}
                 {{ form_errors(form.username) }}
 
-                <label for="last_name">{{ 'form.last_name'|trans }}</label>
-                {{ form_widget(form.last_name) }}
-                {{ form_errors(form.last_name) }}
-
-                <label for="first_name">{{ 'form.first_name'|trans }}</label>
-                {{ form_widget(form.first_name) }}
-                {{ form_errors(form.first_name) }}
+                <div class="col-md-6 form-group no-p-left">
+                    <label for="last_name">{{ 'form.last_name'|trans }}</label>
+                    {{ form_widget(form.last_name) }}
+                    {{ form_errors(form.last_name) }}
+                </div>
+                <div class="col-md-6 form-group no-p-right">
+                    <label for="first_name">{{ 'form.first_name'|trans }}</label>
+                    {{ form_widget(form.first_name) }}
+                    {{ form_errors(form.first_name) }}
+                </div>
 
                 <label for="password">{{ 'form.password'|trans }}</label>
                 {{ form_widget(form.plainPassword.first) }}

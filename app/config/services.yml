@@ -39,7 +39,7 @@ services:
         tags:
             - { name: form.type, alias: user_user_registration }
 
-    AppBundle\Service\:
+    AppBundle\Service:
         class: AppBundle\Service\MessageManager
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
         public: true

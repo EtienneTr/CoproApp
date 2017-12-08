@@ -8,20 +8,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class MessageController extends Controller
 {
     /**
-     * @Route("/Message", name="Message list", requirements={methods: [GET]})
+     * @Route("/message", name="Message list")
+     * @Method({"GET"})
      */
     public function listMessageAction()
     {
         return $this->render('');
     }
     /**
-     * @Route("/Message/{id}", name="Message detail", requirements={methods: [GET]})
+     * @Route("/message/{id}", name="Message detail")
+     * @Method({"GET"})
      */
     public function getMessageAction($id){
 
     }
     /**
-     * @Route("/Message", name="Add Message", requirements={methods: [POST]})
+     * @Route("/message", name="Add Message")
+     * @Method({"POST"})
      */
     public function postMessageAction(){
 
