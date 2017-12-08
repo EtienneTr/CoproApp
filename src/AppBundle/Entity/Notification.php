@@ -55,6 +55,12 @@ class Notification
      * @ORM\Column(name="ack", type="boolean")
      */
     private $ack;
+    /**
+     * @var partOwner
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\partOwner")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
 
     /**
@@ -186,5 +192,22 @@ class Notification
     {
         return $this->ack;
     }
+
+    /**
+     * @return partOwner
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param partOwner $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
 }
 

@@ -62,5 +62,27 @@ class Versement
     {
         return $this->amount;
     }
+    /**
+     * @var partOwner
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\partOwner")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @return partOwner
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param partOwner $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
 }
 

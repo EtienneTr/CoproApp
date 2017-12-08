@@ -41,6 +41,18 @@ class Message
      * @ORM\Column(name="receivedDate", type="date", nullable=true)
      */
     private $receivedDate;
+    /**
+     * @var partOwner
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\partOwner")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $sender;
+    /**
+     * @var partOwner
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\partOwner")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $receiver;
 
 
     /**
@@ -124,5 +136,38 @@ class Message
     {
         return $this->receivedDate;
     }
+
+    /**
+     * @return partOwner
+     */
+    public function getSender()
+    {
+        return $this->sender;
+    }
+
+    /**
+     * @param partOwner $sender
+     */
+    public function setSender($sender)
+    {
+        $this->sender = $sender;
+    }
+
+    /**
+     * @return partOwner
+     */
+    public function getReceiver()
+    {
+        return $this->receiver;
+    }
+
+    /**
+     * @param partOwner $receiver
+     */
+    public function setReceiver($receiver)
+    {
+        $this->receiver = $receiver;
+    }
+
 }
 

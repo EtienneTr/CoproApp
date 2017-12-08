@@ -41,7 +41,28 @@ class Contract
      * @ORM\Column(name="creationDate", type="date")
      */
     private $creationDate;
+    /**
+     * @var partOwner
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\partOwner")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
+    /**
+     * @return partOwner
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param partOwner $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
 
     /**
      * Get id

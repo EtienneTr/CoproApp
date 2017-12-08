@@ -46,6 +46,12 @@ class Charge
      * @ORM\Column(name="creation_date", type="date")
      */
     private $creationDate;
+    /**
+     * @var partOwner
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\partOwner")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     /**
      * Get id
@@ -144,6 +150,23 @@ class Charge
     {
         $this->creationDate = $creationDate;
     }
+
+    /**
+     * @return partOwner
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param partOwner $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
 
 }
 

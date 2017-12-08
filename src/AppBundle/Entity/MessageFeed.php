@@ -22,6 +22,7 @@ class MessageFeed
     private $id;
 
 
+
     /**
      * Get id
      *
@@ -31,5 +32,49 @@ class MessageFeed
     {
         return $this->id;
     }
+    /**
+     * @var message
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Message")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $messages;
+    /**
+     * @var partOwner
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\partOwner")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @return partOwner
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param partOwner $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+    /**
+     * @return message
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * @param message $messages
+     */
+    public function setMessages($messages)
+    {
+        $this->messages = $messages;
+    }
+
 }
 
