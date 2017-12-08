@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use UserBundle\Entity\User;
 
 /**
  * Notification
@@ -56,8 +57,8 @@ class Notification
      */
     private $ack;
     /**
-     * @var partOwner
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\partOwner")
+     * @var User
+     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -194,7 +195,7 @@ class Notification
     }
 
     /**
-     * @return partOwner
+     * @return User
      */
     public function getUser()
     {
@@ -202,7 +203,7 @@ class Notification
     }
 
     /**
-     * @param partOwner $user
+     * @param User $user
      */
     public function setUser($user)
     {

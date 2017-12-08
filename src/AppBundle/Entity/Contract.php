@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use UserBundle\Entity\User;
 
 /**
  * Contract
@@ -42,14 +43,14 @@ class Contract
      */
     private $creationDate;
     /**
-     * @var partOwner
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\partOwner")
+     * @var User
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @return partOwner
+     * @return User
      */
     public function getUser()
     {
@@ -57,7 +58,7 @@ class Contract
     }
 
     /**
-     * @param partOwner $user
+     * @param User $user
      */
     public function setUser($user)
     {

@@ -38,3 +38,8 @@ services:
         class: UserBundle\Form\RegistrationType
         tags:
             - { name: form.type, alias: user_user_registration }
+
+    AppBundle\Service\:
+        class: AppBundle\Service\MessageManager
+        arguments: ["@doctrine.orm.entity_manager"]
+        public: true

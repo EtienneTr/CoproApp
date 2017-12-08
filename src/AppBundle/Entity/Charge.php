@@ -4,12 +4,13 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Date;
+use UserBundle\Entity\User;
 
 /**
  * Charge
  *
  * @ORM\Table(name="charge")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CargeRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ChargeRepository")
  */
 class Charge
 {
@@ -47,8 +48,8 @@ class Charge
      */
     private $creationDate;
     /**
-     * @var partOwner
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\partOwner")
+     * @var User
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -104,22 +105,6 @@ class Charge
     }
 
     /**
-     * @return mixed
-     */
-    public function getAssignedTo()
-    {
-        return $this->assignedTo;
-    }
-
-    /**
-     * @param mixed $assignedTo
-     */
-    public function setAssignedTo($assignedTo)
-    {
-        $this->assignedTo = $assignedTo;
-    }
-
-    /**
      * @return Date
      */
     public function getDueOn()
@@ -152,7 +137,7 @@ class Charge
     }
 
     /**
-     * @return partOwner
+     * @return User
      */
     public function getUser()
     {
@@ -160,7 +145,7 @@ class Charge
     }
 
     /**
-     * @param partOwner $user
+     * @param User $user
      */
     public function setUser($user)
     {

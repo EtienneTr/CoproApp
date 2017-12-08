@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use UserBundle\Entity\User;
 
 /**
  * Message
@@ -42,14 +43,14 @@ class Message
      */
     private $receivedDate;
     /**
-     * @var partOwner
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\partOwner")
+     * @var User
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $sender;
     /**
-     * @var partOwner
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\partOwner")
+     * @var User
+     * @ORM\OneToMany(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $receiver;
@@ -138,7 +139,7 @@ class Message
     }
 
     /**
-     * @return partOwner
+     * @return User
      */
     public function getSender()
     {
@@ -146,7 +147,7 @@ class Message
     }
 
     /**
-     * @param partOwner $sender
+     * @param User $sender
      */
     public function setSender($sender)
     {
@@ -154,7 +155,7 @@ class Message
     }
 
     /**
-     * @return partOwner
+     * @return User
      */
     public function getReceiver()
     {
@@ -162,7 +163,7 @@ class Message
     }
 
     /**
-     * @param partOwner $receiver
+     * @param User $receiver
      */
     public function setReceiver($receiver)
     {

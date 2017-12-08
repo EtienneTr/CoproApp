@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use UserBundle\Entity\User;
 
 /**
  * MessageFeed
@@ -39,14 +40,14 @@ class MessageFeed
      */
     private $messages;
     /**
-     * @var partOwner
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\partOwner")
+     * @var User
+     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\Userr")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @return partOwner
+     * @return User
      */
     public function getUser()
     {
@@ -54,7 +55,7 @@ class MessageFeed
     }
 
     /**
-     * @param partOwner $user
+     * @param User $user
      */
     public function setUser($user)
     {
