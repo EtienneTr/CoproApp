@@ -1,0 +1,47 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% extends "@User/base.html.twig" %}
+
+{% block fos_user_content %}
+    <form action="{{ path('fos_user_registration_register') }}" method="POST" class="form-signin">
+        <div class="login-container" id="fos_user_registration_form">
+            <h1>Register an account</h1>
+            <form>
+                <label for="email">{{ 'form.email'|trans }}</label>
+                {{ form_widget(form.email) }}
+                {{ form_errors(form.email) }}
+
+                <label for="username">{{ 'form.username'|trans }}</label>
+                {{ form_widget(form.username) }}
+                {{ form_errors(form.username) }}
+
+                <label for="last_name">{{ 'form.last_name'|trans }}</label>
+                {{ form_widget(form.last_name) }}
+                {{ form_errors(form.last_name) }}
+
+                <label for="first_name">{{ 'form.first_name'|trans }}</label>
+                {{ form_widget(form.first_name) }}
+                {{ form_errors(form.first_name) }}
+
+                <label for="password">{{ 'form.password'|trans }}</label>
+                {{ form_widget(form.plainPassword.first) }}
+                {{ form_errors(form.plainPassword.first) }}
+
+                <label for="password_confirmation">{{ 'form.password_confirmation'|trans }}</label>
+                {{ form_widget(form.plainPassword.second) }}
+                {{ form_errors(form.plainPassword.second) }}
+
+                {{ form_rest(form) }}
+
+                <input class="login login-submit" type="submit" value="{{ 'registration.submit'|trans }}">
+
+            </form>
+
+            <div class="login-help">
+                <a href="{{ path('fos_user_security_login') }}">Login</a>
+            </div>
+
+
+        </div>
+    </form>
+{% endblock fos_user_content %}
