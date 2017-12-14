@@ -50,8 +50,8 @@ class Message
     private $sender;
     /**
      * @var User
-     * @ORM\OneToMany(targetEntity="UserBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $receiver;
 

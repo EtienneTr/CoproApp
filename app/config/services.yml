@@ -47,3 +47,7 @@ services:
         class: AppBundle\Service\CoproService
         arguments: ["@doctrine.orm.entity_manager",""]
         public: true
+    UserBundle\Service\User:
+        class: UserBundle\Service\UserService
+        arguments: ["@security.token_storage"]
+        public: true

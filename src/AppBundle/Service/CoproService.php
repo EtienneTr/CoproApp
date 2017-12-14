@@ -35,6 +35,7 @@ class CoproService
     public function create($elem)
     {
         $this->em->persist($elem);
+        $this->em->flush();
     }
 
     public function update($elem)

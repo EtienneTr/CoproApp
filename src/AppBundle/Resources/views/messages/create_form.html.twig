@@ -1,0 +1,16 @@
+{% block fos_user_content %}
+    {{ form_start(form) }}
+        <div class="login-container" id="">
+            <h1>Création d'un message</h1>
+            <form>
+
+                <label for="message">Texte</label>
+                {{ form_widget(form.body) }}
+                {{ form_errors(form.body) }}
+
+            </form>
+
+    {{ form_end(form) }}
+        </div>
+
+{% endblock fos_user_content %}

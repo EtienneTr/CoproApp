@@ -41,7 +41,7 @@ class MessageFeed
     private $messages;
     /**
      * @var User
-     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\Userr")
+     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
