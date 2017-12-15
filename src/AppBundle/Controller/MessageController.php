@@ -52,9 +52,13 @@ class MessageController extends Controller
      * @Route("/message/all", name="message_all")
      * @Method({"GET"})
      */
-    public function listMessageAction()
+    public function listMessageAction(MessageManager $manager)
     {
-
+        $messages = $manager->findAll();
+        //var_dump($messages[0]);
+        return $this->render('AppBundle:messages:messages.html.twig', array(
+            'messages' => $messages
+        ));
     }
     /**
      * @Route("/message/{id}", name="Message detail")

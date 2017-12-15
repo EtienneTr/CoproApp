@@ -1,0 +1,12 @@
+{% extends "@App/base.html.twig" %}
+
+{% block appbundle_message_content %}
+    <h1>Messages</h1>
+    <form method="get" action="/message">
+        <button type="submit" class="message-submit">Créer un message</button>
+    </form>
+        {% for message in messages %}
+            <p class="message-container">{{ message.body }}</p>
+        {% endfor %}
+
+{% endblock appbundle_message_content %}
