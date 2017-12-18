@@ -51,7 +51,14 @@ services:
         class: AppBundle\Service\CoproService
         arguments: ["@doctrine.orm.entity_manager",""]
         public: true
+    AppBundle\Service\FileUploader:
+        arguments:
+            $uploadDir: '%bill_directory%'
     UserBundle\Service\User:
         class: UserBundle\Service\UserService
         arguments: ["@security.token_storage"]
         public: true
+
+    AppBundle\EventListener\BillUploadListener:
+        tags:
+            - { name: doctrine.event_listener, event: preRemove }

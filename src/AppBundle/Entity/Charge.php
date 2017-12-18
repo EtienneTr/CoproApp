@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Date;
 use UserBundle\Entity\User;
 use AppBundle\Entity\Contract;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Charge
@@ -67,6 +68,13 @@ class Charge
      * @ORM\JoinColumn(nullable=true)
      */
     private $contract;
+
+    /**
+     * @ORM\Column(type="string",  nullable=true)
+     *
+     * @Assert\File(mimeTypes={ "application/pdf" })
+     */
+    private $bill;
 
     /**
      * Get id
@@ -196,6 +204,22 @@ class Charge
     public function setContract($contract)
     {
         $this->contract = $contract;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBill()
+    {
+        return $this->bill;
+    }
+
+    /**
+     * @param mixed $bill
+     */
+    public function setBill($bill)
+    {
+        $this->bill = $bill;
     }
 
 

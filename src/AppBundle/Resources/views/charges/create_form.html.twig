@@ -16,6 +16,10 @@
                 {{ form_widget(form.amount) }}
                 {{ form_errors(form.amount) }}
 
+                <label for="message">Facture</label>
+                {{ form_widget(form.bill) }}
+                {{ form_errors(form.bill) }}
+
             </form>
 
     {{ form_end(form) }}

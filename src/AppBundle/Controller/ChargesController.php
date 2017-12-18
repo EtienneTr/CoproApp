@@ -8,10 +8,6 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,6 +15,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use AppBundle\Entity\Charge;
 use AppBundle\Service\ChargeManager;
+use AppBundle\Service\FileUploader;
+use AppBundle\Form\ChargeType;
 
 class ChargesController extends Controller
 {
@@ -26,22 +24,20 @@ class ChargesController extends Controller
      * @Route("/charge", name="charges_create")
      * @Method({"GET", "POST"})
      */
-    public function addChargesAction(ChargeManager $manager, Request $request){
+    public function addChargesAction(ChargeManager $manager, FileUploader $fileUploader, Request $request){
         $charge = new Charge();
 
-        $form = $this->createFormBuilder($charge)
-            ->add("title", TextType::class)
-            ->add("dueOn", DateType::class)
-            ->add("amount", MoneyType::class)
-            ->add("save", SubmitType::class, array('label' => "Créer une charge" ))
-            ->getForm();
-
+        $form = $this->createForm(ChargeType::class, $charge);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $chargeForm = $form->getData();
 
             $charge->setCreationDate(new \DateTime('now'));
+
+            $bill = $charge->getBill();
+            $billName = $fileUploader->upload($bill);
+
+            $charge->setBill($billName);
 
             $manager->postCharge($charge);
 
