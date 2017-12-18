@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Date;
 use UserBundle\Entity\User;
+use AppBundle\Entity\Contract;
 
 /**
  * Charge
@@ -48,11 +49,24 @@ class Charge
      */
     private $creationDate;
     /**
-     * @var User
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @var ChargePayement
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ChargePayement", mappedBy="charge")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private $payments;
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $paid;
+
+    /**
+     * @var Contract
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Contract")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $contract;
 
     /**
      * Get id
@@ -137,19 +151,51 @@ class Charge
     }
 
     /**
-     * @return User
+     * @return ChargePayement
      */
-    public function getUser()
+    public function getPayments()
     {
-        return $this->user;
+        return $this->payments;
     }
 
     /**
-     * @param User $user
+     * @param User $payment
      */
-    public function setUser($user)
+    public function setPayments($payments)
     {
-        $this->user = $user;
+        $this->payments = $payments;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaid()
+    {
+        return $this->paid;
+    }
+
+    /**
+     * @param mixed $paid
+     */
+    public function setPaid($paid)
+    {
+        $this->paid = $paid;
+    }
+
+    /**
+     * @return Contract
+     */
+    public function getContract()
+    {
+        return $this->contract;
+    }
+
+    /**
+     * @param Contract $contract
+     */
+    public function setContract($contract)
+    {
+        $this->contract = $contract;
     }
 
 

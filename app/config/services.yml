@@ -43,6 +43,10 @@ services:
         class: AppBundle\Service\MessageManager
         arguments: ["@doctrine.orm.entity_manager","AppBundle:Message"]
         public: true
+    AppBundle\Service\Charge:
+            class: AppBundle\Service\ChargeManager
+            arguments: ["@doctrine.orm.entity_manager","AppBundle:Charge"]
+            public: true
     AppBundle\Service\Copro:
         class: AppBundle\Service\CoproService
         arguments: ["@doctrine.orm.entity_manager",""]

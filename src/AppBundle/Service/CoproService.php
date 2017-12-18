@@ -41,11 +41,13 @@ class CoproService
     public function update($elem)
     {
         $this->em->merge($elem);
+        $this->em->flush();
     }
 
     public function remove($elem)
     {
         $this->em->remove($elem);
+        $this->em->flush();
     }
 
 }

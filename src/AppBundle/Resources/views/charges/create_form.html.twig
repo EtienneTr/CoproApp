@@ -1,0 +1,24 @@
+{% block fos_user_content %}
+    {{ form_start(form) }}
+        <div class="login-container" id="">
+            <h1>Création d'une charge</h1>
+            <form>
+
+                <label for="message">titre</label>
+                {{ form_widget(form.title) }}
+                {{ form_errors(form.title) }}
+
+                <label for="message">Date</label>
+                {{ form_widget(form.dueOn) }}
+                {{ form_errors(form.dueOn) }}
+
+                <label for="message">Montant</label>
+                {{ form_widget(form.amount) }}
+                {{ form_errors(form.amount) }}
+
+            </form>
+
+    {{ form_end(form) }}
+        </div>
+
+{% endblock fos_user_content %}
