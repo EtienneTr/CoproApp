@@ -13,8 +13,8 @@ use Doctrine\ORM\EntityManager;
 
 class CoproService
 {
-    private $repo;
-    private $em;
+    protected $repo;
+    protected $em;
 
     public function __construct(EntityManager $entityManager, $entityName)
     {

@@ -34,4 +34,17 @@ class ChargeManager extends CoproService
         $this->create($charge);
     }
 
+    function getToPayFromDate($date)
+    {
+        $queryBuilder = $this->em->createQueryBuilder();
+
+        $req = $queryBuilder->select(array('c'))
+            ->from('AppBundle:Charge', 'c')
+            ->where('c.dueOn >= :date')
+            ->setParameter('date', $date)
+            ->getQuery();
+
+        return $req->getResult();
+    }
+
 }

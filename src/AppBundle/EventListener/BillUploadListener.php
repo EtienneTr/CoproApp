@@ -23,7 +23,7 @@ class BillUploadListener
         $this->uploader = $uploader;
     }
 
-    public function preRemove(LifecycleEventArgs $args)
+    public function postRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
 
