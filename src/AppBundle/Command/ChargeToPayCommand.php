@@ -14,14 +14,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 
 use AppBundle\Service\ChargeManager;
+use Symfony\Component\Templating\EngineInterface;
 
 class ChargeToPayCommand extends Command
 {
     private $manager;
+    private $mailer;
+    private $templating;
 
-    public function __construct( ChargeManager $manager)
+    public function __construct(EngineInterface $templating, ChargeManager $manager, \Swift_Mailer $mailer)
     {
         $this->manager = $manager;
+        $this->mailer = $mailer;
+        $this->templating = $templating;
 
         parent::__construct();
     }
@@ -57,6 +62,8 @@ class ChargeToPayCommand extends Command
         else
         {
             $output->writeln("Liste des ".$length." résultats");
+
+            $this->sendMail($chargesToPay);
         }
 
         foreach ($chargesToPay as $charges)
@@ -65,6 +72,22 @@ class ChargeToPayCommand extends Command
             $output->write(' , montant : '.$charges->getAmount());
             $output->writeln(' , date d\'échéance : '.$charges->getDueOn()->format('d/m/Y'));
         }
+
+    }
+
+    #Create a specific service later
+    private function sendMail($chargesArray)
+    {
+        $template = '@App/charges/mail_admin.html.twig';
+
+        $message = (new \Swift_Message('Liste of charges'))
+        ->setFrom('no-reply@coproapp.com')
+        #real email configured in config-dev
+        ->setTo('admin@exemple.com')
+        ->setBody($this->templating->render($template, array('charges' => $chargesArray)))
+        ->setContentType('text/html');
+
+        $this->mailer->send($message);
 
     }
 }

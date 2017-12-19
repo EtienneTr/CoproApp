@@ -1,0 +1,12 @@
+{% block appbundle_message_content %}
+    <h1>Charges</h1>
+        {% for charge in charges %}
+            <p class="message-container">{{ charge.title }}</p>
+            <ul>
+                <li>{{ charge.creationDate|date('d/m/Y') }}</li>
+                <li>{{ charge.dueOn|date('d/m/Y') }}</li>
+                <li>{{ charge.amount }}</li>
+            </ul>
+        {% endfor %}
+
+{% endblock appbundle_message_content %}
