@@ -7,6 +7,15 @@
     </form>
         {% for message in messages %}
             <p class="message-container">{{ message.body }}</p>
+            {% if is_granted('ROLE_ADMIN') %}
+	            <p class="message-archived">
+	            	{% if message.archived %}
+	            		message archivé
+	            	{% else %}
+	            		<a href="/message/archive/{{ message.id }}" >Archiver</a>
+	            	{% endif %}
+	            </p>
+            {% endif %}
         {% endfor %}
 
 {% endblock appbundle_message_content %}

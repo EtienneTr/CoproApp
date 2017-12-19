@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use AppBundle\Entity\Message;
 use AppBundle\Service\MessageManager;
@@ -36,7 +37,7 @@ class MessageController extends Controller
 
             $message->setBody($messageForm->getBody());
             $message->setSender($userService->getUser());
-
+            $message->setArchived(false);
 
             $manager->postMessage($message);
 
@@ -65,7 +66,18 @@ class MessageController extends Controller
      * @Method({"GET"})
      */
     public function getMessageAction($id){
-
+        
     }
 
+    /**
+     * @Route("/message/archive/{id}", name="Archive message")
+     * @Method({"GET"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function archiveMessageAction(MessageManager $manager, $id){
+
+        $manager->archive($id);
+
+        return $this->redirectToRoute('message_all');
+    }
 }

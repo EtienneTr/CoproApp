@@ -55,6 +55,12 @@ class Message
      */
     private $receiver;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", options={"default" : false})
+     */
+    private $archived;
 
     /**
      * Get id
@@ -170,5 +176,28 @@ class Message
         $this->receiver = $receiver;
     }
 
+    /**
+     * Set archived
+     *
+     * @param Boolean $archived
+     *
+     * @return Message
+     */
+    public function setArchived($archived)
+    {
+        $this->archived = $archived;
+
+        return $this;
+    }
+
+    /**
+     * Get archived
+     *
+     * @return Boolean
+     */
+    public function getArchived()
+    {
+        return $this->archived;
+    }
 }
 

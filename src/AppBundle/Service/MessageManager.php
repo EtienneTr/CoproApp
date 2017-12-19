@@ -34,4 +34,22 @@ class MessageManager extends CoproService
         $this->create($message);
     }
 
+    function archive($id)
+    {
+        $message = $this->findOne($id);
+        if(!$message)
+        {
+            throw new Error("Message id doesn't exist");
+        }
+
+        #already archived
+        if($message->getArchived() === true)
+        {
+            return;
+        }
+
+        $message->setArchived(true);
+        $this->update($message);
+    }
+
 }
