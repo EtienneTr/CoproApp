@@ -40,7 +40,7 @@ class ChargeManager extends CoproService
 
         $req = $queryBuilder->select(array('c'))
             ->from('AppBundle:Charge', 'c')
-            ->where('c.dueOn >= :date')
+            ->where('c.dueOn < :date and c.paid != 1')
             ->setParameter('date', $date)
             ->getQuery();
 

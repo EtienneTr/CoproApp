@@ -34,13 +34,17 @@ class ChargeToPayCommand extends Command
             ->setHelp('This command allows you to create a user...')
 
             //args
-            ->addArgument('dueDate', InputArgument::REQUIRED, 'Due date to check.');
+            ->addArgument('dueDate', InputArgument::OPTIONAL, 'Due date to check.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
-        $dueDate = new \Datetime($input->getArgument('dueDate'));
+        $dueDate = new \Datetime("now");
+        $inputDate = $input->getArgument('dueDate');
+        if($inputDate)
+        {
+            $dueDate = new \Datetime($inputDate);
+        } 
 
         $output->writeln('Recherche d\'échéance à Date : '.$dueDate->format('d/m/Y').'');
 

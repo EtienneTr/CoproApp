@@ -38,6 +38,7 @@ class ChargesController extends Controller
             $billName = $fileUploader->upload($bill);
 
             $charge->setBill($billName);
+            $charge->setPaid(false);
 
             $manager->postCharge($charge);
 
