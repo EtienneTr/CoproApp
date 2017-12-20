@@ -70,19 +70,6 @@ class MessageController extends Controller
     public function getMessageAction($id){
         
     }
-    /**
-     * @Route("/message/delete/{id}", name="Message detail")
-     * @Method({"GET"})
-     */
-    //TODO Change to DELETE when interface is complete
-    public function deleteMessageAction($id, MessageManager $manager){
-        try{
-            $manager->remove($manager->findOne($id));
-        }catch (Exception $e){
-            //TODO LOG
-        }
-        return $this->redirect("/message/all");
-    }
 
     /**
      * @Route("/message/archive/{id}", name="Archive message")

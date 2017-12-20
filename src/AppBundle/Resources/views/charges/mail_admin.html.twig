@@ -1,4 +1,6 @@
-{% block appbundle_message_content %}
+{% extends "@App/base.html.twig" %}
+
+{% block appbundle_content %}
     <h1>Charges</h1>
         {% for charge in charges %}
             <p class="message-container">{{ charge.title }}</p>
@@ -9,4 +11,4 @@
             </ul>
         {% endfor %}
 
-{% endblock appbundle_message_content %}
+{% endblock appbundle_content %}

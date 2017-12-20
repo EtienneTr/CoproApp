@@ -40,7 +40,7 @@
                     <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                     </li>
                     <li class="divider"></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    <li><a href="/login"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -53,13 +53,13 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
                     <li>
-                        <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        <a href="/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="/message/all"><i class="fa fa-bar-chart-o fa-fw"></i> Messages</a>
+                        <a href="/message/all"><i class="fa fa-comments fa-fw"></i> Messages</a>
                     </li>
                     <li>
-                        <a href="/charge/all"><i class="fa fa-table fa-fw"></i> Charges</a>
+                        <a href="/charge/all"><i class="fa fa-money fa-fw"></i> Charges</a>
                     </li>
                 </ul>
             </div>
@@ -72,9 +72,15 @@
 
 </div>
 <!-- /#wrapper -->
+<div id="page-wrapper">
+    <div class="row">
 
-{% block appbundle_message_content %}
-{% endblock appbundle_message_content %}
+
+        {% block appbundle_content %}
+        {% endblock appbundle_content %}
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
 <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 {% block javascripts %}

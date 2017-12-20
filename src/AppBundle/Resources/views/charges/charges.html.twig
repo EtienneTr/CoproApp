@@ -1,18 +1,30 @@
 {% extends "@App/base.html.twig" %}
 
-{% block appbundle_message_content %}
-    <h1>Charges</h1>
-    <form method="get" action="/charge">
-        <button type="submit" class="message-submit">Créer une charge</button>
-    </form>
+{% block appbundle_content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Charges</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="col-lg-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <form method="get" action="/charge">
+                    <button type="submit" class="message-submit">Créer une charge</button>
+                </form>
+            </div>
+            <div class="panel-body">
+                {% for charge in charges %}
+                    <p class="message-container">{{ charge.title }}</p>
+                    <ul>
+                        <li>{{ charge.creationDate|date('d/m/Y') }}</li>
+                        <li>{{ charge.dueOn|date('d/m/Y') }}</li>
+                        <li>{{ charge.amount }}</li>
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
-        {% for charge in charges %}
-            <p class="message-container">{{ charge.title }}</p>
-            <ul>
-                <li>{{ charge.creationDate|date('d/m/Y') }}</li>
-                <li>{{ charge.dueOn|date('d/m/Y') }}</li>
-                <li>{{ charge.amount }}</li>
-            </ul>
-        {% endfor %}
-
-{% endblock appbundle_message_content %}
+{% endblock appbundle_content %}
