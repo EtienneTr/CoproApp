@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,6 +31,8 @@ class MessageController extends Controller
             ->add("save", SubmitType::class, array('label' => "Créer un message" ))
             ->getForm();
 
+        //TODO pass the users to the view for drop down list.
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -56,7 +59,6 @@ class MessageController extends Controller
     public function listMessageAction(MessageManager $manager)
     {
         $messages = $manager->findAll();
-        //var_dump($messages[0]);
         return $this->render('AppBundle:messages:messages.html.twig', array(
             'messages' => $messages
         ));
@@ -67,6 +69,19 @@ class MessageController extends Controller
      */
     public function getMessageAction($id){
         
+    }
+    /**
+     * @Route("/message/delete/{id}", name="Message detail")
+     * @Method({"GET"})
+     */
+    //TODO Change to DELETE when interface is complete
+    public function deleteMessageAction($id, MessageManager $manager){
+        try{
+            $manager->remove($manager->findOne($id));
+        }catch (Exception $e){
+            //TODO LOG
+        }
+        return $this->redirect("/message/all");
     }
 
     /**
