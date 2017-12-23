@@ -24,11 +24,6 @@ class ChargeManager extends CoproService
         return $this->findAll();
     }
 
-    function getMessagesForCurrentUser()
-    {
-
-    }
-
     function postCharge($charge)
     {
         $this->create($charge);

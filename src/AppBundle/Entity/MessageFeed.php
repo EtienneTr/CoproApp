@@ -22,29 +22,81 @@ class MessageFeed
      */
     private $id;
 
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="body", type="text")
+     */
+    private $body;
 
     /**
-     * Get id
+     * @var \DateTime
      *
+     * @ORM\Column(name="sendDate", type="datetime", nullable=true)
+     */
+    private $sendDate;
+
+    /**
+     * @var message
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Message", inversedBy="feeds")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $message;
+
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
      * @return int
      */
     public function getId()
     {
         return $this->id;
     }
+
     /**
-     * @var message
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Message")
-     * @ORM\JoinColumn(nullable=false)
+     * @param int $id
      */
-    private $messages;
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     /**
-     * @var User
-     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
+     * @return string
      */
-    private $user;
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * @param string $body
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getSendDate()
+    {
+        return $this->sendDate;
+    }
+
+    /**
+     * @param \DateTime $sendDate
+     */
+    public function setSendDate($sendDate)
+    {
+        $this->sendDate = $sendDate;
+    }
 
     /**
      * @return User
@@ -64,17 +116,17 @@ class MessageFeed
     /**
      * @return message
      */
-    public function getMessages()
+    public function getMessage()
     {
-        return $this->messages;
+        return $this->message;
     }
 
     /**
      * @param message $messages
      */
-    public function setMessages($messages)
+    public function setMessage($message)
     {
-        $this->messages = $messages;
+        $this->message = $message;
     }
 
 }

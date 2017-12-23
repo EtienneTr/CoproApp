@@ -4,13 +4,15 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Doctrine\ORM\EntityRepository;
 
 use AppBundle\Entity\Message;
 use AppBundle\Service\MessageManager;
@@ -28,6 +30,11 @@ class MessageController extends Controller
 
         $form = $this->createFormBuilder($message)
             ->add("body", TextareaType::class)
+            ->add("receiver", EntityType::class, array(
+                'class' => 'UserBundle:User',
+                'choice_label' => 'username',
+                'required' => false,
+                'multiple' => true))
             ->add("save", SubmitType::class, array('label' => "Créer un message" ))
             ->getForm();
 
@@ -58,21 +65,17 @@ class MessageController extends Controller
      */
     public function listMessageAction(MessageManager $manager)
     {
-        $messages = $manager->findAll();
+        $messages = $manager->getMessagesForCurrentUser();
+
+        $userMessages = $manager->getMessagesFromCurrentUser();
         return $this->render('AppBundle:messages:messages.html.twig', array(
-            'messages' => $messages
+            'messages' => $messages,
+            'userMessages' => $userMessages
         ));
-    }
-    /**
-     * @Route("/message/{id}", name="Message detail")
-     * @Method({"GET"})
-     */
-    public function getMessageAction($id){
-        
     }
 
     /**
-     * @Route("/message/archive/{id}", name="Archive message")
+     * @Route("/message/archive/{id}", name="message_archive")
      * @Method({"GET"})
      * @Security("has_role('ROLE_ADMIN')")
      */

@@ -16,6 +16,7 @@
             </div>
         <div class="panel-body">
 
+        <h3>Messages visibles</h3>
         {% for message in messages %}
             <p class="message-container">{{ message.body }}</p>
             {% if is_granted('ROLE_ADMIN') %}
@@ -27,6 +28,22 @@
                     {% endif %}
                 </p>
             {% endif %}
+            <a href="/message/detail/{{ message.id }}">afficher</a>
+        {% endfor %}
+
+        <h3>Vos messages créés</h3>
+        {% for userMessage in userMessages %}
+            <p class="message-container">{{ userMessage.body }}</p>
+            {% if is_granted('ROLE_ADMIN') %}
+                <p class="message-archived">
+                    {% if userMessage.archived %}
+                        message archivé
+                    {% else %}
+                        <a href="/message/archive/{{ userMessage.id }}">Archiver</a>
+                    {% endif %}
+                </p>
+            {% endif %}
+            <a href="/message/detail/{{ userMessage.id }}">afficher</a>
         {% endfor %}
         </div>
     </div>

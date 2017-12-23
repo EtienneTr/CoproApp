@@ -21,6 +21,11 @@
                 {{ form_widget(form.body) }}
                 {{ form_errors(form.body) }}
 
+                <br/>
+                <label for="receiver">Destinataires :</label><br/>
+                {{ form_widget(form.receiver) }}
+                {{ form_errors(form.receiver) }}
+
             </form>
 
             {{ form_end(form) }}

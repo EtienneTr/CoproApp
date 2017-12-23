@@ -63,6 +63,13 @@ class Message
     private $archived;
 
     /**
+     * @var MessageFeed
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MessageFeed", mappedBy="message")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $feeds;
+
+    /**
      * Get id
      *
      * @return int
@@ -199,5 +206,23 @@ class Message
     {
         return $this->archived;
     }
+
+    /**
+     * @return feeds
+     */
+    public function getFeeds()
+    {
+        return $this->feeds;
+    }
+
+    /**
+     * @param feeds $feeds
+     */
+    public function setFeeds($feeds)
+    {
+        $this->feeds = $feeds;
+    }
+
+
 }
 
