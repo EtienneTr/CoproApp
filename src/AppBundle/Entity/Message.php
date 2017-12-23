@@ -32,14 +32,14 @@ class Message
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="sendDate", type="date", nullable=true)
+     * @ORM\Column(name="sendDate", type="datetime", nullable=true)
      */
     private $sendDate;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="receivedDate", type="date", nullable=true)
+     * @ORM\Column(name="receivedDate", type="datetime", nullable=true)
      */
     private $receivedDate;
     /**

@@ -47,6 +47,7 @@ class MessageController extends Controller
 
             $message->setBody($messageForm->getBody());
             $message->setSender($userService->getUser());
+            $message->setSendDate(new \DateTime("now"));
             $message->setArchived(false);
 
             $manager->postMessage($message);

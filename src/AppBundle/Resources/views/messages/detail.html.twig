@@ -13,6 +13,8 @@
             {% else %}
                 tout le monde
             {% endif %}
+
+            , envoyé le {{ message.sendDate|date('d/m/Y à H:i:s') }}
         </div>
         <!-- /.col-lg-12 -->
     </div>

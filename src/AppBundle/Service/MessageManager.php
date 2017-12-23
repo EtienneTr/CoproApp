@@ -30,7 +30,7 @@ class MessageManager extends CoproService
     {
         $userId = $this->userManager->getUser()->getId();
 
-        $req = $this->em->createQuery('SELECT m, mu FROM AppBundle:Message m LEFT JOIN m.receiver mu WHERE (mu.id = :userId OR mu.id IS NULL) AND m.sender <> :userId')
+        $req = $this->em->createQuery('SELECT m, mu FROM AppBundle:Message m LEFT JOIN m.receiver mu WHERE (mu.id = :userId OR mu.id IS NULL) AND m.sender <> :userId ORDER BY m.sendDate DESC')
             ->setParameter('userId', $userId);
 
         return $req->getResult();

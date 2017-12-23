@@ -18,7 +18,10 @@
 
         <h3>Messages visibles</h3>
         {% for message in messages %}
-            <p class="message-container">{{ message.body }}</p>
+            <br/> {{ message.sendDate|date('d/m/Y à H:i:s') }} par {{ message.sender }}
+            <p class="message-container">{{ message.body }}
+                <br/><a href="/message/detail/{{ message.id }}">afficher</a>
+            </p>
             {% if is_granted('ROLE_ADMIN') %}
                 <p class="message-archived">
                     {% if message.archived %}
@@ -28,21 +31,12 @@
                     {% endif %}
                 </p>
             {% endif %}
-            <a href="/message/detail/{{ message.id }}">afficher</a>
         {% endfor %}
 
         <h3>Vos messages créés</h3>
         {% for userMessage in userMessages %}
             <p class="message-container">{{ userMessage.body }}</p>
-            {% if is_granted('ROLE_ADMIN') %}
-                <p class="message-archived">
-                    {% if userMessage.archived %}
-                        message archivé
-                    {% else %}
-                        <a href="/message/archive/{{ userMessage.id }}">Archiver</a>
-                    {% endif %}
-                </p>
-            {% endif %}
+            {{ userMessage.sendDate|date('d/m/Y à H:i:s') }}
             <a href="/message/detail/{{ userMessage.id }}">afficher</a>
         {% endfor %}
         </div>
