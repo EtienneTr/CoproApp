@@ -3,42 +3,51 @@
 {% block appbundle_content %}
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Messages</h1>
+            <h1 class="page-header">Messages {% if archived %} archivés {% endif %}</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
     <div class="col-lg-9">
         <div class="panel panel-default">
+
             <div class="panel-heading">
-                <form method="get" action="/message">
-                    <button type="submit" class="message-submit">Créer un message</button>
-                </form>
+                {% if not archived %}
+                    <form method="get" action="/message">
+                        <button type="submit" class="message-submit">Créer un message</button>
+                    </form>
+
+                    <a href="/message/archived">Voir les messages archivés</a>
+                {% else %}
+                    <a href="/message/all">Retourner aux messages</a>
+                {% endif %}
+
             </div>
-        <div class="panel-body">
+        
+            <div class="panel-body">
 
-        <h3>Messages visibles</h3>
-        {% for message in messages %}
-            <br/> {{ message.sendDate|date('d/m/Y à H:i:s') }} par {{ message.sender }}
-            <p class="message-container">{{ message.body }}
-                <br/><a href="/message/detail/{{ message.id }}">afficher</a>
-            </p>
-            {% if is_granted('ROLE_ADMIN') %}
-                <p class="message-archived">
-                    {% if message.archived %}
-                        message archivé
-                    {% else %}
-                        <a href="/message/archive/{{ message.id }}">Archiver</a>
+                <h3>Messages visibles</h3>
+                {% for message in messages %}
+                    <br/> {{ message.sendDate|date('d/m/Y à H:i:s') }} par {{ message.sender }}
+                    <p class="message-container">{{ message.body }}
+                        <br/><a href="/message/detail/{{ message.id }}">afficher</a>
+                    </p>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <p class="message-archived">
+                            {% if message.archived %}
+                                message archivé
+                            {% else %}
+                                <a href="/message/archive/{{ message.id }}">Archiver</a>
+                            {% endif %}
+                        </p>
                     {% endif %}
-                </p>
-            {% endif %}
-        {% endfor %}
+                {% endfor %}
 
-        <h3>Vos messages créés</h3>
-        {% for userMessage in userMessages %}
-            <p class="message-container">{{ userMessage.body }}</p>
-            {{ userMessage.sendDate|date('d/m/Y à H:i:s') }}
-            <a href="/message/detail/{{ userMessage.id }}">afficher</a>
-        {% endfor %}
+                <h3>Vos messages créés</h3>
+                {% for userMessage in userMessages %}
+                    <p class="message-container">{{ userMessage.body }}</p>
+                    {{ userMessage.sendDate|date('d/m/Y à H:i:s') }}
+                    <a href="/message/detail/{{ userMessage.id }}">afficher</a>
+                {% endfor %}
+            </div>
         </div>
-    </div>
 {% endblock appbundle_content %}

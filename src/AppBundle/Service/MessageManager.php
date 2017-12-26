@@ -26,20 +26,23 @@ class MessageManager extends CoproService
         return $this->findAll();
     }
 
-    function getMessagesForCurrentUser()
+    function getMessagesForCurrentUser($archived)
     {
         $userId = $this->userManager->getUser()->getId();
 
-        $req = $this->em->createQuery('SELECT m, mu FROM AppBundle:Message m LEFT JOIN m.receiver mu WHERE (mu.id = :userId OR mu.id IS NULL) AND m.sender <> :userId ORDER BY m.sendDate DESC')
-            ->setParameter('userId', $userId);
+        $req = $this->em->createQuery('SELECT m, mu FROM AppBundle:Message m LEFT JOIN m.receiver mu WHERE (mu.id = :userId OR mu.id IS NULL) AND m.sender <> :userId AND m.archived = :archived ORDER BY m.sendDate DESC')
+            ->setParameters(array('userId' => $userId, 'archived' => $archived));
 
         return $req->getResult();
 
     }
 
-    function getMessagesFromCurrentUser()
+    function getMessagesFromCurrentUser($archived)
     {
-        return $this->repo->findBy(array('sender' => $this->userManager->getUser()->getId()));
+        return $this->repo->findBy(array(
+            'sender' => $this->userManager->getUser()->getId(),
+            'archived' => $archived
+        ), array('sendDate' => 'desc'));
     }
 
     function postMessage($message)

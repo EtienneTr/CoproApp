@@ -66,10 +66,28 @@ class MessageController extends Controller
      */
     public function listMessageAction(MessageManager $manager)
     {
-        $messages = $manager->getMessagesForCurrentUser();
+        $messages = $manager->getMessagesForCurrentUser(0);
 
-        $userMessages = $manager->getMessagesFromCurrentUser();
+        $userMessages = $manager->getMessagesFromCurrentUser(false);
         return $this->render('AppBundle:messages:messages.html.twig', array(
+            'archived' => false,
+            'messages' => $messages,
+            'userMessages' => $userMessages
+        ));
+    }
+
+    /**
+     * @Route("/message/archived", name="message_archived")
+     * @Method({"GET"})
+     */
+    public function archivedListMessageAction(MessageManager $manager)
+    {
+        $messages = $manager->getMessagesForCurrentUser(1);
+
+        $userMessages = $manager->getMessagesFromCurrentUser(true);
+
+        return $this->render('AppBundle:messages:messages.html.twig', array(
+            'archived' => true,
             'messages' => $messages,
             'userMessages' => $userMessages
         ));

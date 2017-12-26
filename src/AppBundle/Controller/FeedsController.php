@@ -38,25 +38,32 @@ class FeedsController extends Controller
         $newFeed = new MessageFeed();
         $newFeed->setMessage($message);
 
-        $form = $this->createFormBuilder($newFeed)
-            ->add("body", TextareaType::class)
-            ->add("save", SubmitType::class, array('label' => "Répondre au message" ))
-            ->getForm();
+        $viewForm = null;
+        #if archived, don't create and save form
+        if(!$message->getArchived())
+        {
+            $form = $this->createFormBuilder($newFeed)
+                ->add("body", TextareaType::class)
+                ->add("save", SubmitType::class, array('label' => "Répondre au message" ))
+                ->getForm();
 
-        $form->handleRequest($request);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            $newFeed->setUser($userService->getUser());
-            $newFeed->setSendDate(new \DateTime("now"));
+                $newFeed->setUser($userService->getUser());
+                $newFeed->setSendDate(new \DateTime("now"));
 
-            $feedManager->postMessage($newFeed);
+                $feedManager->postMessage($newFeed);
 
-            return $this->redirect($request->getUri());
+                return $this->redirect($request->getUri());
+            }
+
+            $viewForm = $form->createView();
         }
 
         return $this->render('AppBundle:messages:detail.html.twig', array(
-            'form' => $form->createView(),
+            'form' => $viewForm,
             'message' => $message
         ));
 

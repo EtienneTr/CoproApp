@@ -2,6 +2,7 @@
 
 {% block appbundle_content %}
     <div class="row">
+        {# sender name + list of receivers #}
         <div class="col-lg-12">
             <h1 class="page-header">Message par {{ message.sender }} </h1>
             visible par :
@@ -18,8 +19,11 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
+
+
     <div class="col-lg-9">
 
+        {# Message body + respnses #}
         <div class="panel-body">
 
             <div class="mesage-container">
@@ -39,7 +43,8 @@
             {% endfor %}
         </div>
 
-
+        {# Reponse form if not archived #}
+        {% if form != null %}
         <div class="panel-heading">
             {{ form_start(form) }}
                 <div class="col-lg-9">
@@ -61,5 +66,7 @@
                 </div>
                 </div>
         </div>
+        {% endif %}
+
     </div>
 {% endblock appbundle_content %}
