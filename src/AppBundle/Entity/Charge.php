@@ -55,11 +55,20 @@ class Charge
      * @ORM\JoinColumn(nullable=false)
      */
     private $payments;
+    
+    /**
+     * @var User
+     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $owners;
+
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
+
     private $paid;
 
     /**
@@ -172,6 +181,22 @@ class Charge
     public function setPayments($payments)
     {
         $this->payments = $payments;
+    }
+
+    /**
+     * @return User
+     */
+    public function getOwners()
+    {
+        return $this->owners;
+    }
+
+    /**
+     * @param User $owners
+     */
+    public function setOwners($owners)
+    {
+        $this->owners = $owners;
     }
 
     /**

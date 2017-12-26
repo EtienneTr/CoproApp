@@ -11,22 +11,27 @@
             <form>
 
                 <div class="row">
-                <label for="message">titre</label>
+                <label for="title">titre</label>
                 {{ form_widget(form.title) }}
                 {{ form_errors(form.title) }}
                 </div>
                 <div class="row">
-                <label for="message">Date</label>
+                <label for="dueOn">Date</label>
                 {{ form_widget(form.dueOn) }}
                 {{ form_errors(form.dueOn) }}
                 </div>
                 <div class="row">
-                <label for="message">Montant</label>
+                <label for="amount">Montant</label>
                 {{ form_widget(form.amount) }}
                 {{ form_errors(form.amount) }}
                 </div>
                 <div class="row">
-                <label for="message">Facture</label>
+                <label for="owners">Propriétaires concernés (tous si aucun sélectionné)</label>
+                {{ form_widget(form.owners) }}
+                {{ form_errors(form.owners) }}
+                </div>
+                <div class="row">
+                <label for="bill">Facture</label>
                 {{ form_widget(form.bill) }}
                 {{ form_errors(form.bill) }}
                 </div>

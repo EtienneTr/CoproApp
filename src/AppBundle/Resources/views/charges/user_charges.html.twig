@@ -1,0 +1,28 @@
+{% extends "@App/base.html.twig" %}
+
+{% block appbundle_content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Mes charges à payer</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="col-lg-9">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                {% for charge in charges %}
+                    <p class="message-container">{{ charge.title }}</p>
+                    <ul>
+                        <li>Créée le : {{ charge.creationDate|date('d/m/Y') }}</li>
+                        <li>Avant le : {{ charge.dueOn|date('d/m/Y') }}</li>
+                        <li>Montant Global : {{ charge.amount }}</li>
+                        {% if not charge.payments[0].paid %}<li>Status : à payer</li> {% endif %}
+                        <li><b>Montant : {{ charge.payments[0].amount }}</b></li>
+                    </ul>
+                    <a href="">Effectuer le paiement</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock appbundle_content %}

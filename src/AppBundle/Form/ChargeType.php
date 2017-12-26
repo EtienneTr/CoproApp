@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ChargeType extends AbstractType
 {
@@ -26,7 +27,13 @@ class ChargeType extends AbstractType
             ->add("title", TextType::class)
             ->add("dueOn", DateType::class)
             ->add("amount", MoneyType::class)
-            ->add('bill', FileType::class, array('label' => 'Facture (PDF file)'))
+            ->add("owners", EntityType::class, array(
+                'label' => 'Propriétaires',
+                'class' => 'UserBundle:User',
+                'choice_label' => 'username',
+                'required' => false,
+                'multiple' => true))
+            ->add('bill', FileType::class, array('label' => 'Facture (PDF file)', 'required' => false))
             ->add("save", SubmitType::class, array('label' => "Créer une charge" ))
             ->getForm();
     }

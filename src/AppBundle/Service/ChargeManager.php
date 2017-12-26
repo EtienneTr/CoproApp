@@ -8,14 +8,21 @@
 
 namespace AppBundle\Service;
 
-
 use Doctrine\ORM\EntityManager;
+use UserBundle\Service\UserService;
+use AppBundle\Service\ChargePayementManager;
 
 class ChargeManager extends CoproService
 {
 
-    public function __construct(EntityManager $entityManager)
+    private $userManager;
+    private $payementManager;
+
+    public function __construct(EntityManager $entityManager, UserService $userManager, ChargePayementManager $payementManager)
     {
+        $this->userManager = $userManager;
+        $this->payementManager = $payementManager;
+
         parent::__construct($entityManager,"AppBundle:Charge");
     }
 
@@ -26,7 +33,9 @@ class ChargeManager extends CoproService
 
     function postCharge($charge)
     {
+        $this->checkChargeOwners($charge);
         $this->create($charge);
+        $this->payementManager->createPayements($charge);
     }
 
     function getToPayFromDate($date)
@@ -42,4 +51,28 @@ class ChargeManager extends CoproService
         return $req->getResult();
     }
 
+    function checkChargeOwners($charge)
+    {
+        $owners = $charge->getOwners();
+
+        if(sizeof($owners) <= 0)
+        {
+            $users = $this->userManager->getAllUsers();
+
+            foreach($users as $user)
+            {
+                $owners->add($user);
+            }
+        }
+    }
+
+    function getUserChargesToPay()
+    {
+        $userId = $this->userManager->getUser()->getId();
+
+        $req = $this->em->createQuery('SELECT c, cp FROM AppBundle:Charge c LEFT JOIN c.payments cp WHERE cp.charge = c.id AND cp.owner = :userId AND cp.paid = 0 ORDER BY c.dueOn ASC')
+            ->setParameters(array('userId' => $userId));
+
+        return $req->getResult();
+    }
 }

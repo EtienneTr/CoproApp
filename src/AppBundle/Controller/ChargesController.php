@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use AppBundle\Entity\Charge;
 use AppBundle\Service\ChargeManager;
@@ -35,31 +36,21 @@ class ChargesController extends Controller
             $charge->setCreationDate(new \DateTime('now'));
 
             $bill = $charge->getBill();
-            $billName = $fileUploader->upload($bill);
-
-            $charge->setBill($billName);
+            
+            if($bill)
+            {
+                $billName = $fileUploader->upload($bill);
+                $charge->setBill($billName);
+            }
             $charge->setPaid(false);
 
             $manager->postCharge($charge);
 
-            return $this->redirectToRoute('charge_all');
+            return $this->redirectToRoute('charge_user');
         }
 
         return $this->render('AppBundle:charges:create_form.html.twig', array(
             'form' => $form->createView()
-        ));
-    }
-
-    /**
-     * @Route("/charge/all", name="charge_all")
-     * @Method({"GET"})
-     */
-    public function listChargeAction(ChargeManager $manager)
-    {
-        $charges = $manager->findAll();
-        //var_dump($messages[0]);
-        return $this->render('AppBundle:charges:charges.html.twig', array(
-            'charges' => $charges
         ));
     }
 
@@ -72,7 +63,33 @@ class ChargesController extends Controller
         $charge = $manager->findOne($id);
         $manager->remove($charge);
 
-        return $this->redirectToRoute('charge_all');
+        return $this->redirectToRoute('charge_user');
+    }
+
+
+    /**
+     * @Route("/charge/all", name="charge_user")
+     * @Method({"GET"})
+     */
+    public function userChargeAction(ChargeManager $manager)
+    {
+        $charges = $manager->getUserChargesToPay();
+        return $this->render('AppBundle:charges:user_charges.html.twig', array(
+            'charges' => $charges
+        ));
+    }
+
+    /**
+     * @Route("/admin/charge/all", name="admin_charge_all")
+     * @Method({"GET"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function listChargeAction(ChargeManager $manager)
+    {
+        $charges = $manager->findAll();
+        return $this->render('AppBundle:charges:charges.html.twig', array(
+            'charges' => $charges
+        ));
     }
 
 }
