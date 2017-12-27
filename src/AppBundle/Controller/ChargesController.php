@@ -57,6 +57,7 @@ class ChargesController extends Controller
     /**
      * @Route("/charge/delete/{id}", name="charge_delete_id")
      * @Method({"GET"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteChargeAction(ChargeManager $manager, $id)
     {
@@ -76,6 +77,24 @@ class ChargesController extends Controller
         $charges = $manager->getUserChargesToPay();
         return $this->render('AppBundle:charges:user_charges.html.twig', array(
             'charges' => $charges
+        ));
+    }
+
+    /**
+     * @Route("/charge/{id}", name="charge_detail")
+     * @Method({"GET"})
+     */
+    public function detailChargeAction(ChargeManager $manager, $id)
+    {
+        $charge = $manager->getChargeById($id);
+
+        if(!$charge)
+        {
+            throw $this->createNotFoundException('The charge does not exist');
+        }
+
+        return $this->render('AppBundle:charges:detail.html.twig', array(
+            'charge' => $charge
         ));
     }
 

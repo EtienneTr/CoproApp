@@ -20,6 +20,7 @@
                         <li><b>Montant : {{ charge.payments[0].amount }}</b></li>
                     </ul>
                     <a href="">Effectuer le paiement</a>
+                    <a href="/charge/{{ charge.id }}">Détail</a>
                 {% endfor %}
             </div>
         </div>

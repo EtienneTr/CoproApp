@@ -31,6 +31,11 @@ class ChargeManager extends CoproService
         return $this->findAll();
     }
 
+    function getChargeById($id)
+    {
+        return $this->findOne($id);
+    }
+
     function postCharge($charge)
     {
         $this->checkChargeOwners($charge);

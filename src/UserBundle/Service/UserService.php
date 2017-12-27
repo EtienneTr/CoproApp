@@ -14,15 +14,18 @@ use UserBundle\Entity\User;
 
 class UserService
 {
-    private $currentUser;
+    private $currentUser = null;
     private $token;
     private $em;
     private $repo;
 
     public function __construct (EntityManager $entityManager, TokenStorageInterface $tokenStorage)
     {
-        $this->token = $tokenStorage;
-        $this->currentUser = $tokenStorage->getToken()->getUser();
+        $this->token = $tokenStorage->getToken();
+        if($this->token)
+        {
+            $this->currentUser = $this->token->getUser();
+        }
         #repo
         $this->em = $entityManager;
         $this->repo = $this->em->getRepository("UserBundle:User");

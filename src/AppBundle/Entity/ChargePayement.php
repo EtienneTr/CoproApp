@@ -44,7 +44,7 @@ class ChargePayement
     private $amount;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Charge", inversedBy="payements")
+     * @ORM\ManyToOne(targetEntity="Charge", inversedBy="payments")
      * @ORM\JoinColumn(name="Charge_id", referencedColumnName="id")
      */
 
