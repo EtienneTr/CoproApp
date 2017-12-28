@@ -44,19 +44,24 @@ services:
         arguments: ["@doctrine.orm.entity_manager","AppBundle:Message"]
         public: true
     AppBundle\Service\Charge:
-            class: AppBundle\Service\ChargeManager
-            arguments: ["@doctrine.orm.entity_manager","AppBundle:Charge"]
-            public: true
+        class: AppBundle\Service\ChargeManager
+        arguments: ["@doctrine.orm.entity_manager","AppBundle:Charge"]
+        public: true
+    AppBundle\Service\ChargePayementManager:
+        class: AppBundle\Service\ChargePayementManager
+        arguments: ["@doctrine.orm.entity_manager"]
+        public: true
     AppBundle\Service\Copro:
         class: AppBundle\Service\CoproService
         arguments: ["@doctrine.orm.entity_manager",""]
         public: true
     AppBundle\Service\FileUploader:
-        arguments:
+        class: AppBundle\Service\FileUploader
+        arguments: 
             $uploadDir: '%bill_directory%'
     UserBundle\Service\User:
         class: UserBundle\Service\UserService
-        arguments: ["@security.token_storage"]
+        arguments: ["@doctrine.orm.entity_manager", "@security.token_storage"]
         public: true
 
     AppBundle\EventListener\BillUploadListener:

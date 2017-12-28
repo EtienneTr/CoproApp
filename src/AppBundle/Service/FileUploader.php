@@ -9,6 +9,7 @@
 namespace AppBundle\Service;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use AppBundle\Entity\File;
 
 class FileUploader
 {
@@ -19,9 +20,23 @@ class FileUploader
         $this->uploadDir = $uploadDir;
     }
 
+    public function uploadFile($file)
+    {   
+        #upload
+        $pathName = $this->upload($file);
+        #save
+        $uplFile = new File();
+        $uplFile->setExtension($file->getClientOriginalExtension());
+        $uplFile->setPath($this->getUploadDir());
+        $uplFile->setFile($pathName);
+        $uplFile->setName($file->getClientOriginalName());
+
+        return $uplFile;
+    }
+
     public function upload(UploadedFile $file)
     {
-        $fileName = md5(uniqid()).'.'.$file->guessExtension();
+        $fileName = md5(uniqid()).'.'.$file->getClientOriginalExtension();
 
         $file->move($this->getUploadDir(), $fileName);
 
@@ -33,9 +48,9 @@ class FileUploader
         return $this->uploadDir;
     }
 
-    public function remove($fileName)
+    public function remove($file)
     {
-        $fullPath = $this->getUploadDir()."/".$fileName;
+        $fullPath = $file->getPath()."/".$file->getFile();
         if(file_exists($fullPath)) unlink($fullPath);
     }
 }

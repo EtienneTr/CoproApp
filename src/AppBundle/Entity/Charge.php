@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Date;
 use UserBundle\Entity\User;
 use AppBundle\Entity\Contract;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Charge
@@ -51,8 +50,8 @@ class Charge
     private $creationDate;
     /**
      * @var ChargePayement
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ChargePayement", mappedBy="charge")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ChargePayement", mappedBy="charge", cascade={"remove"})
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $payments;
     
@@ -79,9 +78,8 @@ class Charge
     private $contract;
 
     /**
-     * @ORM\Column(type="string",  nullable=true)
-     *
-     * @Assert\File(mimeTypes={ "application/pdf" })
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\File",cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $bill;
 

@@ -15,8 +15,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use AppBundle\Entity\Charge;
-use AppBundle\Service\ChargeManager;
 use AppBundle\Service\FileUploader;
+use AppBundle\Service\ChargeManager;
 use AppBundle\Form\ChargeType;
 
 class ChargesController extends Controller
@@ -35,11 +35,11 @@ class ChargesController extends Controller
 
             $charge->setCreationDate(new \DateTime('now'));
 
-            $bill = $charge->getBill();
+            $bill = $form->get('bill')->getData();//$charge->getBill();
             
             if($bill)
             {
-                $billName = $fileUploader->upload($bill);
+                $billName = $fileUploader->uploadFile($bill);
                 $charge->setBill($billName);
             }
             $charge->setPaid(false);
