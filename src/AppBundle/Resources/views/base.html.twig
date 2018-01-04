@@ -82,12 +82,14 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
-<script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
 {% block javascripts %}
-    {% javascripts 'bundles/app/js/*' %}
-        <script src="{{ asset_url }}"></script>
+    {% javascripts 'bundles/app/js/external/*' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% javascripts 'bundles/app/js/main/*' %}
+    <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
 
