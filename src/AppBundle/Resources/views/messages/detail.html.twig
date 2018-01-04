@@ -5,67 +5,67 @@
         {# sender name + list of receivers #}
         <div class="col-lg-12">
             <h1 class="page-header">Message par {{ message.sender }} </h1>
-            visible par :
+            <div class="alert alert-success">
+                Visible par :
 
-            {% if message.receiver|length > 0 %}
-                {% for user in message.receiver %}
-                    <a href="" >{{ user }}</a>,
-                {% endfor %}
-            {% else %}
-                tout le monde
-            {% endif %}
+                {% if message.receiver|length > 0 %}
+                    {% for user in message.receiver %}
+                        <a href="">{{ user }}</a>,
+                    {% endfor %}
+                {% else %}
+                    tout le monde
+                {% endif %}
 
-            , envoyé le {{ message.sendDate|date('d/m/Y à H:i:s') }}
+                , envoyé le {{ message.sendDate|date('d/m/Y à H:i:s') }}
+            </div>
         </div>
         <!-- /.col-lg-12 -->
     </div>
 
 
-    <div class="col-lg-9">
+    <div class="col-lg-12">
 
         {# Message body + respnses #}
         <div class="panel-body">
 
-            <div class="mesage-container">
-                {{ message.body }}
-                   <br/><br/>
-
+            <div>
+                <p class="coproMessage lead">
+                    {{ message.body }}
+                </p>
             </div>
 
 
             {% for feeds in message.feeds %}
-                <div class="panel-body">
-                    <p class="message-container">{{ feeds.body }}</p>
-
-                    par {{ feeds.user }} , {{ feeds.sendDate|date('d/m/Y à H:i:s') }}
-                    <br/>
+                <div class="messageResponse coprocard">
+                    <p class="coproMessage"> {{ feeds.body }}</p>
+                    <p class="dateinfos">{{ feeds.user }} , {{ feeds.sendDate|date('d/m/Y à H:i:s') }}</p>
                 </div>
             {% endfor %}
         </div>
 
         {# Reponse form if not archived #}
         {% if form != null %}
-        <div class="panel-heading">
             {{ form_start(form) }}
-                <div class="col-lg-9">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+            <div class="row">
+                <div class="container">
+                    <div class="col-lg-6 col-lg-offset-2 col-md-6 col-md-offset-2 col-xs-6 col-xs-offset-2">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Répondre au message
+                            </div>
+                            <div class="panel-body">
+                                <form>
+                                    {{ form_widget(form.body) }}
+                                    {{ form_errors(form.body) }}
+                                    <br/>
+                                </form>
 
-                    </div>
-                    <div class="panel-body">
-                        <form>
-
-                            <label for="message">Répondre au message :</label><br/>
-                            {{ form_widget(form.body) }}
-                            {{ form_errors(form.body) }}
-
-                        </form>
-
-                        {{ form_end(form) }}
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                </div>
-        </div>
+            </div>
         {% endif %}
 
     </div>

@@ -9,28 +9,31 @@
     </div>
 
     {{ form_start(form) }}
-    <div class="col-lg-9">
-    <div class="panel panel-default">
-        <div class="panel-heading">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
 
+            <div class="panel-body">
+                <form>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                            <label for="message" class="control-label">Message :</label><br/>
+                            {{ form_widget(form.body) }}
+                            {{ form_errors(form.body) }}
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                            <label for="receiver" class="control-label">Destinataires :</label><br/>
+                            {{ form_widget(form.receiver) }}
+                            {{ form_errors(form.receiver) }}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                {{ form_end(form) }}
+            </div>
         </div>
-        <div class="panel-body">
-            <form>
-
-                <label for="message">Message :</label><br/>
-                {{ form_widget(form.body) }}
-                {{ form_errors(form.body) }}
-
-                <br/>
-                <label for="receiver">Destinataires :</label><br/>
-                {{ form_widget(form.receiver) }}
-                {{ form_errors(form.receiver) }}
-
-            </form>
-
-            {{ form_end(form) }}
-        </div>
-    </div>
     </div>
 
 

@@ -43,8 +43,13 @@ class FeedsController extends Controller
         if(!$message->getArchived())
         {
             $form = $this->createFormBuilder($newFeed)
-                ->add("body", TextareaType::class)
-                ->add("save", SubmitType::class, array('label' => "Répondre au message" ))
+                ->add("body", TextareaType::class, array(
+                    'attr' => ['class' => 'form-control']
+                ))
+                ->add("save", SubmitType::class, array(
+                    'label' => "Répondre au message",
+                    'attr' => ['class' => 'btn btn-success'],
+                ))
                 ->getForm();
 
             $form->handleRequest($request);

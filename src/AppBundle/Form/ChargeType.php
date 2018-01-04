@@ -10,6 +10,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Charge;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -24,17 +25,30 @@ class ChargeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("title", TextType::class)
-            ->add("dueOn", DateType::class)
-            ->add("amount", MoneyType::class)
+            ->add("title", TextType::class, array(
+                'attr' => ['class' => 'form-control'],
+            ))
+            ->add("dueOn", DateType::class, array(
+                'attr' => ['class' => 'form-control'],
+                'widget' => 'single_text',
+                'html5' => true))
+            ->add("amount", NumberType::class, array(
+                'attr' => ['class' => 'form-control']
+            ))
             ->add("owners", EntityType::class, array(
+                'attr' => ['class' => 'form-control selectpicker'],
                 'label' => 'Propriétaires',
                 'class' => 'UserBundle:User',
                 'choice_label' => 'username',
                 'required' => false,
                 'multiple' => true))
-            ->add('bill', FileType::class, array('label' => 'Facture (PDF file)', 'required' => false))
-            ->add("save", SubmitType::class, array('label' => "Créer une charge" ))
+            ->add('bill', FileType::class, array(
+                'label' => 'Facture (PDF file)', 'required' => false
+            ))
+            ->add("save", SubmitType::class, array(
+                'attr' => ['class' => 'btn btn-success'],
+                'label' => "Créer une charge"
+            ))
             ->getForm();
     }
 

@@ -4,50 +4,88 @@
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Messages {% if archived %} archivés {% endif %}</h1>
+            <div class="row">
+
+                {% if not archived %}
+                    <div class="col-md-2">
+                        <form method="get" action="/message">
+                            <button type="submit" class="message-submit btn btn-success">Créer un message</button>
+                        </form>
+                    </div>
+                    <div class="col-md-2">
+                        <form method="get" action="/message/archived">
+                            <button type="submit" class="message-submit btn btn-default">Voir les messages archivés
+                            </button>
+                        </form>
+                    </div>
+                {% else %}
+                    <div class="col-md-2">
+                        <form method="get" action="/message/all">
+                            <button type="submit" class="message-submit btn btn-default">Retourner aux messages</button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
         </div>
         <!-- /.col-lg-12 -->
     </div>
-    <div class="col-lg-9">
-        <div class="panel panel-default">
+    <br/>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
 
-            <div class="panel-heading">
-                {% if not archived %}
-                    <form method="get" action="/message">
-                        <button type="submit" class="message-submit">Créer un message</button>
-                    </form>
+                <div class="panel-heading">
+                    Messages visibles
+                </div>
 
-                    <a href="/message/archived">Voir les messages archivés</a>
-                {% else %}
-                    <a href="/message/all">Retourner aux messages</a>
-                {% endif %}
+                <div class="panel-body">
+                    {% for message in messages %}
+                        <a href="/message/detail/{{ message.id }}" class="coprocardAboveLink">
+                            <div class="coprocard corprocard-a">
+                                <p class="coproMessage lead">
+                                    {{ message.body }}
+                                </p>
+                                {% if is_granted('ROLE_ADMIN') %}
 
-            </div>
-        
-            <div class="panel-body">
+                                    {% if not message.archived %}
 
-                <h3>Messages visibles</h3>
-                {% for message in messages %}
-                    <br/> {{ message.sendDate|date('d/m/Y à H:i:s') }} par {{ message.sender }}
-                    <p class="message-container">{{ message.body }}
-                        <br/><a href="/message/detail/{{ message.id }}">afficher</a>
-                    </p>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <p class="message-archived">
-                            {% if message.archived %}
-                                message archivé
-                            {% else %}
-                                <a href="/message/archive/{{ message.id }}">Archiver</a>
-                            {% endif %}
-                        </p>
-                    {% endif %}
-                {% endfor %}
+                                        <form method="get" action="/message/archive/{{ message.id }}">
+                                            <button type="submit" class="btn btn-warning">Archiver</button>
+                                        </form>
+                                    {% endif %}
 
-                <h3>Vos messages créés</h3>
-                {% for userMessage in userMessages %}
-                    <p class="message-container">{{ userMessage.body }}</p>
-                    {{ userMessage.sendDate|date('d/m/Y à H:i:s') }}
-                    <a href="/message/detail/{{ userMessage.id }}">afficher</a>
-                {% endfor %}
+                                {% endif %}
+                                <p class="dateinfos">{{ message.sendDate|date('d/m/Y à H:i:s') }}
+                                    par {{ message.sender }}</p>
+                            </div>
+                        </a>
+
+                    {% endfor %}
+                </div>
             </div>
         </div>
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    Vos messages créés
+                </div>
+
+                <div class="panel-body">
+                    {% for userMessage in userMessages %}
+                        <a href="/message/detail/{{ userMessage.id }}" class="coprocardAboveLink">
+                            <div class="coprocard corprocard-a">
+                                <p class="coproMessage lead">{{ userMessage.body }}</p>
+                                <p class="dateinfos">{{ userMessage.sendDate|date('d/m/Y à H:i:s') }}</p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+
 {% endblock appbundle_content %}

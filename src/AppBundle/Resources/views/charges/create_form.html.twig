@@ -2,42 +2,60 @@
 
 {% block appbundle_content %}
     {{ form_start(form) }}
-<div class="col-lg-9">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h1>Création d'une charge</h1>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header"> Création d'une charge </h1>
         </div>
-        <div class="panel-body">
-            <form>
+        <!-- /.col-lg-12 -->
+        <div class="col-lg-12">
+            <div class="panel panel-default">
 
-                <div class="row">
-                <label for="title">titre</label>
-                {{ form_widget(form.title) }}
-                {{ form_errors(form.title) }}
-                </div>
-                <div class="row">
-                <label for="dueOn">Date</label>
-                {{ form_widget(form.dueOn) }}
-                {{ form_errors(form.dueOn) }}
-                </div>
-                <div class="row">
-                <label for="amount">Montant</label>
-                {{ form_widget(form.amount) }}
-                {{ form_errors(form.amount) }}
-                </div>
-                <div class="row">
-                <label for="owners">Propriétaires concernés (tous si aucun sélectionné)</label>
-                {{ form_widget(form.owners) }}
-                {{ form_errors(form.owners) }}
-                </div>
-                <div class="row">
-                <label for="bill">Facture</label>
-                {{ form_widget(form.bill) }}
-                {{ form_errors(form.bill) }}
-                </div>
-            </form>
 
-    {{ form_end(form) }}
+                <div class="panel-body">
+                    <div class="row">
+                        <form role="form">
+                            <div class="col-lg-6">
+
+                                <div class="form-group">
+                                    <label for="title" class="control-label">Titre</label>
+                                    {{ form_widget(form.title) }}
+                                    {{ form_errors(form.title) }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="dueOn" class="control-label">Date</label>
+                                    {{ form_widget(form.dueOn) }}
+                                    {{ form_errors(form.dueOn) }}
+                                </div>
+                                <label for="amount" class="control-label">Montant</label>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon"><i class="fa fa-eur"></i></span>
+                                    {{ form_widget(form.amount) }}
+                                    {{ form_errors(form.amount) }}
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="owners" class="control-label">Propriétaires concernés (tous si aucun
+                                        sélectionné)</label>
+                                    {{ form_widget(form.owners) }}
+                                    {{ form_errors(form.owners) }}
+                                </div>
+                                <div class="form-group input-group">
+                                    <label for="bill" class="control-label">Facture</label>
+                                    {{ form_widget(form.bill) }}
+                                    {{ form_errors(form.bill) }}
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                {{ form_widget(form.save) }}
+                            </div>
+                        </form>
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 
 {% endblock appbundle_content %}
