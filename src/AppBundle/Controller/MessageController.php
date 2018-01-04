@@ -29,13 +29,19 @@ class MessageController extends Controller
         $message = new Message();
 
         $form = $this->createFormBuilder($message)
-            ->add("body", TextareaType::class)
+            ->add("body", TextareaType::class, array(
+                'attr' => ['class' => 'form-control']
+            ))
             ->add("receiver", EntityType::class, array(
+                'attr' => ['class' => 'form-control selectpicker'],
                 'class' => 'UserBundle:User',
                 'choice_label' => 'username',
                 'required' => false,
                 'multiple' => true))
-            ->add("save", SubmitType::class, array('label' => "Créer un message" ))
+            ->add("save", SubmitType::class, array(
+                'attr' => ['class' => 'btn btn-success'],
+                'label' => "Créer un message"
+            ))
             ->getForm();
 
         //TODO pass the users to the view for drop down list.

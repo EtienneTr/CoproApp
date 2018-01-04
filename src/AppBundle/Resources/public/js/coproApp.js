@@ -1,0 +1,1 @@
+$('.selectpicker').parent().width('100%');
