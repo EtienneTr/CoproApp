@@ -38,7 +38,7 @@ class Project
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255, nullable=true)
      */
     private $status;
 
@@ -57,17 +57,18 @@ class Project
     private $closingDate;
 
     /**
-     * @var thread
+     * @var ProjectFeed
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProjectFeed", mappedBy="project")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $thread;
 
     /**
-     * @var string
-     *  TODO
-     * @ORM\Column(name="survey", type="string", length=255)
+     * @var Survey
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Survey", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $survey;
 

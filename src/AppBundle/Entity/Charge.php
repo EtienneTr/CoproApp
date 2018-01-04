@@ -78,7 +78,7 @@ class Charge
     private $contract;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\File",cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\File", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $bill;

@@ -59,6 +59,11 @@ services:
         class: AppBundle\Service\FileUploader
         arguments: 
             $uploadDir: '%bill_directory%'
+    AppBundle\Service\Project:
+        class: AppBundle\Service\ProjectManager
+        arguments: ["@doctrine.orm.entity_manager"]
+        public: true
+
     UserBundle\Service\User:
         class: UserBundle\Service\UserService
         arguments: ["@doctrine.orm.entity_manager", "@security.token_storage"]
