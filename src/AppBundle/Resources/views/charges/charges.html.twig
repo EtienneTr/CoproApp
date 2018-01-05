@@ -10,9 +10,7 @@
     <div class="col-lg-9">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <form method="get" action="/charge">
-                    <button type="submit" class="message-submit">Créer une charge</button>
-                </form>
+                <a href="{{ path('charges_create') }}" class="message-submit btn btn-success">Créer une charge</a>
             </div>
             <div class="panel-body">
                 {% for charge in charges %}

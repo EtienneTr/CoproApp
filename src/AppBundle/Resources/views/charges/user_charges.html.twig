@@ -62,7 +62,7 @@
                             <a href="" class="btn btn-danger">Effectuer le paiement</a>
                         </div>
                         <div class="col-md-6">
-                            <a href="/charge/{{ charge.id }}" class="btn btn-info">Détail</a>
+                            <a href="{{ path('charge_detail', {'id': charge.id}) }}" class="btn btn-info">Détail</a>
                         </div>
                     </div>
                 </div>

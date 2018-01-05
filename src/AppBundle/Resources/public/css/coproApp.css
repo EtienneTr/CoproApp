@@ -32,3 +32,10 @@ a.coprocardAboveLink {
 .messageResponse{
     margin-left: 40px;
 }
+.survey-container{
+    display: flex;
+
+}
+.coprocard-survey{
+    width: 50%;
+}
