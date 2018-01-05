@@ -39,7 +39,7 @@ class FeedsController extends Controller
         #if archived, don't create and save form
         if(!$message->getArchived())
         {
-            $form = $this->createForm(MessageFeedType::class, $message);
+            $form = $this->createForm(MessageFeedType::class, $newFeed);
 
             $form->handleRequest($request);
 
