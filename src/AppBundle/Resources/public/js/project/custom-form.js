@@ -25,6 +25,9 @@ jQuery(document).ready(function() {
         addOptions($collectionHolder, nbr);
         nbr++;
     });
+
+    //files form
+    addFiles();
 });
 
 function addTagForm($collectionHolder, $newLinkLi) {
@@ -78,5 +81,46 @@ function addOptions($surveyCollection, $nbr) {
 
     });
 
+}
 
+var fileIndex = 0;
+function addFiles(){
+    var $addFileBtn = $('<a href="#" class="add_file_link">Ajouter un fichier</a>');
+    var $newBtn = $('<li></li>').append($addFileBtn);
+
+    var $collectionFile = $('ul.attachments');
+    $collectionFile.append($newBtn);
+
+    $addFileBtn.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        addNewFileForm($collectionFile, $newBtn);
+        fileIndex++;
+
+    });
+
+}
+
+function addNewFileForm($collectionFile, $newBtn){
+
+    var prototype = $collectionFile.data('prototype');
+
+    var newForm = prototype.replace(/__name__/g, fileIndex);
+
+    //display
+    var $newFormLi = $('<li></li>').append(newForm);
+
+    $newFormLi.append('<a href="#" class="remove-file">x</a>');
+
+    $newBtn.before($newFormLi);
+
+
+    $('.remove-file').click(function(e) {
+        e.preventDefault();
+
+        $(this).parent().remove();
+        nbr--;
+        return false;
+    });
 }

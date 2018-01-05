@@ -38,6 +38,11 @@ class ProjectType extends AbstractType
                 'entry_options' => array('label' => false),
                 'allow_add' => true,
             ))
+            ->add('attachment',CollectionType::class, array(
+                'entry_type' => MultiFileType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
+            ))
             ->add("save", SubmitType::class, array('label' => "Créer un projet" ))
             ->getForm();
     }

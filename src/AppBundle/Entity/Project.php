@@ -75,7 +75,7 @@ class Project
     /**
      * @var string
      *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\File")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\File", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $attachment;

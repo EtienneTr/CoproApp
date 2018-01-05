@@ -12,9 +12,12 @@ use Doctrine\ORM\EntityManager;
 
 class ProjectManager extends CoproService
 {
+    private $fileUploader;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, FileUploader $fileUploader)
     {
+        $this->fileUploader = $fileUploader;
+
         parent::__construct($entityManager,"AppBundle:Project");
     }
 
@@ -31,6 +34,15 @@ class ProjectManager extends CoproService
             }
         }
 
+        $files = $project->getAttachment();
+        $newFiles = [];
+        foreach ($files as $file)
+        {
+            $file = array_shift($file);
+            $fileName = $this->fileUploader->uploadFile($file);
+            array_push($newFiles, $fileName);
+        }
+        $project->setAttachment($newFiles);
         $this->create($project);
     }
 

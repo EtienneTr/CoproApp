@@ -34,9 +34,14 @@
 
                     <br/>
 
-                    <label for="receiver">Survey :</label><br/>
+                    <label for="survey">Survey :</label><br/>
 
                     <ul class="survey" data-prototype="{{ form_widget(form.survey.vars.prototype)|e('html_attr') }}">
+
+                    </ul>
+
+                    <label for="attachment">Pièces jointes :</label><br/>
+                    <ul class="attachments" data-prototype="{{ form_widget(form.attachment.vars.prototype)|e('html_attr') }}">
 
                     </ul>
 
