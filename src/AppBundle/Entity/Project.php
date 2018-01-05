@@ -59,7 +59,7 @@ class Project
     /**
      * @var ProjectFeed
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProjectFeed", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProjectFeed", mappedBy="project", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $thread;

@@ -43,7 +43,49 @@
 
             </div>
 
-            {# ADD : survey.thread for the feeds #}
+
+            <h2>Pièces jointes</h2>
+            {% for file in project.attachment %}
+                <li>{{ file.name }}. <a href="{{ path('download_file', { 'id': file.id}) }}" >Télécharger</a></li>
+            {% endfor %}
+            <div>
+                {{ form_start(fileForm) }}
+                <label for="file">Ajouter une pièce jointe :</label><br/>
+                {{ form_widget(fileForm.file) }}
+                {{ form_end(fileForm) }}
+            </div>
+
+            <h2>Messages :</h2>
+            {% for feeds in project.thread %}
+                <div class="messageResponse coprocard">
+                    <p class="coproMessage"> {{ feeds.body }}</p>
+                    <p class="dateinfos">{{ feeds.user }} , {{ feeds.sendDate|date('d/m/Y à H:i:s') }}</p>
+                </div>
+            {% endfor %}
+
+            {% if threadForm != null %}
+                {{ form_start(threadForm) }}
+                <div class="row">
+                    <div class="container">
+                        <div class="col-lg-6 col-lg-offset-2 col-md-6 col-md-offset-2 col-xs-6 col-xs-offset-2">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Répondre au projet
+                                </div>
+                                <div class="panel-body">
+                                    <form>
+                                        {{ form_widget(threadForm.body) }}
+                                        {{ form_errors(threadForm.body) }}
+                                        <br/>
+                                    </form>
+
+                                    {{ form_end(threadForm) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
 
         </div>
 

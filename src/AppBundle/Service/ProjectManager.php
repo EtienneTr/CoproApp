@@ -38,7 +38,10 @@ class ProjectManager extends CoproService
         $newFiles = [];
         foreach ($files as $file)
         {
-            $file = array_shift($file);
+            #multi-files case
+            if(is_array($file)) {
+                $file = array_shift($file);
+            }
             $fileName = $this->fileUploader->uploadFile($file);
             array_push($newFiles, $fileName);
         }

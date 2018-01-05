@@ -8,7 +8,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\File;
+use AppBundle\Entity\ProjectFeed;
+use AppBundle\Form\MultiFileType;
+use AppBundle\Form\ProjectFeedType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -62,9 +67,9 @@ class ProjectController extends Controller
 
     /**
      * @Route("/project/detail/{id}", name="project_detail")
-     * @Method({"GET"})
+     * @Method({"GET", "POST"})
      */
-    public function getProjectDetailAction(Request $request, ProjectManager $projectManager, $id)
+    public function getProjectDetailAction(Request $request, FileUploader $fileUploader, ProjectManager $projectManager, UserService $userService, $id)
     {
         $project = $projectManager->findOne($id);
 
@@ -73,8 +78,43 @@ class ProjectController extends Controller
             throw $this->createNotFoundException('The project does not exist');
         }
 
+        #form add attachment
+        $file = new File();
+        $fileForm = $this->createForm(MultiFileType::class, $file);
+        $fileForm->add("save", SubmitType::class, array('label' => 'Ajouter'));
+
+        $fileForm->handleRequest($request);
+
+        if ($fileForm->isSubmitted() && $fileForm->isValid()) {
+
+            #upload file
+            $newFile = $fileForm->get('file')->getData();
+            $fileName = $fileUploader->uploadFile($newFile);
+            #add new attachement
+            $project->getAttachment()->add($fileName);
+            $projectManager->update($project);
+        }
+
+        #thread form
+        $newFeed = new ProjectFeed();
+
+        $threadForm = $this->createForm(ProjectFeedType::class, $newFeed);
+        $threadForm->handleRequest($request);
+
+        if ($threadForm->isSubmitted() && $threadForm->isValid()) {
+
+            $newFeed->setUser($userService->getUser());
+            $newFeed->setProject($project);
+            $newFeed->setSendDate(new \DateTime("now"));
+
+            $project->getThread()->add($newFeed);
+            $projectManager->update($project);
+        }
+
         return $this->render('AppBundle:project:detail.html.twig', array(
-            'project' => $project
+            'project' => $project,
+            'fileForm' => $fileForm->createView(),
+            'threadForm' => $threadForm->createView()
         ));
     }
 
