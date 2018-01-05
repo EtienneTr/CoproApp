@@ -8,17 +8,14 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\MessageFeedType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-use AppBundle\Entity\Message;
 use AppBundle\Entity\MessageFeed;
 use AppBundle\Service\MessageManager;
 use AppBundle\Service\MessageFeedManager;
@@ -42,15 +39,7 @@ class FeedsController extends Controller
         #if archived, don't create and save form
         if(!$message->getArchived())
         {
-            $form = $this->createFormBuilder($newFeed)
-                ->add("body", TextareaType::class, array(
-                    'attr' => ['class' => 'form-control']
-                ))
-                ->add("save", SubmitType::class, array(
-                    'label' => "Répondre au message",
-                    'attr' => ['class' => 'btn btn-success'],
-                ))
-                ->getForm();
+            $form = $this->createForm(MessageFeedType::class, $message);
 
             $form->handleRequest($request);
 

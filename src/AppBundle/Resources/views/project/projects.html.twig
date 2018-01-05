@@ -7,7 +7,14 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
+
+
     <div class="col-lg-9">
+        <div class="col-md-2">
+            <form method="get" action="/project">
+                <button type="submit" class="message-submit btn btn-success">Créer un projet d'évolution</button>
+            </form>
+        </div>
         <div class="panel panel-default">
 
             <div class="panel-body">
@@ -18,6 +25,7 @@
                     <p class="message-container">
                         {{ project.name }}<br/>
                     </p>
+                    <a href="/project/detail/{{ project.id }}">Détails</a>
                 {% endfor %}
 
             </div>

@@ -23,7 +23,7 @@ use AppBundle\Form\ProjectType;
 class ProjectController extends Controller
 {
     /**
-     * @Route("/project", name="message_create")
+     * @Route("/project", name="project_create")
      * @Method({"GET", "POST"})
      */
     public function newProjectAction(Request $request, UserService $userService, ProjectManager $projectManager)
@@ -57,6 +57,24 @@ class ProjectController extends Controller
 
         return $this->render('AppBundle:project:projects.html.twig', array(
             'projects' => $projects,
+        ));
+    }
+
+    /**
+     * @Route("/project/detail/{id}", name="project_detail")
+     * @Method({"GET"})
+     */
+    public function getProjectDetailAction(Request $request, ProjectManager $projectManager, $id)
+    {
+        $project = $projectManager->findOne($id);
+
+        if(!$project)
+        {
+            throw $this->createNotFoundException('The project does not exist');
+        }
+
+        return $this->render('AppBundle:project:detail.html.twig', array(
+            'project' => $project
         ));
     }
 

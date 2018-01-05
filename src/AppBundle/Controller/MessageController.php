@@ -4,19 +4,15 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Doctrine\ORM\EntityRepository;
 
 use AppBundle\Entity\Message;
 use AppBundle\Service\MessageManager;
 use UserBundle\Service\UserService;
+use AppBundle\Form\MessageType;
 
 class MessageController extends Controller
 {
@@ -28,30 +24,12 @@ class MessageController extends Controller
     {
         $message = new Message();
 
-        $form = $this->createFormBuilder($message)
-            ->add("body", TextareaType::class, array(
-                'attr' => ['class' => 'form-control']
-            ))
-            ->add("receiver", EntityType::class, array(
-                'attr' => ['class' => 'form-control selectpicker'],
-                'class' => 'UserBundle:User',
-                'choice_label' => 'username',
-                'required' => false,
-                'multiple' => true))
-            ->add("save", SubmitType::class, array(
-                'attr' => ['class' => 'btn btn-success'],
-                'label' => "Créer un message"
-            ))
-            ->getForm();
-
-        //TODO pass the users to the view for drop down list.
+        $form = $this->createForm(MessageType::class, $message);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $messageForm = $form->getData();
 
-            $message->setBody($messageForm->getBody());
             $message->setSender($userService->getUser());
             $message->setSendDate(new \DateTime("now"));
             $message->setArchived(false);
