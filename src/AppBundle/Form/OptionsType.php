@@ -22,7 +22,10 @@ class OptionsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("title", TextType::class, array('label' => "n°__opt__ :"));
+            ->add("title", TextType::class, array(
+                'attr' => ['class' => 'form-control'],
+                'label' => "N°__opt__"
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

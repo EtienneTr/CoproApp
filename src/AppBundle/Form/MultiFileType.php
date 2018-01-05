@@ -19,7 +19,9 @@ class MultiFileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("file", FileType::class);
+            ->add("file", FileType::class, array(
+                'attr' => ['class' => 'form-control']
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

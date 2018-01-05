@@ -8,21 +8,18 @@
 
                 {% if not archived %}
                     <div class="col-md-2">
-                        <form method="get" action="/message">
-                            <button type="submit" class="message-submit btn btn-success">Créer un message</button>
-                        </form>
+                        <a class="message-submit btn btn-success" href="{{ path('message_create') }}">Créer un
+                            message</a>
                     </div>
                     <div class="col-md-2">
-                        <form method="get" action="/message/archived">
-                            <button type="submit" class="message-submit btn btn-default">Voir les messages archivés
-                            </button>
-                        </form>
+
+                        <a class="message-submit btn btn-default" href="{{ path('message_archived') }}">Voir les
+                            messages archivés</a>
                     </div>
                 {% else %}
                     <div class="col-md-2">
-                        <form method="get" action="/message/all">
-                            <button type="submit" class="message-submit btn btn-default">Retourner aux messages</button>
-                        </form>
+                        <a href="{{ path('message_all') }}" class="message-submit btn btn-default">Retourner aux
+                            messages</a>
                     </div>
                 {% endif %}
             </div>
@@ -48,10 +45,8 @@
                                 {% if is_granted('ROLE_ADMIN') %}
 
                                     {% if not message.archived %}
-
-                                        <form method="get" action="/message/archive/{{ message.id }}">
-                                            <button type="submit" class="btn btn-warning">Archiver</button>
-                                        </form>
+                                        <a href="{{ path('message_archive', {'id': message.id}) }}"
+                                           class="btn btn-warning">Archiver</a>
                                     {% endif %}
 
                                 {% endif %}
@@ -73,7 +68,7 @@
 
                 <div class="panel-body">
                     {% for userMessage in userMessages %}
-                        <a href="/message/detail/{{ userMessage.id }}" class="coprocardAboveLink">
+                        <a href="{{ path('message_detail', {'id': userMessage.id}) }}" class="coprocardAboveLink">
                             <div class="coprocard corprocard-a">
                                 <p class="coproMessage lead">{{ userMessage.body }}</p>
                                 <p class="dateinfos">{{ userMessage.sendDate|date('d/m/Y à H:i:s') }}</p>

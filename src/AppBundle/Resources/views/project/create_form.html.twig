@@ -11,42 +11,43 @@
     {{ form_start(form) }}
     <div class="col-lg-9">
         <div class="panel panel-default">
-            <div class="panel-heading">
-
-            </div>
             <div class="panel-body">
                 <form>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="name" class="control-label">Nom</label>
+                            {{ form_widget(form.name) }}
+                            {{ form_errors(form.name) }}
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="control-label">Description</label>
+                            {{ form_widget(form.description) }}
+                            {{ form_errors(form.description) }}
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Propriétaires concernés</label>
+                            {{ form_widget(form.users) }}
+                            {{ form_errors(form.users) }}
+                        </div>
+                        {{ form_widget(form.save) }}
+                        {{ form_widget(form._token) }}
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="survey">Survey</label><br/>
+                            <div class="survey coprocard"
+                                data-prototype="{{ form_widget(form.survey.vars.prototype)|e('html_attr') }}">
 
-                    <label for="name">Nom :</label><br/>
-                    {{ form_widget(form.name) }}
-                    {{ form_errors(form.name) }}
-                    <br />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="attachment">Pièces jointes</label><br/>
+                            <div class="attachments coprocard"
+                                data-prototype="{{ form_widget(form.attachment.vars.prototype)|e('html_attr') }}">
 
-                    <label for="name">Description :</label><br/>
-                    {{ form_widget(form.description) }}
-                    {{ form_errors(form.description) }}
-
-                    <br/>
-
-                    <label for="name">Propriétaires concernés :</label><br/>
-                    {{ form_widget(form.users) }}
-                    {{ form_errors(form.users) }}
-
-                    <br/>
-
-                    <label for="survey">Survey :</label><br/>
-
-                    <ul class="survey" data-prototype="{{ form_widget(form.survey.vars.prototype)|e('html_attr') }}">
-
-                    </ul>
-
-                    <label for="attachment">Pièces jointes :</label><br/>
-                    <ul class="attachments" data-prototype="{{ form_widget(form.attachment.vars.prototype)|e('html_attr') }}">
-
-                    </ul>
-
-                    {{ form_widget(form.save) }}
-                    {{ form_widget(form._token) }}
+                            </div>
+                        </div>
+                    </div>
                 </form>
 
                 {{ form_end(form, {'render_rest': false}) }}
@@ -57,7 +58,7 @@
 
 {% block js_added %}
     {% javascripts 'bundles/app/js/project/custom-form.js' %}
-    <script src="{{ asset_url }}"></script>
+        <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
 

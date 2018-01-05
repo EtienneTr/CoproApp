@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="{{ asset('bundles/bmatznerfontawesome/css/font-awesome.min.css') }}">
     {% block stylesheets %}
         {% stylesheets 'bundles/app/css/*' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
@@ -25,7 +23,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">CoproApp Alpha 0.1</a>
+            <a class="navbar-brand" href="{{ path('dashboard') }}">CoproApp Alpha 0.1</a>
         </div>
         <!-- /.navbar-header -->
         {#User menu#}
@@ -57,10 +55,13 @@
                         <a href="/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="/message/all"><i class="fa fa-comments fa-fw"></i> Messages</a>
+                        <a href="{{ path('project_user') }}"><i class="fa fa-briefcase fa-fw"></i> Projets</a>
                     </li>
                     <li>
-                        <a href="/charge/all"><i class="fa fa-money fa-fw"></i> Charges</a>
+                        <a href="{{ path('message_all') }}"><i class="fa fa-comments fa-fw"></i> Messages</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('charge_user') }}"><i class="fa fa-money fa-fw"></i> Charges</a>
                     </li>
                 </ul>
             </div>

@@ -24,9 +24,14 @@ class ProjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("name", TextType::class)
-            ->add("description", TextType::class)
+            ->add("name", TextType::class, array(
+                'attr' => ['class' => 'form-control'],
+            ))
+            ->add("description", TextType::class, array(
+                'attr' => ['class' => 'form-control'],
+            ))
             ->add("users", EntityType::class, array(
+                'attr' => ['class' => 'form-control selectpicker'],
                 'label' => 'Propriétaires',
                 'class' => 'UserBundle:User',
                 'choice_label' => 'username',
@@ -43,7 +48,10 @@ class ProjectType extends AbstractType
                 'entry_options' => array('label' => false),
                 'allow_add' => true,
             ))
-            ->add("save", SubmitType::class, array('label' => "Créer un projet" ))
+            ->add("save", SubmitType::class, array(
+                'attr' => ['class' => 'btn btn-success'],
+                'label' => "Créer un projet"
+            ))
             ->getForm();
     }
 

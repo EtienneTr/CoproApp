@@ -8,26 +8,35 @@
         <!-- /.col-lg-12 -->
     </div>
 
-
-    <div class="col-lg-9">
-        <div class="col-md-2">
-            <form method="get" action="/project">
-                <button type="submit" class="message-submit btn btn-success">Créer un projet d'évolution</button>
-            </form>
+    <div class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-success" href="{{ path('project_create') }}">Créer un projet d'évolution</a>
         </div>
-        <div class="panel panel-default">
+        <br/>
+        <br/>
+    </div>
 
-            <div class="panel-body">
+    <div class="row">
+        {% for project in projects %}
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {{ project.name }}
+                    </div>
+                    <div class="panel-body">
 
-                <h3>Projets</h3>
-                {% for project in projects %}
-                    <br/> {{ project.creationDate|date('d/m/Y à H:i:s') }} par {{ project.owner }}
-                    <p class="message-container">
-                        {{ project.name }}<br/>
-                    </p>
-                    <a href="/project/detail/{{ project.id }}">Détails</a>
-                {% endfor %}
-
+                        <a href="{{ path('project_detail', {'id': project.id}) }}" class="coprocardAboveLink">
+                            <div class="coprocard corprocard-a">
+                                <p class="coproMessage lead">
+                                    {{ project.description }}
+                                </p>
+                                <p class="dateinfos"> {{ project.creationDate|date('d/m/Y à H:i:s') }} par {{ project.owner }}</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
+        {% endfor %}
+    </div>
+
 {% endblock appbundle_content %}
