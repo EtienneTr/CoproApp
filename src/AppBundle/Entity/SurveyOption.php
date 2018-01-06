@@ -31,16 +31,9 @@ class SurveyOption
     /**
      * @var int
      *
-     * @ORM\Column(name="votes", type="integer", nullable=true)
+     * @ORM\Column(name="votesNumber", type="integer", nullable=true)
      */
-    private $votes;
-
-    /**
-     * @var User
-     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $users;
+    private $votesNumber;
 
     /**
      * @var survey
@@ -84,51 +77,27 @@ class SurveyOption
     }
 
     /**
-     * Set votes.
+     * Set votesNumber.
      *
-     * @param int $votes
+     * @param int $votesNumber
      *
      * @return SurveyOption
      */
-    public function setVotes($votes)
+    public function setVotesNumber($votesNumber)
     {
-        $this->votes = $votes;
+        $this->votesNumber = $votesNumber;
 
         return $this;
     }
 
     /**
-     * Get votes.
+     * Get votesNumber.
      *
      * @return int
      */
-    public function getVotes()
+    public function getVotesNumber()
     {
-        return $this->votes;
-    }
-
-    /**
-     * Set user.
-     *
-     * @param string $user
-     *
-     * @return SurveyOption
-     */
-    public function setUsers($users)
-    {
-        $this->users = $users;
-
-        return $this;
-    }
-
-    /**
-     * Get user.
-     *
-     * @return string
-     */
-    public function getUsers()
-    {
-        return $this->users;
+        return $this->votesNumber;
     }
 
     /**

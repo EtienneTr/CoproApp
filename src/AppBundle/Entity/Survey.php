@@ -31,11 +31,18 @@ class Survey
     /**
      * @var SurveyOption
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\SurveyOption", mappedBy="survey", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="SurveyOption", mappedBy="survey", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $options;
 
+    /**
+     * @var SurveyVotes
+     *
+     * @ORM\OneToMany(targetEntity="SurveyVote", mappedBy="survey", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $votes;
 
     /**
      * Get id.
@@ -93,5 +100,21 @@ class Survey
     public function getOptions()
     {
         return $this->options;
+    }
+
+    /**
+     * @return SurveyVotes
+     */
+    public function getVotes()
+    {
+        return $this->votes;
+    }
+
+    /**
+     * @param SurveyVotes $votes
+     */
+    public function setVotes($votes)
+    {
+        $this->votes = $votes;
     }
 }
