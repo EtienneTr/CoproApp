@@ -17,12 +17,12 @@ use UserBundle\Service\UserService;
 class SurveyManager extends CoproService
 {
     private $userService;
-    private $voteService;
+    private $optionService;
 
     public function __construct(EntityManager $entityManager, UserService $userService)
     {
         $this->userService = $userService;
-        $this->voteService = new CoproService($entityManager, "AppBundle:SurveyVote");
+        $this->optionService = new CoproService($entityManager, "AppBundle:SurveyOption");
 
         parent::__construct($entityManager,"AppBundle:Survey");
     }
@@ -68,6 +68,9 @@ class SurveyManager extends CoproService
 
         $survey->getVotes()->add($vote);
         $this->update($survey);
+
+        $option->increaseVotesNumber();
+        $this->optionService->update($option);
     }
 
     private function getSurveyOption($idSurvey, $idOption)

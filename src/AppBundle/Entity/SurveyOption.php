@@ -100,6 +100,11 @@ class SurveyOption
         return $this->votesNumber;
     }
 
+    public function increaseVotesNumber()
+    {
+        $this->votesNumber++;
+    }
+
     /**
      * @return survey
      */

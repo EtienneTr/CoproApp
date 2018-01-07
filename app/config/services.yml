@@ -39,19 +39,19 @@ services:
         tags:
             - { name: form.type, alias: user_user_registration }
 
-    AppBundle\Service\Message:
+    AppBundle\Service\MessageManager:
         class: AppBundle\Service\MessageManager
-        arguments: ["@doctrine.orm.entity_manager","AppBundle:Message"]
+        arguments: ["@doctrine.orm.entity_manager"]
         public: true
-    AppBundle\Service\Charge:
+    AppBundle\Service\ChargeManager:
         class: AppBundle\Service\ChargeManager
-        arguments: ["@doctrine.orm.entity_manager","AppBundle:Charge"]
+        arguments: ["@doctrine.orm.entity_manager"]
         public: true
     AppBundle\Service\ChargePayementManager:
         class: AppBundle\Service\ChargePayementManager
         arguments: ["@doctrine.orm.entity_manager"]
         public: true
-    AppBundle\Service\Copro:
+    AppBundle\Service\CoproService:
         class: AppBundle\Service\CoproService
         arguments: ["@doctrine.orm.entity_manager",""]
         public: true
@@ -59,12 +59,12 @@ services:
         class: AppBundle\Service\FileUploader
         arguments: 
             $uploadDir: '%bill_directory%'
-    AppBundle\Service\Project:
+    AppBundle\Service\ProjectManager:
         class: AppBundle\Service\ProjectManager
         arguments: ["@doctrine.orm.entity_manager"]
         public: true
 
-    UserBundle\Service\User:
+    UserBundle\Service\UserService:
         class: UserBundle\Service\UserService
         arguments: ["@doctrine.orm.entity_manager", "@security.token_storage"]
         public: true
