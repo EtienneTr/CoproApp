@@ -1,0 +1,73 @@
+{% extends "@App/base.html.twig" %}
+
+{% block appbundle_content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header"> Enregistrement d'un paiement bancaire </h1>
+        </div>
+        <!-- /.col-lg-12 -->
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+
+
+                <div class="panel-body">
+                    <div class="row">
+                        <form role="form">
+                            <div class="col-lg-6">
+
+                                <div class="form-group">
+                                    <label for="user" class="control-label">Propriétaire</label>
+                                    {{ form_widget(form.user) }}
+                                    {{ form_errors(form.user) }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="charge" class="control-label">Charge payée</label>
+                                    {{ form_widget(form.charge) }}
+                                    {{ form_errors(form.charge) }}
+                                </div>
+                                <label for="amount" class="control-label">Montant</label>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon"><i class="fa fa-eur"></i></span>
+                                    {{ form_widget(form.amount) }}
+                                    {{ form_errors(form.amount) }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="date" class="control-label">Date paiement</label>
+                                    {{ form_widget(form.paymentDate) }}
+                                    {{ form_errors(form.paymentDate) }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="paymentType" class="control-label">Type</label>
+                                    {{ form_widget(form.paymentType) }}
+                                    {{ form_errors(form.paymentType) }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="attachment">Pièces jointes</label><br/>
+                                    <div class="attachments coprocard"
+                                        data-prototype="{{ form_widget(form.attachments.vars.prototype)|e('html_attr') }}">
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-12">
+                                {{ form_widget(form._token) }}
+                                {{ form_widget(form.save) }}
+                            </div>
+                        </form>
+
+                        {{ form_end(form, {'render_rest': false}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock appbundle_content %}
+
+{% block js_added %}
+    {% javascripts 'bundles/app/js/payment/custom-form.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

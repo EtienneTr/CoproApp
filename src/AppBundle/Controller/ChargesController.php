@@ -81,7 +81,7 @@ class ChargesController extends Controller
     }
 
     /**
-     * @Route("/charge/{id}", name="charge_detail")
+     * @Route("/charge/detail/{id}", name="charge_detail")
      * @Method({"GET"})
      */
     public function detailChargeAction(ChargeManager $manager, $id)
