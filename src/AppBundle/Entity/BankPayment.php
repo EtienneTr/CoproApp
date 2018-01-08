@@ -7,7 +7,7 @@ use UserBundle\Entity\User;
 use AppBundle\Enum\BankPaymentTypeEnum;
 
 /**
- * Versement
+ * BankPayment
  *
  * @ORM\Table(name="Bank_payment")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BankPaymentRepository")
@@ -80,7 +80,7 @@ class BankPayment
      *
      * @param float $amount
      *
-     * @return Versement
+     * @return BankPayment
      */
     public function setAmount($amount)
     {
@@ -154,7 +154,7 @@ class BankPayment
      */
     public function setPaymentType($paymentType)
     {
-        if (!in_array($type, BankPaymentTypeEnum::getAvailableTypes())) {
+        if (!in_array($paymentType, BankPaymentTypeEnum::getAvailableTypes())) {
              throw new \InvalidArgumentException("Invalid type");
          }
 
