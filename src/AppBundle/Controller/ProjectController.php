@@ -50,7 +50,8 @@ class ProjectController extends Controller
         }
 
         return $this->render('AppBundle:project:create_form.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'update'=> false
         ));
     }
 
@@ -121,6 +122,40 @@ class ProjectController extends Controller
             'project' => $project,
             'fileForm' => $fileForm->createView(),
             'threadForm' => $threadForm->createView()
+        ));
+    }
+
+    /**
+     * @Route("/project/edit/{id}", name="project_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editMessageAction(Request $request, ProjectManager $projectManager, UserService $userService, $id){
+
+        $project = $projectManager->findOne($id);
+
+        if(!$project)
+        {
+            throw $this->createNotFoundException('Ce projet n\'existe pas');
+        }
+
+        if(!$project->isAuthor($userService->getUser()))
+        {
+            throw $this->createAccessDeniedException("Vous de pouvez pas éditer ce projet.");
+        }
+
+        $form = $this->createForm(ProjectType::class, $project);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $projectManager->postUpdate($project);
+            return $this->redirectToRoute('project_detail', array('id' => $id));
+        }
+
+        return $this->render('AppBundle:project:create_form.html.twig', array(
+            'form' => $form->createView(),
+            'update' => true
         ));
     }
 

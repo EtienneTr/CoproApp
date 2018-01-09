@@ -22,17 +22,9 @@ class ProjectManager extends CoproService
     }
 
 
-    function postProject($project)
+    public function postProject($project)
     {
-        $surveys = $project->getSurvey();
-        foreach($surveys as $surv)
-        {
-            $options = $surv->getOptions();
-            foreach($options as $opt)
-            {
-                $opt->setSurvey($surv);
-            }
-        }
+        $this->setOptionSurvey($project);
 
         $files = $project->getAttachment();
         $newFiles = [];
@@ -49,7 +41,26 @@ class ProjectManager extends CoproService
         $this->create($project);
     }
 
-    function getUserProjects($user)
+    public function postUpdate($project)
+    {
+        $this->setOptionSurvey($project);
+        $this->update($project);
+    }
+
+    private function setOptionSurvey($project)
+    {
+        $surveys = $project->getSurvey();
+        foreach($surveys as $surv)
+        {
+            $options = $surv->getOptions();
+            foreach($options as $opt)
+            {
+                $opt->setSurvey($surv);
+            }
+        }
+    }
+
+    public function getUserProjects($user)
     {
         $queryBuilder = $this->repo->createQueryBuilder('p')
                         ->leftJoin('p.users', 'pu')

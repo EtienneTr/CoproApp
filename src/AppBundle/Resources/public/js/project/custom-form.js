@@ -9,23 +9,28 @@ jQuery(document).ready(function () {
     // Get the ul that holds the collection of tags
     $collectionHolder = $('div.survey');
 
-    // add the "add a tag" anchor and li to the tags ul
-    $collectionHolder.append($newLinkLi);
+    if($collectionHolder.find('#project_survey_0').length) {
+        setEditForm($collectionHolder);
 
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    $collectionHolder.data('index', $collectionHolder.find(':input').length);
+    } else {
+        // add the "add a tag" anchor and li to the tags ul
+        $collectionHolder.append($newLinkLi);
 
-    $addTagLink.on('click', function (e) {
-        // prevent the link from creating a "#" on the URL
-        e.preventDefault();
+        // count the current form inputs we have (e.g. 2), use that as the new
+        // index when inserting a new item (e.g. 2)
+        $collectionHolder.data('index', $collectionHolder.find(':input').length);
 
-        // add a new tag form (see next code block)
-        addTagForm($collectionHolder, $newLinkLi);
-        addOptions($collectionHolder, nbr);
-        nbr++;
-    });
+        $addTagLink.on('click', function (e) {
+            // prevent the link from creating a "#" on the URL
+            e.preventDefault();
 
+            // add a new tag form (see next code block)
+            addTagForm($collectionHolder, $newLinkLi);
+            addOptions($collectionHolder, nbr);
+            nbr++;
+        });
+    }
+    
     //files form
     addFiles();
 });
@@ -131,4 +136,20 @@ function addNewFileForm($collectionFile, $newBtn) {
         nbr--;
         return false;
     });
+}
+
+function setEditForm($collection){
+    var nbSurv = 0;
+    var nbOpt = 0;
+    var $survey = $collection.find('#project_survey_' + nbSurv);
+    while($survey.length > 0){
+        var $option = $survey.find('#project_survey_' + nbSurv +'_options_' + nbOpt).find('label');
+        while($option.length > 0){
+            $option.text($option.text().replace(/__opt__/g, ++nbOpt));
+            $option = $survey.find('#project_survey_' + nbSurv +'_options_' + nbOpt).find('label');
+        }
+        nbSurv++;
+        $survey = $collection.find('#project_survey_' + nbSurv);
+    }
+
 }

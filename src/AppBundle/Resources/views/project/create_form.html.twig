@@ -34,10 +34,23 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label for="survey">Survey</label><br/>
+                            <label for="survey">Sondage</label><br/>
                             <div class="survey coprocard"
                                 data-prototype="{{ form_widget(form.survey.vars.prototype)|e('html_attr') }}">
-
+                                {% if update %}
+                                    {% for survey in form.survey %}
+                                    <div><div id="project_survey_0">
+                                        <div>
+                                            <label for="project_survey_title" class="required">Question</label>
+                                            {{ form_widget(survey.title) }}
+                                        </div>
+                                        <div>
+                                            <label class="required">Réponses</label>
+                                            {{ form_widget(survey.options) }}
+                                        </div>
+                                    </div></div>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                         </div>
                         <div class="form-group">
