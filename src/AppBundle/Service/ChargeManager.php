@@ -80,4 +80,10 @@ class ChargeManager extends CoproService
 
         return $req->getResult();
     }
+
+    function setChargePaid($charge)
+    {
+        $charge->setPaid(true);
+        $this->update($charge);
+    }
 }

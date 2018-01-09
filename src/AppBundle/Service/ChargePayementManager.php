@@ -19,18 +19,18 @@ class ChargePayementManager extends CoproService
     }
 
 
-    function postPayement($payement)
+    public function postPayement($payement)
     {
         $this->create($payement);
     }
 
-    function postWaitPayement($payement)
+    private function postWaitPayement($payement)
     {
         $this->em->persist($payement);
     }
 
 
-    function createPayements($charge)
+    public function createPayements($charge)
     {
         $owners = $charge->getOwners();
         $amount = $charge->getAmount();
@@ -50,4 +50,20 @@ class ChargePayementManager extends CoproService
         $this->em->flush();
     }
 
+    public function getByUserAndCharge($userId, $chargeId)
+    {
+        return $this->repo->findOneBy(
+            array(
+                'charge' => $chargeId,
+                'owner' => $userId,
+                'paid' => false
+            ));
+    }
+
+    public function setChargePaymentPaid(ChargePayement $chargePayement)
+    {
+        $chargePayement->setPaid(true);
+        $chargePayement->setPaymentDate(new \DateTime("now"));
+        $this->update($chargePayement);
+    }
 }

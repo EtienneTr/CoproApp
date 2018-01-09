@@ -19,22 +19,22 @@
         <div class="panel-body">
 
             <div class="coprocard lead">
-                <p class=coproMessage">{{ charge.title }}</p>
+                <p class="coproMessage">{{ charge.title }}</p>
             </div>
 
 
-            <table class="table">
+            <table class="table table-hover">
                 <thead>
                 <tr>
                     <th>Propriétaire</th>
                     <th>Montant</th>
                     <th>Status</th>
-                    <th>Date paiement</th>
+                    <th>Date fin paiement</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for payment in charge.payments %}
-                    <tr>
+                    <tr data-toggle="collapse" data-target="#bankPayment{{ payment.id }}" class="clickable">
                         <td>{{ payment.owner.username }}</td>
                         <td>{{ payment.amount }}</td>
                         {% if not payment.paid %}
@@ -45,6 +45,44 @@
 
                         <td>{% if payment.paymentDate %} {{ payment.paymentDate|date('d/m/Y à H:i:s') }} {% endif %}</td>
                     </tr>
+                    <tr>
+                        <td colspan="4">
+                            <div id="bankPayment{{ payment.id }}" class="collapse row">
+                                <div class="col-xs-10 col-md-6 col-lg-6">
+                                <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Date paiement</th>
+                                        <th>Montant</th>
+                                        <th>Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for bankPayment in bankPayments if bankPayment.user == payment.owner %}
+                                        <tr>
+                                            <td>{{ bankPayment.paymentDate|date('d/m/Y') }}</td>
+                                            <td>{{ bankPayment.amount }}</td>
+                                            <td>
+                                                {% if bankPayment.paymentType == "transfert" %}
+                                                    Virement
+                                                {% else %}
+                                                    Chèque
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="3">Aucun paiement banquaire enregistré</td>
+                                        </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                                </table>
+                            </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
                 {% endfor %}
                 </tbody>
             </table>

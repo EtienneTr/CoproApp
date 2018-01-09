@@ -33,7 +33,7 @@ class BankPayment
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="paymentDate", type="date", nullable=true)
+     * @ORM\Column(name="paymentDate", type="datetime", nullable=true)
      */
     private $paymentDate;
 
