@@ -92,7 +92,12 @@ class ChargesController extends Controller
 
         if(!$charge)
         {
-            throw $this->createNotFoundException('The charge does not exist');
+            throw $this->createNotFoundException("Cette charge n'existe pas.");
+        }
+
+        if(!$charge->hasAccess($userService->getUser()))
+        {
+            throw $this->createAccessDeniedException();
         }
 
         return $this->render('AppBundle:charges:detail.html.twig', array(

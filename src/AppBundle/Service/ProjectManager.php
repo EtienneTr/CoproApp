@@ -49,9 +49,14 @@ class ProjectManager extends CoproService
         $this->create($project);
     }
 
-    function getProjects()
+    function getUserProjects($user)
     {
-        return $this->findAll();
+        $queryBuilder = $this->repo->createQueryBuilder('p')
+                        ->where(':user MEMBER OF p.users')
+                        ->setParameter('user', $user)
+                        ->getQuery();
+
+        return $queryBuilder->getResult();
     }
 
 }

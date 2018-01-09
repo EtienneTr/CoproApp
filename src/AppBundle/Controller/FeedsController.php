@@ -32,6 +32,16 @@ class FeedsController extends Controller
     {
         $message = $messageManager->findOne($id);
 
+        if(!$message)
+        {
+            throw $this->createNotFoundException('Ce message n\'existe pas');
+        }
+
+        if(!$message->hasAccess($userService->getUser()))
+        {
+            throw $this->createAccessDeniedException();
+        }
+
         $newFeed = new MessageFeed();
         $newFeed->setMessage($message);
 

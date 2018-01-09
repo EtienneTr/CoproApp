@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use UserBundle\Entity\User;
 
 /**
  * Project
@@ -344,5 +345,25 @@ class Project
     {
         return $this->users;
     }
+
+    /**
+    * Security
+    */
+    public function isAuthor(User $user)
+    {
+        return $user == $this->getOwner();
+    }
+
+    public function isMember(User $user)
+    {
+        $members = $this->getUsers();
+        return is_array($members) ? in_array($user, $members) : $user == $members;
+    }
+
+    public function hasAccess(User $user)
+    {
+        return $this->isAuthor($user) || $this->isMember($user);
+    }
+
 }
 

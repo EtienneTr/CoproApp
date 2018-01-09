@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use AppBundle\Entity\Project;
 use AppBundle\Service\FileUploader;
@@ -57,8 +58,8 @@ class ProjectController extends Controller
      * @Route("/project/all", name="project_user")
      * @Method({"GET"})
      */
-    public function getProjectAction(ProjectManager $manager){
-        $projects = $manager->getProjects();
+    public function getProjectAction(ProjectManager $manager, UserService $userService){
+        $projects = $manager->getUserProjects($userService->getUser());
 
         return $this->render('AppBundle:project:projects.html.twig', array(
             'projects' => $projects,
@@ -76,6 +77,11 @@ class ProjectController extends Controller
         if(!$project)
         {
             throw $this->createNotFoundException('The project does not exist');
+        }
+
+        if(!$project->hasAccess($userService->getUser()))
+        {
+            throw $this->createAccessDeniedException();
         }
 
         #form add attachment

@@ -223,6 +223,24 @@ class Message
         $this->feeds = $feeds;
     }
 
+    /**
+    * Security
+    */
+    public function isAuthor(User $user)
+    {
+        return $user == $this->getSender();
+    }
+
+    public function isMember(User $user)
+    {
+        $members = $this->getReceiver();
+        return is_array($members) ? in_array($user, $members) : $user == $members;
+    }
+
+    public function hasAccess(User $user)
+    {
+        return $this->isAuthor($user) || $this->isMember($user);
+    }
 
 }
 
