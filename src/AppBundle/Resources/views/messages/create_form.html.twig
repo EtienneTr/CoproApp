@@ -3,7 +3,11 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Création d'un message</h1>
+            {% if update %}
+                <h1 class="page-header">Édition d'un message</h1>
+            {% else %}
+                <h1 class="page-header">Création d'un message</h1>
+            {% endif %}
         </div>
         <!-- /.col-lg-12 -->
     </div>

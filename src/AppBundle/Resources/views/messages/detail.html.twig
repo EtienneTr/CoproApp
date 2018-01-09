@@ -33,8 +33,9 @@
                     {{ message.body }}
                 </p>
             </div>
-
-
+            {% if message.isAuthor(app.user) %}
+            <a class="message-submit btn btn-warning" href="{{ path('message_edit', {'id': message.id}) }}">Éditer</a>
+            {% endif %}
             {% for feeds in message.feeds %}
                 <div class="messageResponse coprocard">
                     <p class="coproMessage"> {{ feeds.body }}</p>

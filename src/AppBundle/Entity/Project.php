@@ -357,6 +357,7 @@ class Project
     public function isMember(User $user)
     {
         $members = $this->getUsers();
+        if(sizeof($members) <= 0) return true;
         return is_array($members) ? in_array($user, $members) : $user == $members;
     }
 

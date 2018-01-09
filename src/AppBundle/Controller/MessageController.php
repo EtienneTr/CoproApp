@@ -40,7 +40,8 @@ class MessageController extends Controller
         }
 
         return $this->render('AppBundle:messages:create_form.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'update' => false
         ));
     }
 
@@ -87,5 +88,39 @@ class MessageController extends Controller
         $manager->archive($id);
 
         return $this->redirectToRoute('message_all');
+    }
+
+    /**
+     * @Route("/message/edit/{id}", name="message_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editMessageAction(Request $request, MessageManager $messageManager, UserService $userService, $id){
+
+        $message = $messageManager->findOne($id);
+
+        if(!$message)
+        {
+            throw $this->createNotFoundException('Ce message n\'existe pas');
+        }
+
+        if(!$message->isAuthor($userService->getUser()))
+        {
+            throw $this->createAccessDeniedException();
+        }
+
+        $form = $this->createForm(MessageType::class, $message);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $messageManager->update($message);
+            return $this->redirectToRoute('message_detail', array('id' => $id));
+        }
+
+        return $this->render('AppBundle:messages:create_form.html.twig', array(
+            'form' => $form->createView(),
+            'update' => true
+        ));
     }
 }
