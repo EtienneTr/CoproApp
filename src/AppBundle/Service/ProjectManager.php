@@ -52,7 +52,9 @@ class ProjectManager extends CoproService
     function getUserProjects($user)
     {
         $queryBuilder = $this->repo->createQueryBuilder('p')
-                        ->where(':user MEMBER OF p.users')
+                        ->leftJoin('p.users', 'pu')
+                        ->where('pu.id IS NULL')
+                        ->orWhere(':user MEMBER OF p.users')
                         ->setParameter('user', $user)
                         ->getQuery();
 
