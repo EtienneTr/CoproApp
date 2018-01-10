@@ -74,6 +74,17 @@ services:
         arguments: ["@mgilet.notification"]
         public: true
 
+  #EVENTS
     AppBundle\EventListener\BillUploadListener:
         tags:
             - { name: doctrine.event_listener, event: postRemove }
+
+    UserBundle\EventListener\UserNotificationListener:
+        arguments: ['@service_container']
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+
+    AppBundle\EventListener\NotificationListener:
+        arguments: ['@service_container']
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }

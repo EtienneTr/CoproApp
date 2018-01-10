@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Etienne
- * Date: 10/01/2018
- * Time: 19:34
- */
 
 namespace AppBundle\Service;
 
@@ -23,13 +17,17 @@ class NotificationService
         $this->userService = $userService;
     }
 
-    public function createUserNotification($title, $message, $link)
+    public function createUserNotification($title, $message, $link, $user)
     {
         $notif = $this->notifManager->createNotification($title);
         $notif->setMessage($message);
         $notif->setLink($link);
 
-        $this->notifManager->addNotification(array($this->userService->getUser()), $notif, true);
+        $this->notifManager->addNotification(array($user), $notif, true);
+    }
 
+    public function createNotification($title, $message, $link)
+    {
+        $this->createUserNotification($title, $message, $link, $this->userService->getUser());
     }
 }

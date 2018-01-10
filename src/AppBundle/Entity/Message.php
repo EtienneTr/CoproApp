@@ -234,8 +234,8 @@ class Message
     public function isMember(User $user)
     {
         $members = $this->getReceiver();
-        if(sizeof($members) <= 0) return true;
-        return is_array($members) ? in_array($user, $members) : $user == $members;
+        //if(sizeof($members) <= 0) return true;
+        return is_array($members) ? in_array($user, $members) : $members->contains($user);
     }
 
     public function hasAccess(User $user)
