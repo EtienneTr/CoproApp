@@ -9,6 +9,7 @@
 namespace AppBundle\EventListener;
 
 use AppBundle\Entity\Message;
+use AppBundle\Entity\MessageFeed;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -42,7 +43,39 @@ class NotificationListener
             }
         }
 
+        if($entity instanceof MessageFeed)
+        {
+            $message = $entity->getMessage();
+            $owner = $message->getSender();
+            $users = $message->getReceiver();
+
+            $sender = $entity->getUser();
+            $senderName = $sender->getUsername();
+
+            #send to parent message author
+            $this->sendFeedNotification($notifService, $senderName, $message->getId(), $owner);
+
+            #sent to message receivers
+            foreach($users as $user)
+            {
+                if($user == $sender)
+                    continue;
+                $this->sendFeedNotification($notifService, $senderName, $message->getId(), $user);
+            }
+
+        }
+
         return;
+    }
+
+    private function sendFeedNotification($service, $userName, $messageId, $user)
+    {
+        $service->createUserNotification(
+            "Nouvelle réponse à un message.",
+            $userName." à répondu à un message que vous suivez.",
+            "message/detail/".$messageId,
+            $user
+        );
     }
 
 }
