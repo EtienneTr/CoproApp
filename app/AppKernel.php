@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new UserBundle\UserBundle(),
             new Bmatzner\FontAwesomeBundle\BmatznerFontAwesomeBundle(),
+            new Mgilet\NotificationBundle\MgiletNotificationBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

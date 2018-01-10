@@ -9,3 +9,7 @@ user:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+mgilet_notifications:
+    resource: "@MgiletNotificationBundle/Controller/"
+    prefix: /notifications

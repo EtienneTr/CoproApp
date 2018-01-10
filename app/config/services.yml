@@ -69,6 +69,11 @@ services:
         arguments: ["@doctrine.orm.entity_manager", "@security.token_storage"]
         public: true
 
+    AppBundle\Service\NotificationService:
+        class: AppBundle\Service\NotificationService
+        arguments: ["@mgilet.notification"]
+        public: true
+
     AppBundle\EventListener\BillUploadListener:
         tags:
             - { name: doctrine.event_listener, event: postRemove }
