@@ -66,7 +66,7 @@ class NotificationController extends Controller
     }
     /**
      *
-     * @Route("notification/{notifiable}/mark_as_seen/{notification}", name="notif_mark_unseen")
+     * @Route("notification/{notifiable}/mark_as_unseen/{notification}", name="notif_mark_unseen")
      * @Method("POST")
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
