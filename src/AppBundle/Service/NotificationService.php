@@ -5,6 +5,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Message;
 use AppBundle\Entity\MessageFeed;
+use AppBundle\Entity\Project;
 use Mgilet\NotificationBundle\Manager\NotificationManager;
 use UserBundle\Service\UserService;
 
@@ -90,5 +91,21 @@ class NotificationService
             "message/detail/".$messageId,
             $user
         );
+    }
+
+    #Cutom services
+    public function createProjectNotification(Project $entity)
+    {
+        $sender = $entity->getOwner()->getUsername();
+        $users = $entity->getUsers();
+        foreach($users as $user)
+        {
+            $this->createUserNotification(
+                "Un nouveau projet d'évolution a été créé.",
+                $sender." a mis en ligne un nouveau projet.",
+                "project/detail/".$entity->getId(),
+                $user
+            );
+        }
     }
 }

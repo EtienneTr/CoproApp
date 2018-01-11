@@ -60,6 +60,7 @@ class Charge
      * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
+
     private $owners;
 
     /**

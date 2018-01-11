@@ -42,12 +42,19 @@ class Contract
      * @ORM\Column(name="creationDate", type="date")
      */
     private $creationDate;
+
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\File", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $attachment;
 
     /**
      * @return User
@@ -145,6 +152,22 @@ class Contract
     public function getCreationDate()
     {
         return $this->creationDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAttachment()
+    {
+        return $this->attachment;
+    }
+
+    /**
+     * @param mixed $attachment
+     */
+    public function setAttachment($attachment)
+    {
+        $this->attachment = $attachment;
     }
 }
 

@@ -25,7 +25,9 @@
                                     {{ notification.notification.subject }} -
                                     {{ notification.notification.message }}
                                 </p>
-
+                                {% if notification.notification.link %}
+                                <a href="/{{ notification.notification.link }}" class="message-submit btn btn-default">Voir</a>
+                                {% endif %}
                                 <form action="{{ path('notif_mark_seen', {'notifiable' : notification.notifiableEntity.id, 'notification' : notification.notification.id}) }}"
                                       method="post">
                                     <button type="submit" class="btn btn-success">Marquer comme lue</button>

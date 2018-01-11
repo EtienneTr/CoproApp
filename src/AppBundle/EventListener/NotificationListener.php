@@ -10,6 +10,7 @@ namespace AppBundle\EventListener;
 
 use AppBundle\Entity\Message;
 use AppBundle\Entity\MessageFeed;
+use AppBundle\Entity\Project;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -39,6 +40,11 @@ class NotificationListener
             $notifService->createMessageReplyNotification($entity);
         }
 
+        #project create notification
+        if($entity instanceof Project)
+        {
+            $notifService->createProjectNotification($entity);
+        }
         return;
     }
 

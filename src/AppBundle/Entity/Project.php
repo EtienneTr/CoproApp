@@ -339,7 +339,7 @@ class Project
     /**
      * Get users
      *
-     * @return string
+     * @return User
      */
     public function getUsers()
     {
