@@ -15,7 +15,7 @@ use AppBundle\Service\ChargePayementManager;
 class BankPaymentManager extends CoproService
 {
     private $fileUploader;
-    private $chargeManager;
+    private $chargePayementManager;
 
     public function __construct(EntityManager $entityManager, ChargePayementManager $chargePayementManager, FileUploader $fileUploader)
     {
@@ -45,7 +45,7 @@ class BankPaymentManager extends CoproService
         else
         {
             #Chek sum old payments + current
-           $this->checkOlderPayments($payment, $charge, $userChargeAmount);
+           $this->checkOlderPayments($payment, $charge, $chargePayment);
         }
 
         #save attachment
@@ -90,17 +90,21 @@ class BankPaymentManager extends CoproService
         $payment->setAttachments($newFiles);
     }
 
-    private function checkOlderPayments($payment, $charge, $userChargeAmount)
+    private function checkOlderPayments($payment, $charge, $chargePayment)
     {
-        $paymentAmount = $payment->getAmount();
 
+        $paymentAmount = $payment->getAmount();
+        $userChargeAmount = $chargePayment->getAmount();
+
+        #get all bank payment for current charge
         $userPayments = $this->getByUserAndCharge($payment->getUser()->getId(), $charge->getId());
         $sumPayments = array_reduce(
             $userPayments, 
             function($sum, $item) { return $sum + $item->getAmount();  }, 
             0
         );#default sum = 0;
-        
+
+        #check sum all payments + current sum
         if($paymentAmount + $sumPayments > $userChargeAmount)
         {
             throw new InvalidArgumentException("Le montant du paiement est trop élevé, la charge restante étant de ".($userChargeAmount - $sumPayments)." €.");
@@ -109,6 +113,7 @@ class BankPaymentManager extends CoproService
         #full paiement
         if($paymentAmount + $sumPayments == $userChargeAmount)
         {
+            #update chargePayment paid
             $this->chargePayementManager->setChargePaymentPaid($chargePayment);
         }
     }

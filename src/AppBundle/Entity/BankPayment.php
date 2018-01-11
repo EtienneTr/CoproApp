@@ -184,9 +184,9 @@ class BankPayment
     }
 
     /**
-     * @param User $user
+     * @param User
      *
-     * @return self
+     * @return User
      */
     public function getUser()
     {
@@ -194,7 +194,8 @@ class BankPayment
     }
 
     /**
-     * @param User $user
+     * @param User
+     * @return $this
      */
     public function setUser($user)
     {
