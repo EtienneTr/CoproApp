@@ -1,12 +1,50 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 
-<div class="fos_user_user_show">
-    <p>{{ 'profile.show.firstname'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.lastname'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Profil</h1>
+    </div>
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="control-label" for="fn">{{ 'profile.show.firstname'|trans }} :</label>
+                            <input type="text" class="form-control" name="fn" value="{{ user.firstname }}"
+                                   disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="un">{{ 'profile.show.username'|trans }} :</label>
+                            <input type="text" class="form-control" name="un" value="{{ user.username }}"
+                                   disabled>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="control-label" for="ln">{{ 'profile.show.lastname'|trans }} :</label>
+                            <input type="text" class="form-control" name="ln" value="{{ user.lastname }}"
+                                   disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="em">{{ 'profile.show.email'|trans }} :</label>
+                            <input type="text" class="form-control" name="em" value="{{ user.email }}"
+                                   disabled>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <a class="message-submit btn btn-warning" href="{{ path('fos_user_profile_edit') }}">Éditer le
+                            profil</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <a class="message-submit btn btn-warning" href="{{ path('fos_user_profile_edit') }}">Éditer le profil</a>
+<div class="fos_user_user_show">
+
+
 </div>
 

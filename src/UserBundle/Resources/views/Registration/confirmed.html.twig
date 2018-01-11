@@ -1,10 +1,26 @@
-{% extends "@FOSUser/layout.html.twig" %}
-
 {% trans_default_domain 'FOSUserBundle' %}
 
+{% extends "@User/base.html.twig" %}
+
 {% block fos_user_content %}
-    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
-    {% if targetUrl %}
-    <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
-    {% endif %}
+    <style>
+        div.success{
+            display: none;
+        }
+        div.container{
+            margin-top: 10%;
+        }
+    </style>
+    <a href="{{ path('dashboard') }}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 marg">
+                    <div class="alert alert-success">{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</div>
+                    {% if targetUrl %}
+                        <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </a>
 {% endblock fos_user_content %}

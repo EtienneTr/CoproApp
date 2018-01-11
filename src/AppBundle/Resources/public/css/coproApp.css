@@ -44,3 +44,6 @@ a.coprocardAboveLink {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+.panel-margin{
+    margin-top: 15px;
+}
