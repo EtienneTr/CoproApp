@@ -39,7 +39,7 @@
                                 data-prototype="{{ form_widget(form.survey.vars.prototype)|e('html_attr') }}">
                                 {% if update %}
                                     {% for survey in form.survey %}
-                                    <div><div id="project_survey_0">
+                                    <div><div id="project_survey_{{ loop.index0 }}">
                                         <div>
                                             <label for="project_survey_title" class="required">Question</label>
                                             {{ form_widget(survey.title) }}

@@ -169,5 +169,13 @@ class Contract
     {
         $this->attachment = $attachment;
     }
+
+    /**
+     * Security
+     */
+    public function isMember(User $user)
+    {
+        return $user == $this->getUser();
+    }
 }
 
