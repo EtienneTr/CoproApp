@@ -139,15 +139,16 @@ function addNewFileForm($collectionFile, $newBtn) {
 }
 
 function setEditForm($collection){
-    var nbSurv = 0;
-    var nbOpt = 0;
-    var $survey = $collection.find('#project_survey_' + nbSurv);
+    let nbSurv = 0;
+    let nbOpt = 0;
+    let $survey = $collection.find('#project_survey_' + nbSurv);
     while($survey.length > 0){
         var $option = $survey.find('#project_survey_' + nbSurv +'_options_' + nbOpt).find('label');
         while($option.length > 0){
             $option.text($option.text().replace(/__opt__/g, ++nbOpt));
             $option = $survey.find('#project_survey_' + nbSurv +'_options_' + nbOpt).find('label');
         }
+        nbOpt = 0;
         nbSurv++;
         $survey = $collection.find('#project_survey_' + nbSurv);
     }
