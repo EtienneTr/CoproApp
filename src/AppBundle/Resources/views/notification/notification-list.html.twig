@@ -1,0 +1,78 @@
+{% extends "@App/base.html.twig" %}
+
+{% block appbundle_content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Notifications</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    Notifications non lues
+                </div>
+
+                <div class="panel-body">
+                    {% for notification in notifiableNotifications %}
+                        {% if not notification.seen %}
+                        {#<a href="/message/detail/{{ message.id }}" class="coprocardAboveLink">#}
+                            <div class="coprocard corprocard-a">
+                                <p class="coproMessage lead">
+                                    {{ notification.notification.subject }} -
+                                    {{ notification.notification.message }}
+                                </p>
+
+                                <form action="{{ path('notif_mark_seen', {'notifiable' : notification.notifiableEntity.id, 'notification' : notification.notification.id}) }}"
+                                      method="post">
+                                    <button type="submit" class="btn btn-success">Marquer comme lue</button>
+                                </form>
+
+
+                                <p class="dateinfos">{{ notification.notification.date|date('d/m/Y à H:i:s') }}</p>
+                            </div>
+                        {#</a>#}
+                            {% endif %}
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    Notifications lues
+                </div>
+
+                <div class="panel-body">
+                    {% for notification in notifiableNotifications %}
+                        {% if notification.seen %}
+
+                            <div class="coprocard">
+                                <p class="coproMessage lead">
+                                    {{ notification.notification.subject }} -
+                                    {{ notification.notification.message }}
+                                </p>
+                                <form action="{{ path('notif_mark_unseen', {'notifiable' : notification.notifiableEntity.id, 'notification' : notification.notification.id}) }}"
+                                      method="post">
+                                    <button type="submit" class="btn btn-default">Marquer comme non lue</button>
+                                </form>
+
+
+                                <p class="dateinfos">{{ notification.notification.date|date('d/m/Y à H:i:s') }}</p>
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock appbundle_content %}
