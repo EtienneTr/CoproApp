@@ -143,7 +143,7 @@ class ProjectController extends Controller
             throw $this->createAccessDeniedException("Vous de pouvez pas éditer ce projet.");
         }
 
-        $form = $this->createForm(ProjectType::class, $project);
+        $form = $this->createForm(ProjectType::class, $project, array('update' => true));
 
         $form->handleRequest($request);
 

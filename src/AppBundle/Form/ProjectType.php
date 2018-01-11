@@ -42,13 +42,18 @@ class ProjectType extends AbstractType
                 'entry_type' => SurveyType::class,
                 'entry_options' => array('label' => false),
                 'allow_add' => true,
-            ))
-            ->add('attachment',CollectionType::class, array(
-                'entry_type' => MultiFileType::class,
-                'entry_options' => array('label' => false),
-                'allow_add' => true,
-            ))
-            ->add("save", SubmitType::class, array(
+            ));
+
+            if(!$options['update']) {
+                $builder->
+                add('attachment', CollectionType::class, array(
+                    'entry_type' => MultiFileType::class,
+                    'entry_options' => array('label' => false),
+                    'allow_add' => true,
+                ));
+            }
+
+            $builder->add("save", SubmitType::class, array(
                 'attr' => ['class' => 'btn btn-success'],
                 'label' => "Créer un projet"
             ))
@@ -58,7 +63,9 @@ class ProjectType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array('data_class' => Project::class)
+            array('data_class' => Project::class,
+                  'update' => false
+            )
         );
     }
 }
