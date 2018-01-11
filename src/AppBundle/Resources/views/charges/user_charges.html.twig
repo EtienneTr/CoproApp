@@ -4,70 +4,80 @@
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Mes charges à payer</h1>
+            <div class="row">
+                <div class="col-md-2">
+                    <a class="message-submit btn btn-success" href="{{ path('charges_create') }}">Créer une
+                        charge</a>
+                </div>
+            </div>
         </div>
         <!-- /.col-lg-12 -->
     </div>
-    {% for charge in charges %}
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    {{ charge.title }}
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-
-                        <div class="col-md-6">
-                            <label class="control-label" for="amount">Montant Global :</label>
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><i class="fa fa-eur"></i></span>
-                                <input name="amount" type="text" value="{{ charge.amount }}" disabled
-                                       class="form-control">
-
-                            </div>
-                            {% if not charge.payments[0].paid %}
-                            <div class="form-group has-error">
-                                <label class="control-label" for="inputError">Status :</label>
-                                <input type="text" class="form-control" name="inputError" value="à payer" disabled>
-                            </div>
-                            {% endif %}
-                            <label class="control-label" for="amount2">Montant :</label>
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><i class="fa fa-eur"></i></span>
-                                <input name="amount2" type="text" value="{{ charge.payments[0].amount }}" disabled
-                                       class="form-control">
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Créee le :
-                                    <input type="date" value="{{ charge.creationDate|date('Y-m-d') }}" disabled
-                                           class="form-control">
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Avant le :
-                                    <input type="date" value="{{ charge.dueOn|date('Y-m-d') }}" disabled
-                                           class="form-control">
-                                </label>
-                            </div>
-
-                        </div>
-
-
+    <br/>
+    <div class="row">
+        {% for charge in charges %}
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {{ charge.title }}
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <a href="" class="btn btn-danger" disabled>Effectuer le paiement</a>
+                    <div class="panel-body">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <label class="control-label" for="amount">Montant Global :</label>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon"><i class="fa fa-eur"></i></span>
+                                    <input name="amount" type="text" value="{{ charge.amount }}" disabled
+                                           class="form-control">
+
+                                </div>
+                                {% if not charge.payments[0].paid %}
+                                    <div class="form-group has-error">
+                                        <label class="control-label" for="inputError">Status :</label>
+                                        <input type="text" class="form-control" name="inputError" value="à payer"
+                                               disabled>
+                                    </div>
+                                {% endif %}
+                                <label class="control-label" for="amount2">Montant :</label>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon"><i class="fa fa-eur"></i></span>
+                                    <input name="amount2" type="text" value="{{ charge.payments[0].amount }}" disabled
+                                           class="form-control">
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Créee le :
+                                        <input type="date" value="{{ charge.creationDate|date('Y-m-d') }}" disabled
+                                               class="form-control">
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Avant le :
+                                        <input type="date" value="{{ charge.dueOn|date('Y-m-d') }}" disabled
+                                               class="form-control">
+                                    </label>
+                                </div>
+
+                            </div>
+
+
                         </div>
-                        <div class="col-md-6">
-                            <a href="{{ path('charge_detail', {'id': charge.id}) }}" class="btn btn-info">Détail</a>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="" class="btn btn-danger" disabled>Effectuer le paiement</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="{{ path('charge_detail', {'id': charge.id}) }}" class="btn btn-info">Détail</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 
 {% endblock appbundle_content %}
