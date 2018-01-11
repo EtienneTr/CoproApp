@@ -77,7 +77,7 @@ class ProjectController extends Controller
 
         if(!$project)
         {
-            throw $this->createNotFoundException('The project does not exist');
+            throw $this->createNotFoundException('Ce projet n\'existe pas.');
         }
 
         if(!$project->hasAccess($userService->getUser()))

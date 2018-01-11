@@ -30,4 +30,15 @@ class NotificationService
     {
         $this->createUserNotification($title, $message, $link, $this->userService->getUser());
     }
+
+    public function getUserNotification($notifiableRepo, $notifiable)
+    {
+        $qb = $notifiableRepo->createQueryBuilder('nn')
+            ->join('nn.notification', 'n')
+            ->join('nn.notifiableEntity', 'ne')
+            ->where('ne.identifier = :id')
+            ->setParameter('id', $notifiable);
+
+        return $qb->getQuery()->getResult();
+    }
 }

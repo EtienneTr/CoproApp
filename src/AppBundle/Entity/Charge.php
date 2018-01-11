@@ -245,6 +245,14 @@ class Charge
         $this->bill = $bill;
     }
 
+    public function hasAccess(User $user)
+    {
+        $members = $this->getOwners();
+        if(sizeof($members) <= 0) return true;
+
+        return is_array($members) ? in_array($user, $members) : $members->contains($user);
+    }
+
 
 }
 
