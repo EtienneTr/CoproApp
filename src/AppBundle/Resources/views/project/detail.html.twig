@@ -28,40 +28,50 @@
         {#  #}
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="lead">
+                {% if project.isAuthor(app.user) %}
+                    <a class="message-submit btn btn-warning" href="{{ path('project_edit', {'id': project.id}) }}">Éditer</a>
+                    <br/>
+                    <br/>
+                {% endif %}
+                <div class="lead well">
                     <p>{{ project.description }}</p>
                 </div>
                 <div class="row">
-                    <div class="survey-container">
-                        {% for survey in project.survey %}
-                            <div class="coprocard coprocard-survey">
-                                <p class="lead">{{ survey.title }}</p>
-                                <ul>
-                                    {% for option in survey.options %}
-                                        <li>{{ option.title }} (nb de votes : {{ option.votesNumber }})</li>
-                                        <a href="{{ path('survey_vote', { 'idProject': project.id,'idSurvey': survey.id, 'idOption': option.id}) }}" >Voter</a>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        {% endfor %}
+                    <div class="col-lg-6">
+                        <h2>Sondages</h2>
+                        <div class="survey-container">
+                            {% for survey in project.survey %}
+                                <div class="coprocard coprocard-survey">
+                                    <p class="lead">{{ survey.title }}</p>
+                                    <ul>
+                                        {% for option in survey.options %}
+                                            <li>{{ option.title }} (nb de votes : {{ option.votesNumber }})</li>
+                                            <a href="{{ path('survey_vote', { 'idProject': project.id,'idSurvey': survey.id, 'idOption': option.id}) }}">Voter</a>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endfor %}
 
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h2>Pièces jointes</h2>
+                        {% for file in project.attachment %}
+                            <div class="alert alert-info pj">{{ file.name }}. <a href="{{ path('download_file', { 'id': file.id}) }}">Télécharger</a></div>
+                        {% endfor %}
+                        <div>
+                            {{ form_start(fileForm) }}
+                            <label for="file">Ajouter une pièce jointe :</label><br/>
+                            {{ form_widget(fileForm.file) }}
+                            {{ form_end(fileForm) }}
+                        </div>
                     </div>
                 </div>
 
             </div>
 
-            <h2>Pièces jointes</h2>
-            {% for file in project.attachment %}
-                <li>{{ file.name }}. <a href="{{ path('download_file', { 'id': file.id}) }}" >Télécharger</a></li>
-            {% endfor %}
-            <div>
-                {{ form_start(fileForm) }}
-                <label for="file">Ajouter une pièce jointe :</label><br/>
-                {{ form_widget(fileForm.file) }}
-                {{ form_end(fileForm) }}
-            </div>
 
-            <h2>Messages :</h2>
+            <h2>Messages</h2>
             {% for feeds in project.thread %}
                 <div class="messageResponse coprocard">
                     <p class="coproMessage"> {{ feeds.body }}</p>

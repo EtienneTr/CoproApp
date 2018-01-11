@@ -34,8 +34,13 @@ a.coprocardAboveLink {
 }
 .survey-container{
     display: flex;
+    flex-wrap: wrap;
 
 }
 .coprocard-survey{
-    width: 50%;
+    width: 45%;
+}
+.pj{
+    text-overflow: ellipsis;
+    overflow: hidden;
 }

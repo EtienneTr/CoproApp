@@ -27,15 +27,17 @@
 
         {# Message body + respnses #}
         <div class="panel-body">
-
+            {% if message.isAuthor(app.user) %}
+                <a class="message-submit btn btn-warning" href="{{ path('message_edit', {'id': message.id}) }}">Éditer</a>
+                <br/>
+                <br/>
+            {% endif %}
             <div>
                 <p class="coproMessage lead">
                     {{ message.body }}
                 </p>
             </div>
-            {% if message.isAuthor(app.user) %}
-            <a class="message-submit btn btn-warning" href="{{ path('message_edit', {'id': message.id}) }}">Éditer</a>
-            {% endif %}
+
             {% for feeds in message.feeds %}
                 <div class="messageResponse coprocard">
                     <p class="coproMessage"> {{ feeds.body }}</p>
