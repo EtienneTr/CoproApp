@@ -23,6 +23,13 @@ class Contract
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="startDate", type="date")
@@ -55,6 +62,22 @@ class Contract
      * @ORM\JoinColumn(nullable=true)
      */
     private $attachment;
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
     /**
      * @return User

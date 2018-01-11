@@ -41,7 +41,14 @@ class ChargeType extends AbstractType
                 'class' => 'UserBundle:User',
                 'choice_label' => 'username',
                 'required' => false,
-                'multiple' => true))
+                'multiple' => true
+            ))
+            ->add("contract", EntityType::class, array(
+                'attr' => ['class' => 'form-control selectpicker'],
+                'class' => 'AppBundle:Contract',
+                'choice_label' => 'name',
+                'required' => false,
+            ))
             ->add('bill', FileType::class, array(
                 'label' => 'Facture (PDF file)', 'required' => false
             ))

@@ -15,7 +15,11 @@
                     <div class="row">
                         <form role="form">
                             <div class="col-lg-6">
-
+                                <div class="form-group">
+                                    <label for="name" class="control-label">Nom</label>
+                                    {{ form_widget(form.name) }}
+                                    {{ form_errors(form.name) }}
+                                </div>
                                 <div class="form-group">
                                     <label for="startDate" class="control-label">Date de début</label>
                                     {{ form_widget(form.startDate) }}

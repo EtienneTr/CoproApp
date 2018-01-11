@@ -12,6 +12,7 @@ use AppBundle\Entity\Contract;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -22,6 +23,9 @@ class ContractType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add("name", TextType::class, array(
+                'attr' => ['class' => 'form-control'],
+            ))
             ->add("startDate", DateType::class, array(
                 'attr' => ['class' => 'form-control'],
                 'widget' => 'single_text',
@@ -36,14 +40,13 @@ class ContractType extends AbstractType
                 'attr' => ['class' => 'form-control selectpicker'],
                 'class' => 'UserBundle:User',
                 'choice_label' => 'username'
+            ))
+            ->add('attachment', FileType::class, array(
+                 'label' => 'Facture (PDF file)',
+                 'required' => false,
+                 'data' => null
             ));
-            //if(!$options['update']) {
-                $builder->add('attachment', FileType::class, array(
-                    'label' => 'Facture (PDF file)',
-                    'required' => false,
-                    'data' => null
-                ));
-            //}
+
             $builder->add("save", SubmitType::class, array(
                 'attr' => ['class' => 'btn btn-success'],
                 'label' => "Enregistrer un contrat"

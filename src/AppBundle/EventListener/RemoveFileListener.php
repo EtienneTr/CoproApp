@@ -35,7 +35,7 @@ class RemoveFileListener
         if ($entity instanceof Charge) {
             $file = $entity->getFile();
         }
-        
+
         if($file) {
             $this->uploader->remove($file);
         }

@@ -16,6 +16,7 @@
                 <table class="table">
                 <thead>
                 <tr>
+                    <th>Nom</th>
                     <th>Date de début</th>
                     <th>Date de fin</th>
                     <th>Pièce jointe</th>
@@ -25,6 +26,7 @@
                 <tbody>
                 {% for contract in contracts %}
                     <tr>
+                        <td>{{ contract.name }}</td>
                         <td>{{ contract.startDate|date('d/m/Y') }}</td>
                         <td>{{ contract.endDate|date('d/m/Y') }}</td>
                         <td>
