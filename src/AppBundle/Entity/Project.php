@@ -358,7 +358,7 @@ class Project
     {
         $members = $this->getUsers();
         if(sizeof($members) <= 0) return true;
-        return is_array($members) ? in_array($user, $members) : $user == $members;
+        return is_array($members) ? in_array($user, $members) : $members->contains($user);
     }
 
     public function hasAccess(User $user)

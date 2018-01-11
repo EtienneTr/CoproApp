@@ -19,6 +19,7 @@ use AppBundle\Service\FileUploader;
 use AppBundle\Service\ChargeManager;
 use AppBundle\Service\BankPaymentManager;
 use AppBundle\Form\ChargeType;
+use UserBundle\Service\UserService;
 
 class ChargesController extends Controller
 {
@@ -85,7 +86,7 @@ class ChargesController extends Controller
      * @Route("/charge/detail/{id}", name="charge_detail")
      * @Method({"GET"})
      */
-    public function detailChargeAction(ChargeManager $chargeManager, BankPaymentManager $paymentManager, $id)
+    public function detailChargeAction(ChargeManager $chargeManager, BankPaymentManager $paymentManager, UserService $userService, $id)
     {
         $charge = $chargeManager->getChargeById($id);
         $payments = $paymentManager->getByChargeId($id);

@@ -11,6 +11,7 @@ namespace AppBundle\Service;
 use AppBundle\Entity\SurveyVote;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\InvalidArgumentException;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use UserBundle\Service\UserService;
 
@@ -35,11 +36,13 @@ class SurveyManager extends CoproService
     public function checkAndCreateVote($idSurvey, $idOption)
     {
         $survey = $this->getSurvey($idSurvey);
+        $currentUser = $this->userService->getUser();
 
         if(!$survey)
         {
             throw new InvalidArgumentException("Erreur lors de la récupération du sondage");
         }
+
         #check option exist in surveys
         $optionArr = $this->getSurveyOption($idSurvey, $idOption);
         $option = array_pop($optionArr);
@@ -49,7 +52,6 @@ class SurveyManager extends CoproService
         }
 
         #check if user can vote
-        $currentUser = $this->userService->getUser();
 
         if($this->checkUserCanVote($idSurvey, $currentUser->getId()) != null)
         {

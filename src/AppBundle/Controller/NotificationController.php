@@ -26,19 +26,15 @@ class NotificationController extends Controller
      * @Route("/notification", name="notif_list")
      * @Method("GET")
      */
-    public function listAction()
+    public function listAction(NotificationService $notifService)
     {
         $notifiableRepo = $this->get('doctrine.orm.entity_manager')->getRepository('MgiletNotificationBundle:NotifiableNotification');
         $notifiable = $this->getUser()->getId();
-        $qb = $notifiableRepo->createQueryBuilder('nn')
-            ->join('nn.notification', 'n')
-            ->join('nn.notifiableEntity', 'ne')
-            ->where('ne.identifier = :id')
-            ->setParameter('id', $notifiable)
-            ->getQuery()->getResult();
+
+        $userNotification = $notifService->getUserNotification($notifiableRepo, $notifiable);
 
         return $this->render('AppBundle:notification:notification-list.html.twig', array(
-            'notifiableNotifications' => $qb
+            'notifiableNotifications' => $userNotification
         ));
     }
 
