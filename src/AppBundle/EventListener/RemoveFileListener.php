@@ -8,13 +8,13 @@
 
 namespace AppBundle\EventListener;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use AppBundle\Entity\Charge;
+use AppBundle\Entity\Contract;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use AppBundle\Service\FileUploader;
 
 
-class BillUploadListener
+class RemoveFileListener
 {
     private $uploader;
 
@@ -26,10 +26,18 @@ class BillUploadListener
     public function postRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+        $file = null;
+
+        if ($entity instanceof Contract) {
+            $file = $entity->getAttachment();
+        }
 
         if ($entity instanceof Charge) {
-            $fileName = $entity->getBill();
-            $this->uploader->remove($fileName);
+            $file = $entity->getFile();
+        }
+        
+        if($file) {
+            $this->uploader->remove($file);
         }
 
         return;

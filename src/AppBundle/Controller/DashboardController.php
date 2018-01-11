@@ -15,6 +15,7 @@ class DashboardController extends Controller
      */
     public function indexAction()
     {
+
         return $this->render('AppBundle:dashboard:dashboard.html.twig', array());
     }
 

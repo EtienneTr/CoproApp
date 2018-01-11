@@ -75,7 +75,7 @@ services:
         public: true
 
   #EVENTS
-    AppBundle\EventListener\BillUploadListener:
+    AppBundle\EventListener\RemoveFileListener:
         tags:
             - { name: doctrine.event_listener, event: postRemove }
 

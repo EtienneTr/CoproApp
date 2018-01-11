@@ -27,8 +27,15 @@
                     <tr>
                         <td>{{ contract.startDate|date('d/m/Y') }}</td>
                         <td>{{ contract.endDate|date('d/m/Y') }}</td>
-                        <td>{{ contract.attachment.name }} <a href="{{ path('download_file', { 'id': contract.attachment.id}) }}">Télécharger</a></td>
-                        <td><a class="btn btn-warning" href="{{ path('contract_edit', {'id': contract.id}) }}">Éditer</a></td>
+                        <td>
+                        {% if contract.attachment %}
+                            {{ contract.attachment.name }} <a href="{{ path('download_file', { 'id': contract.attachment.id}) }}">Télécharger</a>
+                        {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-warning" href="{{ path('contract_edit', {'id': contract.id}) }}">Éditer</a>
+                            <a class="btn btn-danger" href="{{ path('contract_delete', {'id': contract.id}) }}">Supprimer</a>
+                        </td>
                     </tr>
                 {% else %}
                     <td>Vous n'avez aucun contrat pour le moment.</td>

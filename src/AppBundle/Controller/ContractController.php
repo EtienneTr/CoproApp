@@ -102,4 +102,25 @@ class ContractController extends Controller
             'update' => true
         ));
     }
+
+    /**
+     * @Route("/contract/delete/{id}", name="contract_delete")
+     * @Method({"GET", "POST"})
+     */
+    public function deleteMessageAction(Request $request, ContractManager $contractManager, UserService $userService, $id)
+    {
+        $contract = $contractManager->findOne($id);
+
+        if (!$contract) {
+            throw $this->createNotFoundException('Ce projet n\'existe pas');
+        }
+
+        if (!$contract->isMember($userService->getUser())) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $contractManager->remove($contract);
+        //return $this->render('AppBundle:dashboard:dashboard.html.twig', array());
+        return $this->redirectToRoute('contract_all');
+    }
 }
