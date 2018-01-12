@@ -81,6 +81,22 @@ class ChargeManager extends CoproService
         return $req->getResult();
     }
 
+    function getPaidChargesForUser()
+    {
+        $userId = $this->userManager->getUser()->getId();
+
+        $qb = $this->repo
+            ->createQueryBuilder("c")
+            ->leftJoin('c.payments', 'cp')
+            ->where(':user = cp.owner')
+            ->andWhere('cp.paid = 1')
+            ->setParameter('user', $userId)
+            ->orderBy("cp.paymentDate", "DESC")
+            ->setMaxResults(5)
+            ->getQuery();
+        return $qb->getResult();
+    }
+
     function setChargePaid($charge)
     {
         $charge->setPaid(true);

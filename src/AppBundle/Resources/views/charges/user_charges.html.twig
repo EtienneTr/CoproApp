@@ -80,4 +80,35 @@
         {% endfor %}
     </div>
 
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Mes charges payées</h1>
+            </div>
+            <div class="col-xs-12 col-md-10 col-lg-8">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Montant</th>
+                        <th>Date</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for paidCharge in paidCharges %}
+                        <tr>
+                            <td>{{ paidCharge.title }}</td>
+                            <td>{{ paidCharge.amount }}</td>
+                            <td>{{ paidCharge.dueOn|date('Y-m-d') }}</td>
+                            <td><a href="{{ path('charge_detail', {'id': paidCharge.id}) }}" class="btn btn-info">Détail</a></td>
+                        </tr>
+                    {% else %}
+                        Aucune charge à afficher.
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
 {% endblock appbundle_content %}

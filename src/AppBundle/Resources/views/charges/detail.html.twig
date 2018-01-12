@@ -55,6 +55,7 @@
                                         <th>Date paiement</th>
                                         <th>Montant</th>
                                         <th>Type</th>
+                                        <th>Pièces jointes</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,6 +69,11 @@
                                                 {% else %}
                                                     Chèque
                                                 {% endif %}
+                                            </td>
+                                            <td>
+                                                {% for file in bankPayment.attachments %}
+                                                    <div>{{ file.name }}. <a href="{{ path('download_file', { 'id': file.id}) }}">Télécharger</a></div>
+                                                {% endfor %}
                                             </td>
                                         </tr>
                                     {% else %}

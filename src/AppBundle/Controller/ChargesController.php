@@ -76,9 +76,12 @@ class ChargesController extends Controller
      */
     public function userChargeAction(ChargeManager $manager)
     {
-        $charges = $manager->getUserChargesToPay();
+        $toPayCharges = $manager->getUserChargesToPay();
+        $paidCharges = $manager->getPaidChargesForUser();
+
         return $this->render('AppBundle:charges:user_charges.html.twig', array(
-            'charges' => $charges
+            'charges' => $toPayCharges,
+            'paidCharges' => $paidCharges
         ));
     }
 
