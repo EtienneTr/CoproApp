@@ -47,3 +47,9 @@ a.coprocardAboveLink {
 .panel-margin{
     margin-top: 15px;
 }
+.red{
+    background-color: indianred;
+}
+.green{
+    background-color: darkseagreen;
+}

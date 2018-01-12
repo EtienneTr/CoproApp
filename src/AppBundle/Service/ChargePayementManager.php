@@ -37,8 +37,7 @@ class ChargePayementManager extends CoproService
         $nbOwner = sizeof($owners);
         $equalAmount = $amount / $nbOwner;
 
-        foreach($owners as $user)
-        {
+        foreach ($owners as $user) {
             $payement = new ChargePayement();
             $payement->setCharge($charge);
             $payement->setPaid(false);
@@ -67,7 +66,7 @@ class ChargePayementManager extends CoproService
         $this->update($chargePayement);
     }
 
-    function getLastPaymentsForUser($userId)
+    function getLastUnpaidPaymentsForUser($userId)
     {
         $qb = $this->repo
             ->createQueryBuilder("p")
@@ -78,5 +77,38 @@ class ChargePayementManager extends CoproService
             ->getQuery();
 
         return $qb->getResult();
+    }
+
+    function getTotalPaymentForUserByMonth($userId)
+    {
+//        $req = $this->em->createQuery('
+//        SELECT
+//            DATE_FORMAT(c.paymentDate,\'%m-%Y\')  AS MOIS,
+//            SUM(c.amount)  AS amount
+//        FROM  charge_payement c
+//        WHERE c.owner_id LIKE :userId AND MONTH(c.paymentDate) IS NOT NULL
+//        GROUP BY DATE_FORMAT(c.paymentDate,\'%m-%Y\')
+//        ORDER BY DATE_FORMAT(c.paymentDate,\'%m-%Y\')  ASC;')
+//            ->setParameters(array(
+//                'userId' => $userId
+//            ));
+//
+//        return $req->getResult();
+    }
+    function getPaidPaymentForUserByMonth($userId)
+    {
+        //$req = $this->em->createQuery('
+//        SELECT
+//            DATE_FORMAT(c.paymentDate,\'%m-%Y\')  AS MOIS,
+//            SUM(c.amount)  AS amount
+//        FROM  charge_payement c
+//        WHERE c.owner_id LIKE :userId AND MONTH(c.paymentDate) IS NOT NULL AND c.paid
+//        GROUP BY DATE_FORMAT(c.paymentDate,\'%m-%Y\')
+//        ORDER BY DATE_FORMAT(c.paymentDate,\'%m-%Y\')  ASC;')
+//            ->setParameters(array(
+//                'userId' => $userId
+//            ));
+//
+//        return $req->getResult();
     }
 }
