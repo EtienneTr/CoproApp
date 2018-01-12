@@ -9,10 +9,8 @@
 namespace AppBundle\Service;
 
 use Doctrine\ORM\EntityManager;
-use Psr\Log\InvalidArgumentException;
-use AppBundle\Service\ChargePayementManager;
 
-class BankPaymentManager extends CoproService
+class BankPaymentManager extends CoproService   
 {
     private $fileUploader;
     private $chargePayementManager;
@@ -32,7 +30,7 @@ class BankPaymentManager extends CoproService
         $chargePayment = $this->chargePayementManager->getByUserAndCharge($payment->getUser()->getId(), $charge);
         if($chargePayment == null)
         {
-            throw new InvalidArgumentException("L'utilisateur n'a pas de paiement pour cette charge.");
+            throw new \InvalidArgumentException("L'utilisateur n'a pas de paiement pour cette charge.");
         }
 
         #check amount limit
@@ -40,7 +38,7 @@ class BankPaymentManager extends CoproService
         $userChargeAmount = $chargePayment->getAmount();
         if($paymentAmount > $userChargeAmount)
         {
-            throw new InvalidArgumentException("Le montant du paiement est trop élevé, la charge étant de ".$userChargeAmount." €.");
+            throw new \UnexpectedValueException("Le montant du paiement est trop élevé, la charge étant de ".$userChargeAmount." €.");
         }
         else
         {
@@ -107,7 +105,7 @@ class BankPaymentManager extends CoproService
         #check sum all payments + current sum
         if($paymentAmount + $sumPayments > $userChargeAmount)
         {
-            throw new InvalidArgumentException("Le montant du paiement est trop élevé, la charge restante étant de ".($userChargeAmount - $sumPayments)." €.");
+            throw new \UnexpectedValueException("Le montant du paiement est trop élevé, la charge restante étant de ".($userChargeAmount - $sumPayments)." €.");
         }
 
         #full paiement

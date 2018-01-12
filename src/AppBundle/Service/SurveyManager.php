@@ -35,6 +35,8 @@ class SurveyManager extends CoproService
 
     public function checkAndCreateVote($idSurvey, $idOption)
     {
+        #ERRORS are catched in controller
+
         $survey = $this->getSurvey($idSurvey);
         $currentUser = $this->userService->getUser();
 

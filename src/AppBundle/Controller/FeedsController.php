@@ -34,12 +34,14 @@ class FeedsController extends Controller
 
         if(!$message)
         {
-            throw $this->createNotFoundException('Ce message n\'existe pas');
+            $this->addFlash('danger', "Ce message n'existe pas.");
+            return $this->redirectToRoute("message_all");
         }
 
         if(!$message->hasAccess($userService->getUser()))
         {
-            throw $this->createAccessDeniedException();
+            $this->addFlash('danger', "Vous ne pouvez pas accéder à ce message.");
+            return $this->redirectToRoute("message_all");
         }
 
         $newFeed = new MessageFeed();
@@ -59,6 +61,8 @@ class FeedsController extends Controller
                 $newFeed->setSendDate(new \DateTime("now"));
 
                 $feedManager->postMessage($newFeed);
+
+                $this->addFlash('info', "Votre réponse a bien été posté.");
 
                 return $this->redirect($request->getUri());
             }

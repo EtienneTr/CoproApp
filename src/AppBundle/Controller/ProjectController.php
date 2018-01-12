@@ -45,7 +45,7 @@ class ProjectController extends Controller
             $project->setOwner($userService->getUser());
 
             $projectManager->postProject($project);
-
+            $this->addFlash('info', "Votre projet a bien été posté.");
             return $this->redirectToRoute('project_user');
         }
 
@@ -77,12 +77,14 @@ class ProjectController extends Controller
 
         if(!$project)
         {
-            throw $this->createNotFoundException('Ce projet n\'existe pas.');
+            $this->addFlash('danger', "Ce projet n'existe pas.");
+            return $this->redirectToRoute("project_user");
         }
 
         if(!$project->hasAccess($userService->getUser()))
         {
-            throw $this->createAccessDeniedException();
+            $this->addFlash('danger', "Vous ne pouvez pas accéder à cet élément.");
+            return $this->redirectToRoute("project_user");
         }
 
         #form add attachment
@@ -99,6 +101,7 @@ class ProjectController extends Controller
             $fileName = $fileUploader->uploadFile($newFile);
             #add new attachement
             $project->getAttachment()->add($fileName);
+            $this->addFlash('info', "Votre pièce jointe a bien été ajoutée.");
             $projectManager->update($project);
         }
 
@@ -115,6 +118,7 @@ class ProjectController extends Controller
             $newFeed->setSendDate(new \DateTime("now"));
 
             $project->getThread()->add($newFeed);
+            $this->addFlash('info', "Votre message a bien été posté.");
             $projectManager->update($project);
         }
 
@@ -135,12 +139,14 @@ class ProjectController extends Controller
 
         if(!$project)
         {
-            throw $this->createNotFoundException('Ce projet n\'existe pas');
+            $this->addFlash('danger', "Ce projet n'existe pas.");
+            return $this->redirectToRoute("project_user");
         }
 
         if(!$project->isAuthor($userService->getUser()))
         {
-            throw $this->createAccessDeniedException("Vous de pouvez pas éditer ce projet.");
+            $this->addFlash('danger', "Vous ne pouvez pas effectuer cette action.");
+            return $this->redirectToRoute("project_user");
         }
 
         $form = $this->createForm(ProjectType::class, $project, array('update' => true));
@@ -150,6 +156,7 @@ class ProjectController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $projectManager->postUpdate($project);
+            $this->addFlash('info', "Votre modification a bien été sauvegardée.");
             return $this->redirectToRoute('project_detail', array('id' => $id));
         }
 
@@ -168,14 +175,17 @@ class ProjectController extends Controller
         $project = $projectManager->findOne($id);
 
         if (!$project) {
-            throw $this->createNotFoundException('Ce projet n\'existe pas');
+            $this->addFlash('danger', "Ce projet n'existe pas.");
+            return $this->redirectToRoute("project_user");
         }
 
         if (!$project->isAuthor($userService->getUser())) {
-            throw $this->createAccessDeniedException("Vous ne pouvez pas éditer ce projet");
+            $this->addFlash('danger', "Vous ne pouvez pas effectuer cette action.");
+            return $this->redirectToRoute("project_user");
         }
 
         $projectManager->remove($project);
+        $this->addFlash('info', "Votre projet a bien été supprimé.");
         return $this->redirectToRoute('project_user');
     }
 

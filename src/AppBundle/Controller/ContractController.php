@@ -72,12 +72,14 @@ class ContractController extends Controller
 
         if(!$contract)
         {
-            throw $this->createNotFoundException('Ce projet n\'existe pas');
+            $this->addFlash('danger', "Ce contrat n'existe pas.");
+            return $this->redirectToRoute("contract_all");
         }
 
         if(!$contract->isMember($userService->getUser()))
         {
-            throw $this->createAccessDeniedException();
+            $this->addFlash('danger', "Vous ne pouvez pas accéder à ce contrat.");
+            return $this->redirectToRoute("contract_all");
         }
 
         $form = $this->createForm(ContractType::class, $contract, array('update' => true));
@@ -94,6 +96,9 @@ class ContractController extends Controller
                 $contract->setAttachment($attName);
             }
             $contractManager->update($contract);
+
+            $this->addFlash('info', "le contrat a été correctement enregistré.");
+
             return $this->redirectToRoute('contract_all');
         }
 
@@ -112,15 +117,17 @@ class ContractController extends Controller
         $contract = $contractManager->findOne($id);
 
         if (!$contract) {
-            throw $this->createNotFoundException('Ce contrat n\'existe pas');
+            $this->addFlash('danger', "Ce contrat n'existe pas.");
+            return $this->redirectToRoute("contract_all");
         }
 
         if (!$contract->isMember($userService->getUser())) {
-            throw $this->createAccessDeniedException();
+            $this->addFlash('danger', "Vous ne pouvez pas effectuer cette action.");
+            return $this->redirectToRoute("contract_all");
         }
 
         $contractManager->remove($contract);
-        //return $this->render('AppBundle:dashboard:dashboard.html.twig', array());
+        $this->addFlash('info', "le contrat a été correctement supprimé.");
         return $this->redirectToRoute('contract_all');
     }
 }
