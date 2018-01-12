@@ -248,5 +248,11 @@ class Message
         return $this->isAuthor($user) || $this->isMember($user);
     }
 
+    public function isArchived()
+    {
+        return $this->getArchived() == 1;
+    }
+
+
 }
 

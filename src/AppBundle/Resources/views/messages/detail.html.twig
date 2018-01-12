@@ -27,7 +27,7 @@
 
         {# Message body + respnses #}
         <div class="panel-body">
-            {% if message.isAuthor(app.user) %}
+            {% if not message.archived and message.isAuthor(app.user) %}
                 <a class="message-submit btn btn-warning" href="{{ path('message_edit', {'id': message.id}) }}">Éditer</a>
                 <br/>
                 <br/>

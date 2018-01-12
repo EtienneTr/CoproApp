@@ -105,7 +105,7 @@ class MessageController extends Controller
             return $this->redirectToRoute("message_all");
         }
 
-        if(!$message->isAuthor($userService->getUser()))
+        if(!$message->isAuthor($userService->getUser()) || $message->isArchived())
         {
             $this->addFlash('danger', "Vous ne pouvez pas effectuer cette action.");
             return $this->redirectToRoute("message_all");

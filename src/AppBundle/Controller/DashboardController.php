@@ -24,8 +24,6 @@ class DashboardController extends Controller
         $user = $userService->getUser();
         $userMessages = $messageManager->getLastMessageForUser($user);
         $userProjects = $projectManager->getLastProjectsForUser($user);
-//        $totalcharges = $chargePayementManager->getTotalPaymentForUserByMonth($user);
-//        $paidcharges = $chargePayementManager->getPaidPaymentForUserByMonth($user);
         $userCharges = $chargeManager->getLastChargesForUser($user);
         $userPayments = $chargePayementManager->getLastUnpaidPaymentsForUser($user);
 
