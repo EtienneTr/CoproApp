@@ -66,4 +66,17 @@ class ChargePayementManager extends CoproService
         $chargePayement->setPaymentDate(new \DateTime("now"));
         $this->update($chargePayement);
     }
+
+    function getLastPaymentsForUser($userId)
+    {
+        $qb = $this->repo
+            ->createQueryBuilder("p")
+            ->where('p.owner = :user')
+            ->andWhere('p.paid = 0')
+            ->setParameter('user', $userId)
+            ->setMaxResults(5)
+            ->getQuery();
+
+        return $qb->getResult();
+    }
 }

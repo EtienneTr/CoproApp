@@ -72,4 +72,19 @@ class ProjectManager extends CoproService
         return $queryBuilder->getResult();
     }
 
+    public function getLastProjectsForUser($user)
+    {
+        $queryBuilder = $this->repo->createQueryBuilder('p')
+            ->leftJoin('p.users', 'pu')
+            ->where('(pu.id IS NULL')
+            ->orWhere(':user MEMBER OF p.users)')
+            ->orWhere('p.owner = :user')
+            ->orderBy('p.creationDate', 'DESC')
+            ->setMaxResults(5)
+            ->setParameter('user', $user)
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
+
 }

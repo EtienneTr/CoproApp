@@ -1,5 +1,31 @@
 {% extends "@App/base.html.twig" %}
 
 {% block appbundle_content %}
+    {% for message in messages %}
+        <a href="{{ path('message_detail', {'id' : message.id}) }}" class="coprocardAboveLink">
+            <div class="coprocard corprocard-a">
+                <p class="coproMessage lead">
+                    {{ message.body }}
+                </p>
+
+                <p class="dateinfos">{{ message.sendDate|date('d/m/Y à H:i:s') }}
+                    par {{ message.sender }}</p>
+            </div>
+        </a>
+    {% endfor %}
+
+    projets
+    {% for project in projects %}
+        <a href="{{ path('project_detail', {'id' : project.id}) }}" class="coprocardAboveLink">
+            <div class="coprocard corprocard-a">
+                <p class="coproMessage lead">
+                    {{ project.name }}
+                </p>
+
+                <p class="dateinfos">{{ project.creationDate|date('d/m/Y à H:i:s') }}
+                    par {{ project.owner }}</p>
+            </div>
+        </a>
+    {% endfor %}
 
 {% endblock %}

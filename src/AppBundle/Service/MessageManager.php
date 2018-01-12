@@ -73,11 +73,17 @@ class MessageManager extends CoproService
 
     public function getLastMessageForUser($userId)
     {
-        $qb = $this->repo->createQueryBuilder("m");
-        $qb->leftJoin('m.receiver', 'm')
-            ->where('m.id IS NULL')
-            ->orWhere(':user MEMBER OF m.receiver')
+        $qb = $this->repo
+            ->createQueryBuilder("m")
+            ->leftJoin('m.receiver', 'mr')
+            ->where('(mr.id IS NULL')
+            ->orWhere(':user MEMBER OF m.receiver)')
+            ->orWhere(':user = m.sender')
             ->setParameter('user', $userId)
+            ->orderBy("m.sendDate", "DESC")
+            ->setMaxResults(5)
             ->getQuery();
+
+        return $qb->getResult();
     }
 }
