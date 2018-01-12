@@ -60,7 +60,7 @@ class Project
     /**
      * @var ProjectFeed
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProjectFeed", mappedBy="project", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProjectFeed", mappedBy="project", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $thread;
@@ -68,7 +68,7 @@ class Project
     /**
      * @var Survey
      *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Survey", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Survey", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $survey;
@@ -76,7 +76,7 @@ class Project
     /**
      * @var string
      *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\File", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\File", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $attachment;

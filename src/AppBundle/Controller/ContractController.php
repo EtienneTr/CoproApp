@@ -105,14 +105,14 @@ class ContractController extends Controller
 
     /**
      * @Route("/contract/delete/{id}", name="contract_delete")
-     * @Method({"GET", "POST"})
+     * @Method({"GET"})
      */
-    public function deleteMessageAction(Request $request, ContractManager $contractManager, UserService $userService, $id)
+    public function deleteMessageAction(ContractManager $contractManager, UserService $userService, $id)
     {
         $contract = $contractManager->findOne($id);
 
         if (!$contract) {
-            throw $this->createNotFoundException('Ce projet n\'existe pas');
+            throw $this->createNotFoundException('Ce contrat n\'existe pas');
         }
 
         if (!$contract->isMember($userService->getUser())) {

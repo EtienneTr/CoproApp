@@ -159,4 +159,24 @@ class ProjectController extends Controller
         ));
     }
 
+    /**
+     * @Route("/project/delete/{id}", name="project_delete")
+     * @Method({"GET"})
+     */
+    public function deleteProjectAction(ProjectManager $projectManager, UserService $userService, $id)
+    {
+        $project = $projectManager->findOne($id);
+
+        if (!$project) {
+            throw $this->createNotFoundException('Ce projet n\'existe pas');
+        }
+
+        if (!$project->isAuthor($userService->getUser())) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas éditer ce projet");
+        }
+
+        $projectManager->remove($project);
+        return $this->redirectToRoute('project_user');
+    }
+
 }

@@ -44,7 +44,7 @@ class ChargeType extends AbstractType
                 'multiple' => true
             ))
             ->add("contract", EntityType::class, array(
-                'attr' => ['class' => 'form-control selectpicker'],
+                'attr' => ['class' => 'form-control selectpicker select_other_than_user'],
                 'class' => 'AppBundle:Contract',
                 'choice_label' => 'name',
                 'required' => false,

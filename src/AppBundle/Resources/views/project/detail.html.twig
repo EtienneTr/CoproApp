@@ -30,6 +30,7 @@
             <div class="panel-body">
                 {% if project.isAuthor(app.user) %}
                     <a class="message-submit btn btn-warning" href="{{ path('project_edit', {'id': project.id}) }}">Éditer</a>
+                    <a class="message-submit btn btn-danger" href="{{ path('project_delete', {'id': project.id}) }}">Supprimer</a>
                     <br/>
                     <br/>
                 {% endif %}

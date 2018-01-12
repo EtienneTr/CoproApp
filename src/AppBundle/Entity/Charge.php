@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Date;
 use UserBundle\Entity\User;
-use AppBundle\Entity\Contract;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Charge
@@ -40,6 +40,7 @@ class Charge
      * @var date
      *
      * @ORM\Column(name="due_on", type="date")
+     * @Assert\GreaterThan("today")
      */
     private $dueOn;
     /**

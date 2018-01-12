@@ -10,6 +10,7 @@ namespace AppBundle\EventListener;
 
 use AppBundle\Entity\Charge;
 use AppBundle\Entity\Contract;
+use AppBundle\Entity\Project;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use AppBundle\Service\FileUploader;
 
@@ -27,17 +28,29 @@ class RemoveFileListener
     {
         $entity = $args->getEntity();
         $file = null;
-
+        $files = null;
         if ($entity instanceof Contract) {
             $file = $entity->getAttachment();
         }
 
         if ($entity instanceof Charge) {
-            $file = $entity->getFile();
+            $file = $entity->getBill();
+        }
+
+        if($entity instanceof Project)
+        {
+            $files = $entity->getAttachment();
         }
 
         if($file) {
             $this->uploader->remove($file);
+        }
+        if($files)
+        {
+            foreach($files as $file)
+            {
+                $this->uploader->remove($file);
+            }
         }
 
         return;
