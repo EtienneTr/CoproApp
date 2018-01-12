@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use UserBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Contract
@@ -26,6 +27,7 @@ class Contract
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotNull()
      */
     private $name;
 
@@ -33,6 +35,7 @@ class Contract
      * @var \DateTime
      *
      * @ORM\Column(name="startDate", type="date")
+     * @Assert\NotNull()
      */
     private $startDate;
 
@@ -40,6 +43,10 @@ class Contract
      * @var \DateTime
      *
      * @ORM\Column(name="endDate", type="date")
+     * @Assert\Expression(
+     *     "this.getEndDate() > this.getStartDate()",
+     *     message="La date de fin ne peut être inférieur à la date de début!"
+     * )
      */
     private $endDate;
 
@@ -54,6 +61,7 @@ class Contract
      * @var User
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $user;
 

@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use UserBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Model\Thread;
 
 /**
@@ -28,6 +28,7 @@ class MessageFeed extends Thread
      * @var message
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Message", inversedBy="feeds")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $message;
 

@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Model\Thread;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ProjectFeed
@@ -47,7 +48,7 @@ class ProjectFeed extends Thread
     }
 
     /**
-     * @param project $messages
+     * @param project
      */
     public function setProject($project)
     {

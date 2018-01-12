@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * SurveyOption
@@ -25,6 +26,7 @@ class SurveyOption
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\NotNull()
      */
     private $title;
 
@@ -32,6 +34,7 @@ class SurveyOption
      * @var int
      *
      * @ORM\Column(name="votesNumber", type="integer", nullable=true)
+     * @Assert\Type("integer")
      */
     private $votesNumber;
 

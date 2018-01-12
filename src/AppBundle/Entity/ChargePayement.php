@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\Charge;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ChargePayement
@@ -40,19 +40,24 @@ class ChargePayement
      * @var float
      *
      * @ORM\Column(name="amount", type="float")
+     * @Assert\Type("float")
+     * @Assert\GreaterThan(0)
+     * @Assert\NotNull()
      */
     private $amount;
 
     /**
      * @ORM\ManyToOne(targetEntity="Charge", inversedBy="payments")
      * @ORM\JoinColumn(name="Charge_id", referencedColumnName="id")
+     * @Assert\NotNull()
      */
-
     private $charge;
+
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $owner;
 

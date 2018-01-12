@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use UserBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Message
@@ -26,6 +27,7 @@ class Message
      * @var string
      *
      * @ORM\Column(name="body", type="text")
+     * @Assert\NotNull()
      */
     private $body;
 
@@ -42,12 +44,14 @@ class Message
      * @ORM\Column(name="receivedDate", type="datetime", nullable=true)
      */
     private $receivedDate;
+
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $sender;
+
     /**
      * @var User
      * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User")

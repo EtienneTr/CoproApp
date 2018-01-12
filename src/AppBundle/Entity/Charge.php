@@ -28,27 +28,34 @@ class Charge
      * @var float
      *
      * @ORM\Column(name="amount", type="float")
+     * @Assert\Type("float")
+     * @Assert\GreaterThan(0)
      */
     private $amount;
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string")
+     * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\NotNull()
      */
     private $title;
+
     /**
      * @var date
      *
      * @ORM\Column(name="due_on", type="date")
      * @Assert\GreaterThan("today")
+     * @Assert\NotNull()
      */
     private $dueOn;
+
     /**
      * @var Date
      *
      * @ORM\Column(name="creation_date", type="date")
      */
     private $creationDate;
+
     /**
      * @var ChargePayement
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ChargePayement", mappedBy="charge", cascade={"remove"})
@@ -61,7 +68,6 @@ class Charge
      * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
-
     private $owners;
 
     /**
@@ -69,7 +75,6 @@ class Charge
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
-
     private $paid;
 
     /**

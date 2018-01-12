@@ -2,7 +2,8 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping    as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * SurveyVote
@@ -25,12 +26,14 @@ class SurveyVote
      * @var survey
      * @ORM\ManyToOne(targetEntity="Survey", inversedBy="votes")
      * @ORM\JoinColumn(name="survey_id", referencedColumnName="id")
+     * @Assert\NotNull()
      */
     private $survey;
 
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @Assert\NotNull()
      */
     private $user;
 

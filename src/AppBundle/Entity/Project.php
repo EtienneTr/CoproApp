@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use UserBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Project
@@ -26,6 +27,7 @@ class Project
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotNull()
      */
     private $name;
 
@@ -47,6 +49,7 @@ class Project
      * @var \DateTime
      *
      * @ORM\Column(name="creationDate", type="date")
+     * @Assert\Type("date")
      */
     private $creationDate;
 
@@ -54,6 +57,7 @@ class Project
      * @var \DateTime
      *
      * @ORM\Column(name="closingDate", type="date", nullable=true)
+     * @Assert\GreaterThan("today")
      */
     private $closingDate;
 

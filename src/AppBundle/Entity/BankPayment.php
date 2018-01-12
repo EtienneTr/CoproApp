@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use UserBundle\Entity\User;
 use AppBundle\Enum\BankPaymentTypeEnum;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * BankPayment
@@ -27,13 +28,17 @@ class BankPayment
      * @var float
      *
      * @ORM\Column(name="amount", type="float")
+     * @Assert\Type("float")
+     * @Assert\GreaterThan(0)
      */
     private $amount;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="paymentDate", type="datetime", nullable=true)
+     * @ORM\Column(name="paymentDate", type="datetime")
+     * @Assert\NotNull()
+     * @Assert\DateTime()
      */
     private $paymentDate;
 
@@ -41,20 +46,22 @@ class BankPayment
      * @var string
      *
      * @ORM\ManyToMany(targetEntity="File", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $attachments;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="paymentType", type="string", length=255, nullable=true)
+     * @ORM\Column(name="paymentType", type="string", length=255)
+     * @Assert\NotNull()
      */
     private $paymentType;
 
     /**
      * @ORM\ManyToOne(targetEntity="Charge")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $charge;
 
@@ -62,6 +69,7 @@ class BankPayment
      * @var User
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $user;
 
