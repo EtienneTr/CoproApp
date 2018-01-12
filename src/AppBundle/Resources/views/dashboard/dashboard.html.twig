@@ -65,7 +65,8 @@
                                        class="coprocardAboveLink">
                                         <div class="coprocard coprocard-a">
                                             <p class="coproMessage lead">
-                                                {{ charge.amount }}
+                                                {{ charge.title }} -
+                                                {{ charge.amount }}€
                                             </p>
 
                                             <p class="dateinfos">{{ charge.creationDate|date('d/m/Y à H:i:s') }}
@@ -89,7 +90,8 @@
                                        class="coprocardAboveLink">
                                         <div class="coprocard coprocard-a">
                                             <p class="coproMessage lead">
-                                                {{ payment.amount }}
+                                                {{ payment.charge.title }} -
+                                                {{ payment.amount }}€
                                             </p>
                                         </div>
                                     </a>
