@@ -37,7 +37,7 @@ class ChargesController extends Controller
 
             $charge->setCreationDate(new \DateTime('now'));
 
-            $bill = $form->get('bill')->getData();//$charge->getBill();
+            $bill = $form->get('bill')->getData();
             
             if($bill)
             {
@@ -96,12 +96,14 @@ class ChargesController extends Controller
 
         if(!$charge)
         {
-            throw $this->createNotFoundException("Cette charge n'existe pas.");
+            $this->addFlash('danger', "Cette charge n'existe pas.");
+            return $this->redirectToRoute("charge_user");
         }
 
         if(!$charge->hasAccess($userService->getUser()))
         {
-            throw $this->createAccessDeniedException();
+            $this->addFlash('danger', "Vous ne pouvez pas accéder à cette charge.");
+            return $this->redirectToRoute("charge_user");
         }
 
         return $this->render('AppBundle:charges:detail.html.twig', array(

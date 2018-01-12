@@ -30,17 +30,27 @@ class SurveyController extends  Controller
         $project = $projectManager->findOne($idProject);
         if(!$project)
         {
-            throw $this->createNotFoundException('Ce projet n\'existe pas.');
+            $this->addFlash('danger', "Ce projet n'existe pas.");
+            return $this->redirectToRoute("project_user");
         }
 
         if(!$project->hasAccess($userService->getUser()))
         {
-            throw $this->createAccessDeniedException();
+            $this->addFlash('danger', "Vous ne pouvez pas effectuer cette action.");
+            return $this->redirectToRoute("project_user");
         }
-
-        $surveyManager->checkAndCreateVote($idSurvey,$idOption);
-
-        return $this->redirectToRoute("project_detail", array('id' => $idProject));
+        #catch errors from service for flash message view
+        try {
+            $surveyManager->checkAndCreateVote($idSurvey, $idOption);
+        }
+        catch(\Exception $exception)
+        {
+            $this->addFlash('danger', $exception->getMessage());
+        }
+        finally
+        {
+            return $this->redirectToRoute("project_detail", array('id' => $idProject));
+        }
 
     }
 }

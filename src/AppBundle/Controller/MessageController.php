@@ -36,6 +36,7 @@ class MessageController extends Controller
 
             $manager->postMessage($message);
 
+            $this->addFlash('info', "Votre message a bien été posté.");
             return $this->redirectToRoute('message_all');
         }
 
@@ -100,12 +101,14 @@ class MessageController extends Controller
 
         if(!$message)
         {
-            throw $this->createNotFoundException('Ce message n\'existe pas');
+            $this->addFlash('danger', "Ce message n'existe pas.");
+            return $this->redirectToRoute("message_all");
         }
 
         if(!$message->isAuthor($userService->getUser()))
         {
-            throw $this->createAccessDeniedException();
+            $this->addFlash('danger', "Vous ne pouvez pas effectuer cette action.");
+            return $this->redirectToRoute("message_all");
         }
 
         $form = $this->createForm(MessageType::class, $message);
@@ -115,6 +118,7 @@ class MessageController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $messageManager->update($message);
+            $this->addFlash('info', "Votre modification a bien été sauvegardée.");
             return $this->redirectToRoute('message_detail', array('id' => $id));
         }
 
