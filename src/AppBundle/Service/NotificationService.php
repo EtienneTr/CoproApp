@@ -3,6 +3,7 @@
 namespace AppBundle\Service;
 
 
+use AppBundle\Entity\ChargePayement;
 use AppBundle\Entity\Message;
 use AppBundle\Entity\MessageFeed;
 use AppBundle\Entity\Project;
@@ -40,6 +41,7 @@ class NotificationService
             ->join('nn.notification', 'n')
             ->join('nn.notifiableEntity', 'ne')
             ->where('ne.identifier = :id')
+            ->orderBy('n.date', 'DESC')
             ->setParameter('id', $notifiable);
 
         return $qb->getQuery()->getResult();
@@ -107,5 +109,16 @@ class NotificationService
                 $user
             );
         }
+    }
+
+    public function createChargePaymentNotification(ChargePayement $entity)
+    {
+        $user = $entity->getowner();
+        $this->createUserNotification(
+            "Nouvelle charge vous concernant.",
+            "Une nouvelle charge a été créée avec un paiment vous concernant",
+            "charge/detail/".$entity->getCharge()->getId(),
+            $user
+        );
     }
 }

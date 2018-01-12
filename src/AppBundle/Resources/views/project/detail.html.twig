@@ -42,12 +42,15 @@
                         <h2>Sondages</h2>
                         <div class="survey-container">
                             {% for survey in project.survey %}
+                                {% set hasVoted = survey.hasVoted(app.user) %}
                                 <div class="coprocard coprocard-survey">
                                     <p class="lead">{{ survey.title }}</p>
                                     <ul>
                                         {% for option in survey.options %}
                                             <li>{{ option.title }} (nb de votes : {{ option.votesNumber }})</li>
+                                            {% if not hasVoted %}
                                             <a href="{{ path('survey_vote', { 'idProject': project.id,'idSurvey': survey.id, 'idOption': option.id}) }}">Voter</a>
+                                            {% endif %}
                                         {% endfor %}
                                     </ul>
                                 </div>

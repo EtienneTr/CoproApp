@@ -8,6 +8,7 @@
 
 namespace AppBundle\EventListener;
 
+use AppBundle\Entity\ChargePayement;
 use AppBundle\Entity\Message;
 use AppBundle\Entity\MessageFeed;
 use AppBundle\Entity\Project;
@@ -44,6 +45,12 @@ class NotificationListener
         if($entity instanceof Project)
         {
             $notifService->createProjectNotification($entity);
+        }
+
+        #Charge payment
+        if($entity instanceof ChargePayement)
+        {
+            $notifService->createChargePaymentNotification($entity);
         }
         return;
     }

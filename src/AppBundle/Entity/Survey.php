@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -116,5 +117,13 @@ class Survey
     public function setVotes($votes)
     {
         $this->votes = $votes;
+    }
+
+    public function hasVoted($user)
+    {
+        #get votes for user
+        $votes = $this->getVotes();
+        $criteria = Criteria::create()->where(Criteria::expr()->eq('user', $user));
+        return $votes->matching($criteria)->toArray();
     }
 }
