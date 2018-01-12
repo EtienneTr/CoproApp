@@ -56,11 +56,23 @@
                 <div class="col-lg-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            TBD
+                            Dernières charges
                         </div>
                         <div class="panel-body">
                             <div class="row">
+                                {% for charge in userCharge %}
+                                    <a href="{{ path('charge_detail', {'id' : charge.id}) }}"
+                                       class="coprocardAboveLink">
+                                        <div class="coprocard coprocard-a">
+                                            <p class="coproMessage lead">
+                                                {{ charge.amount }}
+                                            </p>
 
+                                            <p class="dateinfos">{{ charge.creationDate|date('d/m/Y à H:i:s') }}
+                                                </p>
+                                        </div>
+                                    </a>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -68,11 +80,20 @@
                 <div class="col-lg-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            TBD
+                            Derniers paiements à effectuer
                         </div>
                         <div class="panel-body">
                             <div class="row">
-
+                                {% for payment in userPayments %}
+                                    <a href="{{ path('charge_detail', {'id' : payment.charge.id}) }}"
+                                       class="coprocardAboveLink">
+                                        <div class="coprocard coprocard-a">
+                                            <p class="coproMessage lead">
+                                                {{ payment.amount }}
+                                            </p>
+                                        </div>
+                                    </a>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>

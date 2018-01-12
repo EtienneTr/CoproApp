@@ -21,15 +21,19 @@ class DashboardController extends Controller
     public function indexAction(MessageManager $messageManager, ProjectManager $projectManager,
                                 ChargeManager $chargeManager, ChargePayementManager $chargePayementManager, UserService $userService)
     {
-
-        $userMessages = $messageManager->getLastMessageForUser($userService->getUser());
-        $userProjects = $projectManager->getLastProjectsForUser($userService->getUser());
-        #userCharges = getLastChargesForUser
-        #userPayments = getLastPaymentsForUser
+        $user = $userService->getUser();
+        $userMessages = $messageManager->getLastMessageForUser($user);
+        $userProjects = $projectManager->getLastProjectsForUser($user);
+//        $totalcharges = $chargePayementManager->getTotalPaymentForUserByMonth($user);
+//        $paidcharges = $chargePayementManager->getPaidPaymentForUserByMonth($user);
+        $userCharges = $chargeManager->getLastChargesForUser($user);
+        $userPayments = $chargePayementManager->getLastUnpaidPaymentsForUser($user);
 
         return $this->render('AppBundle:dashboard:dashboard.html.twig', array(
             'messages'=> $userMessages,
-            'projects' => $userProjects
+            'projects' => $userProjects,
+            'userCharge' => $userCharges,
+            'userPayments' => $userPayments
         ));
     }
 

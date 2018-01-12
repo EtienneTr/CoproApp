@@ -47,7 +47,6 @@ a.coprocardAboveLink {
 .panel-margin{
     margin-top: 15px;
 }
-
 .error-msg{
     text-align: center;
 }
@@ -55,4 +54,11 @@ a.coprocardAboveLink {
 .error-container {
     position: absolute;
     z-index: 10;
+}
+.red{
+    background-color: indianred;
+}
+
+.green{
+    background-color: darkseagreen;
 }

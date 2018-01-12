@@ -30,6 +30,7 @@
                     <th>Montant</th>
                     <th>Status</th>
                     <th>Date fin paiement</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -44,6 +45,7 @@
                         {% endif %}
 
                         <td>{% if payment.paymentDate %} {{ payment.paymentDate|date('d/m/Y à H:i:s') }} {% endif %}</td>
+                        <td><i class="fa fa-plus-circle"></i></td>
                     </tr>
                     <tr>
                         <td colspan="4">

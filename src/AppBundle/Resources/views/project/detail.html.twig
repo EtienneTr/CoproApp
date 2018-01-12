@@ -45,14 +45,17 @@
                                 {% set hasVoted = survey.hasVoted(app.user) %}
                                 <div class="coprocard coprocard-survey">
                                     <p class="lead">{{ survey.title }}</p>
-                                    <ul>
+                                    <div>
                                         {% for option in survey.options %}
-                                            <li>{{ option.title }} (nb de votes : {{ option.votesNumber }})</li>
-                                            {% if not hasVoted %}
-                                            <a href="{{ path('survey_vote', { 'idProject': project.id,'idSurvey': survey.id, 'idOption': option.id}) }}">Voter</a>
-                                            {% endif %}
+                                            <div class="well well-sm">
+                                                {{ option.title }} (nb de votes : {{ option.votesNumber }})
+                                                {% if not hasVoted %}
+                                                    <a href="{{ path('survey_vote', { 'idProject': project.id,'idSurvey': survey.id, 'idOption': option.id}) }}"><i
+                                                                class="fa fa-thumbs-up"></i> </a>
+                                                {% endif %}
+                                            </div>
                                         {% endfor %}
-                                    </ul>
+                                    </div>
                                 </div>
                             {% endfor %}
 
@@ -61,7 +64,8 @@
                     <div class="col-lg-6">
                         <h2>Pièces jointes</h2>
                         {% for file in project.attachment %}
-                            <div class="alert alert-info pj">{{ file.name }}. <a href="{{ path('download_file', { 'id': file.id}) }}">Télécharger</a></div>
+                            <div class="alert alert-info pj">{{ file.name }}. <a
+                                        href="{{ path('download_file', { 'id': file.id}) }}">Télécharger</a></div>
                         {% endfor %}
                         <div>
                             {{ form_start(fileForm) }}

@@ -10,7 +10,7 @@ namespace AppBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 
-class BankPaymentManager extends CoproService   
+class BankPaymentManager extends CoproService
 {
     private $fileUploader;
     private $chargePayementManager;
