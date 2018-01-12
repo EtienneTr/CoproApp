@@ -1,31 +1,85 @@
 {% extends "@App/base.html.twig" %}
 
 {% block appbundle_content %}
-    {% for message in messages %}
-        <a href="{{ path('message_detail', {'id' : message.id}) }}" class="coprocardAboveLink">
-            <div class="coprocard corprocard-a">
-                <p class="coproMessage lead">
-                    {{ message.body }}
-                </p>
+    <div class="row">
+        <div class="col-lg-12 panel-margin">
 
-                <p class="dateinfos">{{ message.sendDate|date('d/m/Y à H:i:s') }}
-                    par {{ message.sender }}</p>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class=" panel panel-default">
+                        <div class="panel-heading">
+                            Derniers messages
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                {% for message in messages %}
+                                    <a href="{{ path('message_detail', {'id' : message.id}) }}"
+                                       class="coprocardAboveLink">
+                                        <div class="coprocard coprocard-a">
+                                            <p class="coproMessage lead">
+                                                {{ message.body }}
+                                            </p>
+
+                                            <p class="dateinfos">{{ message.sendDate|date('d/m/Y à H:i:s') }}
+                                                par {{ message.sender }}</p>
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                           Derniers projets
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                {% for project in projects %}
+                                    <a href="{{ path('project_detail', {'id' : project.id}) }}"
+                                       class="coprocardAboveLink">
+                                        <div class="coprocard coprocard-a">
+                                            <p class="coproMessage lead">
+                                                {{ project.name }}
+                                            </p>
+
+                                            <p class="dateinfos">{{ project.creationDate|date('d/m/Y à H:i:s') }}
+                                                par {{ project.owner }}</p>
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            TBD
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            TBD
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </a>
-    {% endfor %}
-
-    projets
-    {% for project in projects %}
-        <a href="{{ path('project_detail', {'id' : project.id}) }}" class="coprocardAboveLink">
-            <div class="coprocard corprocard-a">
-                <p class="coproMessage lead">
-                    {{ project.name }}
-                </p>
-
-                <p class="dateinfos">{{ project.creationDate|date('d/m/Y à H:i:s') }}
-                    par {{ project.owner }}</p>
-            </div>
-        </a>
-    {% endfor %}
+        </div>
+    </div>
 
 {% endblock %}
