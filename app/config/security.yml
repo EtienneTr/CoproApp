@@ -22,6 +22,7 @@ security:
             anonymous:    true
             #allow switch
             switch_user: { role: ROLE_ADMIN }
+            access_denied_handler: AppBundle\Security\AccessDeniedHandler
 
     #FOS USER
     encoders:

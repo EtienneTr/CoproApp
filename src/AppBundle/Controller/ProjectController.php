@@ -133,7 +133,7 @@ class ProjectController extends Controller
      * @Route("/project/edit/{id}", name="project_edit")
      * @Method({"GET", "POST"})
      */
-    public function editMessageAction(Request $request, ProjectManager $projectManager, UserService $userService, $id){
+    public function editProjectAction(Request $request, ProjectManager $projectManager, UserService $userService, $id){
 
         $project = $projectManager->findOne($id);
 

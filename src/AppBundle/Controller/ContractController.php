@@ -66,6 +66,7 @@ class ContractController extends Controller
     /**
      * @Route("/contract/manage", name="contract_manager")
      * @Method({"GET"})
+     * @Security("has_role('ROLE_MANAGER')")
      */
     public function manageContractAction(ContractManager $manager)
     {
