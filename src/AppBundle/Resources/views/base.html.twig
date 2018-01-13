@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>CoproApp</title>
     <link rel="stylesheet" href="{{ asset('bundles/bmatznerfontawesome/css/font-awesome.min.css') }}">
     {% block stylesheets %}
         {% stylesheets 'bundles/app/css/*' %}
@@ -23,7 +24,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ path('dashboard') }}">CoproApp Alpha 0.1</a>
+            <a class="navbar-brand" href="{{ path('dashboard') }}">CoproApp</a>
         </div>
         <!-- /.navbar-header -->
         {#User menu#}
@@ -36,6 +37,10 @@
                 <ul class="dropdown-menu dropdown-user">
                     <li><a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user fa-fw"></i> Votre profil</a>
                     </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="/admin"><i class="fa fa-wrench fa-fw"></i> Administration</a>
+                    </li>
+                    {% endif %}
                     <li class="divider"></li>
                     <li><a href="/login"><i class="fa fa-sign-out fa-fw"></i> Déconnection</a>
                     </li>
@@ -64,9 +69,22 @@
                     <li>
                         <a href="{{ path('contract_all') }}"><i class="fa fa-edit fa-fw"></i> Mes contrats</a>
                     </li>
+                    {% if is_granted('ROLE_MANAGER') %}
                     <li>
-                        <a href="{{ path('payment_bank_create') }}"><i class="fa fa-credit-card fa-fw"></i> Nouveau paiement</a>
+                        <a><i class="fa fa-user-secret fa-fw"></i> Actions manager <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse" aria-expanded="false">
+                            <li>
+                                <a href="{{ path('payment_bank_create') }}"></i> Nouveau paiement</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('charges_create') }}"></i> Nouvelle charge</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('contract_manager') }}"></i> Gestion contrats</a>
+                            </li>
+                        </ul>
                     </li>
+                    {% endif %}
                     <li>
                         <a href="{{ path('notif_list') }}"><i class="fa fa-bell fa-fw"></i> Notifications</a>
                     </li>

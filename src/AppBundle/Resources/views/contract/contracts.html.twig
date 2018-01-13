@@ -9,13 +9,20 @@
     </div>
     <div class="col-lg-9">
         <div class="panel panel-default">
+            {% set isManager = false %}
+            {% if is_granted('ROLE_MANAGER') %}
+                {% set isManager = true %}
             <div class="panel-heading">
                 <a href="{{ path('contract_create') }}" class="message-submit btn btn-success">Enregistrer un nouveau contrat</a>
             </div>
+            {% endif %}
             <div class="panel-body">
                 <table class="table">
                 <thead>
                 <tr>
+                    {% if isManager %}
+                        <th>Utilisateur</th>
+                    {% endif %}
                     <th>Nom</th>
                     <th>Date de début</th>
                     <th>Date de fin</th>
@@ -26,6 +33,9 @@
                 <tbody>
                 {% for contract in contracts %}
                     <tr>
+                        {% if isManager %}
+                            <td>{{ contract.user.username }}</td>
+                        {% endif %}
                         <td>{{ contract.name }}</td>
                         <td>{{ contract.startDate|date('d/m/Y') }}</td>
                         <td>{{ contract.endDate|date('d/m/Y') }}</td>
@@ -34,10 +44,12 @@
                             {{ contract.attachment.name }} <a href="{{ path('download_file', { 'id': contract.attachment.id}) }}">Télécharger</a>
                         {% endif %}
                         </td>
+                        {% if isManager %}
                         <td>
                             <a class="btn btn-warning" href="{{ path('contract_edit', {'id': contract.id}) }}">Éditer</a>
                             <a class="btn btn-danger" href="{{ path('contract_delete', {'id': contract.id}) }}">Supprimer</a>
                         </td>
+                        {% endif %}
                     </tr>
                 {% else %}
                     <td>Vous n'avez aucun contrat pour le moment.</td>

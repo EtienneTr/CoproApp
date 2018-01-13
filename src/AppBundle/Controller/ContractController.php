@@ -18,8 +18,9 @@ use UserBundle\Service\UserService;
 class ContractController extends Controller
 {
     /**
-     * @Route("/contract", name="contract_create")
+     * @Route("/contract/new", name="contract_create")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_MANAGER')")
      */
     public function newContractAction(Request $request, ContractManager $manager, FileUploader $fileUploader)
     {
@@ -40,7 +41,7 @@ class ContractController extends Controller
             }
             $manager->postContract($contract);
 
-            return $this->redirectToRoute('contract_all');
+            return $this->redirectToRoute('contract_manager');
         }
 
         return $this->render('AppBundle:contract:create_form.html.twig', array(
@@ -53,7 +54,7 @@ class ContractController extends Controller
      * @Route("/contract/all", name="contract_all")
      * @Method({"GET"})
      */
-    public function listMessageAction(ContractManager $manager,  UserService $userService)
+    public function listContractAction(ContractManager $manager,  UserService $userService)
     {
         $contracts = $manager->getUserContracts($userService->getUser()->getId());
 
@@ -63,22 +64,30 @@ class ContractController extends Controller
     }
 
     /**
+     * @Route("/contract/manage", name="contract_manager")
+     * @Method({"GET"})
+     */
+    public function manageContractAction(ContractManager $manager)
+    {
+        $contracts = $manager->findAll();
+
+        return $this->render('AppBundle:contract:contracts.html.twig', array(
+            'contracts' => $contracts,
+        ));
+    }
+
+    /**
      * @Route("/contract/edit/{id}", name="contract_edit")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_MANAGER')")
      */
-    public function editMessageAction(Request $request, ContractManager $contractManager, UserService $userService, FileUploader $fileUploader, $id){
+    public function editContractAction(Request $request, ContractManager $contractManager, UserService $userService, FileUploader $fileUploader, $id){
 
         $contract = $contractManager->findOne($id);
 
         if(!$contract)
         {
             $this->addFlash('danger', "Ce contrat n'existe pas.");
-            return $this->redirectToRoute("contract_all");
-        }
-
-        if(!$contract->isMember($userService->getUser()))
-        {
-            $this->addFlash('danger', "Vous ne pouvez pas accéder à ce contrat.");
             return $this->redirectToRoute("contract_all");
         }
 
@@ -99,7 +108,7 @@ class ContractController extends Controller
 
             $this->addFlash('info', "le contrat a été correctement enregistré.");
 
-            return $this->redirectToRoute('contract_all');
+            return $this->redirectToRoute('contract_manager');
         }
 
         return $this->render('AppBundle:contract:create_form.html.twig', array(
@@ -111,8 +120,9 @@ class ContractController extends Controller
     /**
      * @Route("/contract/delete/{id}", name="contract_delete")
      * @Method({"GET"})
+     * @Security("has_role('ROLE_MANAGER')")
      */
-    public function deleteMessageAction(ContractManager $contractManager, UserService $userService, $id)
+    public function deleteContractAction(ContractManager $contractManager, UserService $userService, $id)
     {
         $contract = $contractManager->findOne($id);
 
@@ -121,13 +131,8 @@ class ContractController extends Controller
             return $this->redirectToRoute("contract_all");
         }
 
-        if (!$contract->isMember($userService->getUser())) {
-            $this->addFlash('danger', "Vous ne pouvez pas effectuer cette action.");
-            return $this->redirectToRoute("contract_all");
-        }
-
         $contractManager->remove($contract);
         $this->addFlash('info', "le contrat a été correctement supprimé.");
-        return $this->redirectToRoute('contract_all');
+        return $this->redirectToRoute('contract_manager');
     }
 }

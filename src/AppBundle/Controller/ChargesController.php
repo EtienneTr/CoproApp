@@ -24,7 +24,7 @@ use UserBundle\Service\UserService;
 class ChargesController extends Controller
 {
     /**
-     * @Route("/charge", name="charges_create")
+     * @Route("/charge/new", name="charges_create")
      * @Method({"GET", "POST"})
      */
     public function addChargesAction(ChargeManager $manager, FileUploader $fileUploader, Request $request){

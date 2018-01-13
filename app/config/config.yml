@@ -8,7 +8,7 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: fr
-    bill_directory: '%kernel.project_dir%/web/uploads'
+    bill_directory: '%kernel.project_dir%/web/uploads/files'
 
 framework:
     #esi: ~
@@ -62,14 +62,6 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
-# Swiftmailer Configuration
-swiftmailer:
-    transport: '%mailer_transport%'
-    host: '%mailer_host%'
-    username: '%mailer_user%'
-    password: '%mailer_password%'
-    spool: { type: memory }
-
 
 #FOS CONFIG
 fos_user:
@@ -82,3 +74,23 @@ fos_user:
     registration:
         form:
             type: UserBundle\Form\RegistrationType
+#admin config
+easy_admin:
+    site_name: 'CoproApp Admin'
+    design:
+        color_scheme: 'light'
+        menu:
+            - { entity: 'User', label: 'Utilisateurs' }
+            - { label: 'Accueil Copro', route: 'dashboard' }
+    entities:
+        User:
+             class: UserBundle\Entity\User
+             form:
+                  fields:
+                      - username
+                      - email
+                      - first_name
+                      - last_name
+                      - enabled
+                      - lastLogin
+                      - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_MANAGER': 'ROLE_MANAGER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
